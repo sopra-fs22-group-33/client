@@ -9,12 +9,12 @@ import { FormField } from "components/ui/FormField";
 
 export const Login = (props) => {
   const history = useHistory();
-  const [name, setName] = useState(null);
-  const [username, setUsername] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
 
   const doLogin = async () => {
     try {
-      const requestBody = JSON.stringify({ username, name });
+      const requestBody = JSON.stringify({ email, password });
       const response = await api.post("/users", requestBody);
 
       // Get the returned user and update a new object.
@@ -35,14 +35,18 @@ export const Login = (props) => {
       <div className="auth container">
         <div className="auth form">
           <FormField
-            label="Username"
-            value={username}
-            onChange={(un) => setUsername(un)}
+            label="Email"
+            value={email}
+            onChange={(n) => setEmail(n)}
           />
-          <FormField label="Name" value={name} onChange={(n) => setName(n)} />
+          <FormField
+            label="Password"
+            value={password}
+            onChange={(un) => setPassword(un)}
+          />
           <div className="auth button-container">
             <Button
-              disabled={!username || !name}
+              disabled={!email || !password}
               width="100%"
               onClick={() => doLogin()}
             >

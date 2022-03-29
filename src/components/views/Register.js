@@ -8,12 +8,12 @@ import { Button } from "components/ui/Button";
 
 export const Register = (props) => {
   const history = useHistory();
-  const [name, setName] = useState(null);
-  const [username, setUsername] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
 
   const doRegister = async (props) => {
     try {
-      const requestBody = JSON.stringify({ email: name, password: username });
+      const requestBody = JSON.stringify({ email, password });
       const response = await api.post("/users", requestBody);
 
       const user = new User(response.data);
@@ -31,14 +31,18 @@ export const Register = (props) => {
       <div className="auth container">
         <div className="auth form">
           <FormField
-            label="Username"
-            value={username}
-            onChange={(un) => setUsername(un)}
+            label="Email"
+            value={email}
+            onChange={(n) => setEmail(n)}
           />
-          <FormField label="Name" value={name} onChange={(n) => setName(n)} />
+          <FormField
+            label="Password"
+            value={password}
+            onChange={(un) => setPassword(un)}
+          />
           <div className="auth button-container">
             <Button
-              disabled={!username || !name}
+              disabled={!email || !password}
               width="100%"
               onClick={() => doRegister()}
             >

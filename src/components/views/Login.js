@@ -3,29 +3,9 @@ import { api, handleError } from "helpers/api";
 import User from "models/User";
 import { useHistory } from "react-router-dom";
 import { Button } from "components/ui/Button";
-import "styles/views/Login.scss";
+import "styles/views/Auth.scss";
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
-
-const FormField = (props) => {
-  return (
-    <div className="login field">
-      <label className="login label">{props.label}</label>
-      <input
-        className="login input"
-        placeholder="enter here.."
-        value={props.value}
-        onChange={(e) => props.onChange(e.target.value)}
-      />
-    </div>
-  );
-};
-
-FormField.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-};
+import { FormField } from "components/ui/FormField";
 
 export const Login = (props) => {
   const history = useHistory();
@@ -52,15 +32,15 @@ export const Login = (props) => {
 
   return (
     <BaseContainer>
-      <div className="login container">
-        <div className="login form">
+      <div className="auth container">
+        <div className="auth form">
           <FormField
             label="Username"
             value={username}
             onChange={(un) => setUsername(un)}
           />
           <FormField label="Name" value={name} onChange={(n) => setName(n)} />
-          <div className="login button-container">
+          <div className="auth button-container">
             <Button
               disabled={!username || !name}
               width="100%"

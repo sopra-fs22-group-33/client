@@ -2,7 +2,7 @@ import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 
 export const RegisterGuard = (props) => {
-  // iff there is a token user is logged in
+  // if there is a token user is logged in
   if (!localStorage.getItem("token")) {
     return props.children;
   }

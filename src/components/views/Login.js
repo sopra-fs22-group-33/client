@@ -17,14 +17,10 @@ export const Login = (props) => {
       const requestBody = JSON.stringify({ email, password });
       const response = await api.post("/users", requestBody);
 
-      // Get the returned user and update a new object.
       const user = new User(response.data);
-
-      // Store the token into the local storage.
       localStorage.setItem("token", user.token);
 
-      // Login successfully worked --> navigate to the route /game in the GameRouter
-      history.push(`/game`);
+      history.push("/calendar");
     } catch (error) {
       alert(`Something went wrong during the login: \n${handleError(error)}`);
     }

@@ -20,7 +20,7 @@ export const Login = (props) => {
       const user = new User(response.data);
       localStorage.setItem("token", user.token);
 
-      history.push("/calendar");
+      history.push("/user");
     } catch (error) {
       alert(`Something went wrong during the login: \n${handleError(error)}`);
     }

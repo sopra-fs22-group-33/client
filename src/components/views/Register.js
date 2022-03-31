@@ -19,7 +19,7 @@ export const Register = (props) => {
       const user = new User(response.data);
       localStorage.setItem("token", user.token);
 
-      history.push("/calendar");
+      history.push("/user");
     } catch (e) {
       alert(`Something went wrong during registration: \n${handleError(e)}`);
     }

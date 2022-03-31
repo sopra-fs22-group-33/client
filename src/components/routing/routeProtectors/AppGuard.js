@@ -2,18 +2,19 @@ import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 
 /**
- * Check that user is authenticated and authorized
+ * Check that user is authenticated
  *
  * @param props
+ * @returns {JSX.Element|*}
  */
-export const MainGuard = (props) => {
+export const AppGuard = (props) => {
   if (localStorage.getItem("token")) {
     return props.children;
   }
 
-  return <Redirect to="/" />;
+  return <Redirect to="/welcome" />;
 };
 
-MainGuard.propTypes = {
+AppGuard.propTypes = {
   children: PropTypes.node,
 };

@@ -1,29 +1,41 @@
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
+import { Welcome } from "components/views/Welcome";
+import { AuthGuard } from "components/routing/routeProtectors/AuthGuard";
 import { Login } from "components/views/Login";
-import { RegisterGuard } from "components/routing/routeProtectors/RegisterGuard";
 import { Register } from "components/views/Register";
-import { MainGuard } from "components/routing/routeProtectors/MainGuard";
-import { MainRouter } from "components/routing/routers/MainRouter"
+import { AppGuard } from "components/routing/routeProtectors/AppGuard";
+import { UserRouter } from "components/routing/routers/UserRouter";
+import { TeamRouter } from "./TeamRouter";
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Switch>
+        <Route exact path="/welcome">
+          <Welcome />
+        </Route>
         <Route exact path="/login">
-          <LoginGuard>
+          <AuthGuard>
             <Login />
-          </LoginGuard>
+          </AuthGuard>
         </Route>
         <Route exact path="/register">
-          <RegisterGuard>
+          <AuthGuard>
             <Register />
-          </RegisterGuard>
+          </AuthGuard>
         </Route>
-        <Route path="/calendar">
-          <MainGuard>
-            <MainRouter base="/calendar" />
-          </MainGuard>
+        <Route path="/user">
+          <AppGuard>
+            <UserRouter base="/user"/>
+          </AppGuard>
+        </Route>
+        <Route path="/team">
+          <AppGuard>
+            <TeamRouter base="/team"/>
+          </AppGuard>
+        </Route>
+        <Route exact path="/">
+          <Redirect to="/welcome" />
         </Route>
       </Switch>
     </BrowserRouter>

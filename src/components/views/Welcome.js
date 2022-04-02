@@ -27,8 +27,11 @@ export const Welcome = () => {
   if (isAuthenticated) {
     content = (
       <div>
-        <button onClick={() => history.push("/user/calendar")}>
-          my calendar
+        <button onClick={() => history.push("/user")}>
+          me
+        </button>
+        <button onClick={() => history.push("/team")}>
+          team
         </button>
         <button onClick={() => doLogout()}> log out</button>
       </div>

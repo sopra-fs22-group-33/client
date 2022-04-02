@@ -18,6 +18,7 @@ export const Register = (props) => {
 
       const user = new User(response.data);
       localStorage.setItem("token", user.token);
+      localStorage.setItem("id", user.id);
 
       history.push("/user");
     } catch (e) {

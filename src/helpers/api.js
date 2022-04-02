@@ -6,6 +6,19 @@ export const api = axios.create({
   headers: { 'Content-Type': 'application/json' }
 });
 
+export async function doLogout() {
+    try {
+      // todo: check REST specification
+      const requestBody = JSON.stringify({ isOnline: false });
+      await api.put("/user/" + localStorage.getItem("id"), requestBody);
+    } catch (e) {
+      alert(`Something went wrong during logout: \n${handleError(e)}`);
+    } finally {
+      localStorage.removeItem("token");
+      localStorage.removeItem("id");
+    }
+  }
+
 export const handleError = error => {
   const response = error.response;
 

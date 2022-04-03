@@ -3,7 +3,7 @@ import {api, doLogout, handleError} from "../../helpers/api";
 import {useState} from "react";
 import User from "../../models/User";
 
-
+//component for a TEAM
 const Team = ({team, getTeam}) => (
 
     <div className="team container">
@@ -11,21 +11,21 @@ const Team = ({team, getTeam}) => (
         <div className="team id">id: {team.id}</div>
 
         <ul className="team member-list">
-            {team.map(teamMember => (
+            {team.users.map(teamMember => (
                 <TeamMember
                     teamMember={teamMember}
                 />
-
             ))}
         </ul>
 
     </div>
 
 );
-const TeamMember = ({team}) => (
+//component for a TEAM MEMBER
+const TeamMember = ({teamMember}) => (
 
     <div className="team member container">
-        <div className="team member id">id: {team.id}</div>
+        <div className="team member id">id: {teamMember.name}</div>
     </div>
 
 );
@@ -51,6 +51,10 @@ export const AllTeams = () => {
             alert(`Something went wrong with fetching the teams the user is part of: \n${handleError(error)}`);
         }
     }
+
+    const getTeam = (teamId) => {
+        history.push(`/team/${teamId}/profile`);
+    }
     //execute
     fetchData();
 
@@ -63,6 +67,7 @@ export const AllTeams = () => {
                     {teams.map(team => (
                         <Team
                             team={team}
+                            getTeam={getTeam}
                         />
 
                     ))}

@@ -3,6 +3,7 @@ import { doLogout } from "../../helpers/api";
 
 export const AllTeams = () => {
   const history = useHistory();
+  //change
 
   return (
     <div>

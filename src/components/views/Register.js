@@ -49,6 +49,9 @@ export const Register = (props) => {
               Register
             </Button>
           </div>
+          <button onClick={() => history.push("/login")}>
+            Existing user? Sign in instead
+          </button>
         </div>
       </div>
     </BaseContainer>

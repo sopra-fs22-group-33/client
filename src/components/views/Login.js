@@ -50,6 +50,9 @@ export const Login = (props) => {
               Login
             </Button>
           </div>
+          <button onClick={() => history.push("/register")}>
+            Create new account instead?
+          </button>
         </div>
       </div>
     </BaseContainer>

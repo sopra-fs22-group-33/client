@@ -1,29 +1,28 @@
-import React, { useState } from "react";
 import { api, handleError } from "helpers/api";
-import User from "models/User";
 import { useHistory } from "react-router-dom";
-import { Button } from "components/ui/Button";
-import "styles/views/Auth.scss";
+import { useState } from "react";
+import User from "models/User";
 import BaseContainer from "components/ui/BaseContainer";
 import { FormField } from "components/ui/FormField";
+import { Button } from "components/ui/Button";
 
-export const Login = (props) => {
+export const Register = (props) => {
   const history = useHistory();
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
-  const doLogin = async () => {
+  const doRegister = async (props) => {
     try {
       const requestBody = JSON.stringify({ email, password });
-      const response = await api.post("/users/login", requestBody);
+      const response = await api.post("/users", requestBody);
 
       const user = new User(response.data);
       localStorage.setItem("token", user.token);
       localStorage.setItem("id", user.id);
 
       history.push("/user");
-    } catch (error) {
-      alert(`Something went wrong during the login: \n${handleError(error)}`);
+    } catch (e) {
+      alert(`Something went wrong during registration: \n${handleError(e)}`);
     }
   };
 
@@ -45,13 +44,13 @@ export const Login = (props) => {
             <Button
               disabled={!email || !password}
               width="100%"
-              onClick={() => doLogin()}
+              onClick={() => doRegister()}
             >
-              Login
+              Register
             </Button>
           </div>
-          <button onClick={() => history.push("/register")}>
-            Create new account instead?
+          <button onClick={() => history.push("/login")}>
+            Existing user? Sign in instead
           </button>
         </div>
       </div>

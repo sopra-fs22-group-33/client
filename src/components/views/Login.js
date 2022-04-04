@@ -15,7 +15,7 @@ export const Login = (props) => {
   const doLogin = async () => {
     try {
       const requestBody = JSON.stringify({ email, password });
-      const response = await api.post("/users", requestBody);
+      const response = await api.post("/users/login", requestBody);
 
       const user = new User(response.data);
       localStorage.setItem("token", user.token);

@@ -13,6 +13,22 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+class Slot extends React.Component {
+  render() {
+    return (
+      <Item>
+        from: {this.props.from}
+        to: {this.props.to}
+      </Item>
+    );
+  }
+}
+
+Slot.propTypes = {
+  from: PropTypes.number,
+  to: PropTypes.number,
+};
+
 class Day extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +45,9 @@ class Day extends React.Component {
       <Grid item xs={xs} md={md}>
         <Item>
           weekday: {this.props.weekday}
-          slots: {this.props.slots}
+          {this.state.slots.map((slot) => (
+            <Slot from={slot.from} to={slot.to} />
+          ))}
         </Item>
       </Grid>
     );

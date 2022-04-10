@@ -5,6 +5,11 @@ import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import PropTypes from "prop-types";
 
+// todo: set in Calendar
+const DAY_SPACING = 2;
+const DAY_HEIGHT = 400;
+const SLOT_SCALING = 10;
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -14,11 +19,23 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 class Slot extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      from: props.from,
+      to: props.to,
+    };
+  }
+
+  calcHeight() {
+    return SLOT_SCALING * (this.state.to - this.state.from);
+  }
+
   render() {
     return (
-      <Item>
-        from: {this.props.from}
-        to: {this.props.to}
+      <Item sx={{ height: this.calcHeight() }}>
+        from: {this.state.from}
+        to: {this.state.to}
       </Item>
     );
   }
@@ -38,12 +55,9 @@ class Day extends React.Component {
   }
 
   render() {
-    const xs = 12 / 7;
-    const md = false;
-
     return (
-      <Grid item xs={xs} md={md}>
-        <Item>
+      <Grid item xs={12 / 7} >
+        <Item sx={{height: DAY_HEIGHT}}>
           weekday: {this.props.weekday}
           {this.state.slots.map((slot) => (
             <Slot from={slot.from} to={slot.to} />
@@ -71,7 +85,7 @@ export class Calendar extends React.Component {
       <div>
         <Box sx={{ width: 1 }}>
           <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
+            <Grid container spacing={DAY_SPACING}>
               {this.state.days.map((day) => (
                 <Day weekday={day.weekday} slots={day.slots} />
               ))}

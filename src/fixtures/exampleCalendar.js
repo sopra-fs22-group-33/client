@@ -1,4 +1,4 @@
-export const EXAMPLE_VALIDATED_CALENDAR = {
+export const VALID_TEAM_CALENDAR = {
   startingDate: "someDateFormat",
   days: [
     {

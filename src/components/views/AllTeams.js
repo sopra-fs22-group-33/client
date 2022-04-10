@@ -2,9 +2,10 @@ import {useHistory} from "react-router-dom";
 import {api, doLogout, handleError} from "../../helpers/api";
 import {useState} from "react";
 import User from "../../models/User";
+import {Spinner} from "../ui/Spinner";
 
 //component for a TEAM
-const Team = ({team, getTeam}) => (
+export const Team = ({team, getTeam}) => (
 
     <div className="team container">
         <a className="team name" onClick={() => getTeam(team.id) }>{team.name} </a>
@@ -22,18 +23,13 @@ const Team = ({team, getTeam}) => (
 
 );
 //component for a TEAM MEMBER
-const TeamMember = ({teamMember}) => (
+export const TeamMember = ({teamMember}) => (
 
     <div className="team member container">
         <div className="team member id">id: {teamMember.name}</div>
     </div>
 
 );
-
-Team.propTypes = {
-    user: PropTypes.object
-};
-
 
 export const AllTeams = () => {
     const history = useHistory();
@@ -62,8 +58,8 @@ export const AllTeams = () => {
 
     if (teams) {
         content = (
-            <div className="game">
-                <ul className="game user-list">
+            <div className="team">
+                <ul className="team member-list">
                     {teams.map(team => (
                         <Team
                             team={team}
@@ -72,6 +68,7 @@ export const AllTeams = () => {
 
                     ))}
                 </ul>
+
             </div>
         );
     }

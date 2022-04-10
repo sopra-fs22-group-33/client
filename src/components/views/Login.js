@@ -15,7 +15,7 @@ export const Login = (props) => {
   const doLogin = async () => {
     try {
       const requestBody = JSON.stringify({ email, password });
-      const response = await api.post("/users", requestBody);
+      const response = await api.post("/users/login", requestBody);
 
       const user = new User(response.data);
       localStorage.setItem("token", user.token);
@@ -50,6 +50,9 @@ export const Login = (props) => {
               Login
             </Button>
           </div>
+          <button onClick={() => history.push("/register")}>
+            Create new account instead?
+          </button>
         </div>
       </div>
     </BaseContainer>

@@ -50,3 +50,10 @@ export const handleError = (error) => {
     return error.message;
   }
 };
+
+export const getToken = (response) => {
+  if (!response.headers.hasOwnProperty("token")) {
+    throw Error(`token is not in response headers or cannot be read:\n${response.headers}`)
+  }
+  return response.headers.token
+}

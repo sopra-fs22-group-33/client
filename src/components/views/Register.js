@@ -1,4 +1,4 @@
-import { api, handleError } from "helpers/api";
+import {api, getToken, handleError} from "helpers/api";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import User from "models/User";
@@ -17,6 +17,7 @@ export const Register = (props) => {
       const response = await api.post("/users", requestBody);
 
       const user = new User(response.data);
+      user.token = getToken(response)
       localStorage.setItem("token", user.token);
       localStorage.setItem("id", user.id);
 

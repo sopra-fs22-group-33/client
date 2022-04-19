@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { api, handleError } from "helpers/api";
+import {api, getToken, handleError} from "helpers/api";
 import User from "models/User";
 import { useHistory } from "react-router-dom";
 import { Button } from "components/ui/Button";
@@ -18,6 +18,7 @@ export const Login = (props) => {
       const response = await api.post("/users/login", requestBody);
 
       const user = new User(response.data);
+      user.token = getToken(response)
       localStorage.setItem("token", user.token);
       localStorage.setItem("id", user.id);
 

@@ -32,11 +32,18 @@ class Slot extends React.Component {
     return SLOT_SCALING * (this.state.to - this.state.from);
   }
 
+  calcTop() {
+    return SLOT_SCALING * this.state.from;
+  }
+
   render() {
     return (
       <Item
-        sx={{
+        style={{
+          position: "absolute",
           height: this.calcHeight(),
+          top: this.calcTop(),
+          background: "gray",
         }}
       >
         from: {this.state.from}
@@ -97,7 +104,11 @@ class Day extends React.Component {
             if (!el) return;
             this.ref = el;
           }}
-          sx={{ height: DAY_HEIGHT }}
+          style={{
+            position: "absolute",
+            height: DAY_HEIGHT,
+            background: "white",
+          }}
           onClick={(ev) => this.onClic(ev)}
           onMouseDown={(ev) => this.onMouseDown(ev)}
           onMouseUp={(ev) => this.onMouseUp(ev)}
@@ -126,17 +137,13 @@ export class Calendar extends React.Component {
 
   render() {
     return (
-      <div>
-        <Box sx={{ width: 1 }}>
-          <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={DAY_SPACING}>
-              {this.state.days.map((day) => (
-                <Day weekday={day.weekday} slots={day.slots} />
-              ))}
-            </Grid>
-          </Box>
-        </Box>
-      </div>
+      <Box sx={{ width: 1, flexGrow: 1 }}>
+        <Grid container spacing={DAY_SPACING} style={{height: DAY_HEIGHT*3}}>
+          {this.state.days.map((day) => (
+            <Day weekday={day.weekday} slots={day.slots} />
+          ))}
+        </Grid>
+      </Box>
     );
   }
 }

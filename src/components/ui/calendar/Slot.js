@@ -1,6 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { Item, SLOT_SCALING } from "./config";
+import { SLOT_SCALING } from "./config";
 import Box from "@mui/material/Box";
 
 export class Slot extends React.Component {

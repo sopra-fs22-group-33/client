@@ -36,8 +36,8 @@ export class Day extends React.Component {
 
   appendSlot(from, to) {
     this.state.slots.push({
-      from: Math.floor(from / SLOT_SCALING),
-      to: Math.floor(to / SLOT_SCALING),
+      from: Math.round(from / SLOT_SCALING),
+      to: Math.round(to / SLOT_SCALING),
     });
     this.setState({ slots: this.state.slots });
   }

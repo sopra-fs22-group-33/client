@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper";
 
 export const DAY_SPACING = 2;
 export const DAY_HEIGHT = 400;
-export const SLOT_SCALING = 10;
+export const SLOT_SCALING = DAY_HEIGHT / 24;
 
 export const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",

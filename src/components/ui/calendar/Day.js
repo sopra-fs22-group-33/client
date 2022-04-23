@@ -3,6 +3,7 @@ import { Grid } from "@mui/material";
 import PropTypes from "prop-types";
 import { DAY_HEIGHT, Item, SLOT_SCALING } from "./config";
 import { Slot } from "./Slot";
+import Box from "@mui/material/Box";
 
 export class Day extends React.Component {
   constructor(props) {
@@ -39,17 +40,20 @@ export class Day extends React.Component {
       to: Math.floor(to / SLOT_SCALING),
     });
     this.setState({ slots: this.state.slots });
-    console.log(this.state.slots);
   }
 
   render() {
     return (
       <Grid item xs={12 / 7}>
-        <Item
+        <Box sx={{ width: 1}} style={{ background: "lightgray" }}>
+          weekday: {this.props.weekday}
+        </Box>
+        <Box
           ref={(el) => {
             if (!el) return;
             this.ref = el;
           }}
+          sx={{ width: 1 / 7 }}
           style={{
             position: "absolute",
             height: DAY_HEIGHT,
@@ -59,16 +63,15 @@ export class Day extends React.Component {
           onMouseDown={(ev) => this.onMouseDown(ev)}
           onMouseUp={(ev) => this.onMouseUp(ev)}
         >
-          weekday: {this.props.weekday}
           {this.state.slots.map((slot) => (
             <Slot from={slot.from} to={slot.to} />
           ))}
-        </Item>
+        </Box>
       </Grid>
     );
   }
 }
 
 Day.propTypes = {
-    slots: PropTypes.array,
+  slots: PropTypes.array,
 };

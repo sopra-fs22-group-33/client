@@ -1,6 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { Item, SLOT_SCALING } from "./config";
+import Box from "@mui/material/Box";
 
 export class Slot extends React.Component {
   constructor(props) {
@@ -21,7 +22,10 @@ export class Slot extends React.Component {
 
   render() {
     return (
-      <Item
+      <Box
+        sx={{
+          width: 3 / 4,
+        }}
         style={{
           position: "absolute",
           height: this.calcHeight(),
@@ -31,7 +35,7 @@ export class Slot extends React.Component {
       >
         from: {this.state.from}
         to: {this.state.to}
-      </Item>
+      </Box>
     );
   }
 }

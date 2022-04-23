@@ -10,10 +10,6 @@ export class Day extends React.Component {
     super(props);
 
     this.newSlot = {};
-
-    this.isSlotDrawn = false;
-    this.isSlotEdited = false;
-
     this.ref = undefined;
 
     this.state = {
@@ -22,41 +18,41 @@ export class Day extends React.Component {
   }
 
   onClic(ev) {
-    // todo: validate creation if necessary
-    console.log("slot creation");
-  }
-
-  onMouseDown(ev) {
-    if (this.isSlotDrawn || this.isSlotEdited) {
-      console.log(this.isSlotDrawn);
-      return;
+    //check whether mouse down was on existing slot
+    for (const slot of this.state.slots) {
+      console.log(slot);
+      if (
+        Math.round(this.newSlot.from / SLOT_SCALING) >= slot.from &&
+        Math.round(this.newSlot.from / SLOT_SCALING) <= slot.to
+      ) {
+        console.log("clicked on slot:", slot);
+        // slot editing is handled in Slot
+        return;
+      }
     }
-
-    // todo: check that no slot in space exists
-    this.isSlotDrawn = true;
-    this.newSlot.from = ev.clientY - this.ref.getBoundingClientRect().y;
-  }
-
-  onMouseUp(ev) {
-    if (!this.isSlotDrawn) {
-      console.log(this.isSlotDrawn);
-      return;
-    }
-
-    this.newSlot.to = ev.clientY - this.ref.getBoundingClientRect().y;
 
     if (
       Math.round(this.newSlot.to / SLOT_SCALING) -
         Math.round(this.newSlot.from / SLOT_SCALING) <
       1
     ) {
-      console.log("Slot too short", this.newSlot.to - this.newSlot.from);
+      console.log(
+        "Slot too short or inverted",
+        this.newSlot.to - this.newSlot.from
+      );
       this.isSlotDrawn = false;
       return;
     }
 
-    this.isSlotDrawn = false;
     this.appendSlot(this.newSlot.from, this.newSlot.to);
+  }
+
+  onMouseDown(ev) {
+    this.newSlot.from = ev.clientY - this.ref.getBoundingClientRect().y;
+  }
+
+  onMouseUp(ev) {
+    this.newSlot.to = ev.clientY - this.ref.getBoundingClientRect().y;
   }
 
   appendSlot(from, to) {

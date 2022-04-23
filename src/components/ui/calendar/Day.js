@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Grid } from "@mui/material";
 import PropTypes from "prop-types";
-import { DAY_HEIGHT, Item, SLOT_SCALING } from "./config";
+import { DAY_HEIGHT, SLOT_SCALING } from "./config";
 import { Slot } from "./Slot";
 import Box from "@mui/material/Box";
 
@@ -9,7 +9,10 @@ export class Day extends React.Component {
   constructor(props) {
     super(props);
 
-    this.temp = {};
+    this.newSlot = {};
+
+    this.isSlotDrawn = false;
+    this.isSlotEdited = false;
 
     this.ref = undefined;
 
@@ -24,14 +27,36 @@ export class Day extends React.Component {
   }
 
   onMouseDown(ev) {
-    this.temp.from = ev.clientY - this.ref.getBoundingClientRect().y;
+    if (this.isSlotDrawn || this.isSlotEdited) {
+      console.log(this.isSlotDrawn);
+      return;
+    }
+
+    // todo: check that no slot in space exists
+    this.isSlotDrawn = true;
+    this.newSlot.from = ev.clientY - this.ref.getBoundingClientRect().y;
   }
 
   onMouseUp(ev) {
-    this.appendSlot(
-      this.temp.from,
-      ev.clientY - this.ref.getBoundingClientRect().y
-    );
+    if (!this.isSlotDrawn) {
+      console.log(this.isSlotDrawn);
+      return;
+    }
+
+    this.newSlot.to = ev.clientY - this.ref.getBoundingClientRect().y;
+
+    if (
+      Math.round(this.newSlot.to / SLOT_SCALING) -
+        Math.round(this.newSlot.from / SLOT_SCALING) <
+      1
+    ) {
+      console.log("Slot too short", this.newSlot.to - this.newSlot.from);
+      this.isSlotDrawn = false;
+      return;
+    }
+
+    this.isSlotDrawn = false;
+    this.appendSlot(this.newSlot.from, this.newSlot.to);
   }
 
   appendSlot(from, to) {
@@ -45,7 +70,7 @@ export class Day extends React.Component {
   render() {
     return (
       <Grid item xs={12 / 7}>
-        <Box sx={{ width: 1}} style={{ background: "lightgray" }}>
+        <Box sx={{ width: 1 }} style={{ background: "lightgray" }}>
           weekday: {this.props.weekday}
         </Box>
         <Box

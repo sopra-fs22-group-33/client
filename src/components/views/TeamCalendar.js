@@ -1,7 +1,7 @@
 import { useHistory } from "react-router-dom";
 import { api, doLogout, handleError } from "helpers/api";
 import * as React from "react";
-import { Calendar } from "components/ui/Calendar";
+import { Calendar } from "components/ui/calendar/Calendar";
 import { validateCalendar } from "helpers/validations";
 import { VALID_TEAM_CALENDAR } from "fixtures/exampleCalendar";
 import { useEffect, useState } from "react";

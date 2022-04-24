@@ -4,7 +4,9 @@ import PropTypes from "prop-types";
 import { DAY_HEIGHT, SLOT_SCALING } from "./config";
 import { Slot } from "./Slot";
 import Box from "@mui/material/Box";
-import {randomId} from "../../../helpers/validations";
+import { randomId } from "../../../helpers/validations";
+import CalendarGlobal from "./CalendarGlobal";
+import CalendarEventDispatcher from "./CalendarEventDispatcher";
 
 export class Day extends React.Component {
   constructor(props) {
@@ -51,12 +53,14 @@ export class Day extends React.Component {
   }
 
   appendSlot(from, to) {
+    const newId = randomId();
     this.state.slots.push({
       from: Math.round(from / SLOT_SCALING),
       to: Math.round(to / SLOT_SCALING),
-      id: randomId(),
+      id: newId,
     });
-    this.setState({ slots: this.state.slots });
+    CalendarGlobal.setSelectedSlot(newId);
+    CalendarEventDispatcher.dispatch("slotSelected");
   }
 
   render() {

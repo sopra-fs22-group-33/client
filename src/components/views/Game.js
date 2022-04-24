@@ -6,9 +6,19 @@ import "styles/views/Auth.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import { FormField } from "components/ui/FormField";
 
-const Game = (props) => {
+const Snake = (props) => {
 
-    const updateGame = () => {
+    const Snake = [100,100];
+    const snakeSize = 1;
+
+    const step = 50;
+
+
+}
+
+export const Game = (props) => {
+
+    const getUpdatedGame = () => {
 
         // GET request
 
@@ -19,12 +29,15 @@ const Game = (props) => {
         // PUT request
     }
 
-
     return (
-        <BaseContainer>
+        <div
+        style={{
+        height: 500,
+        width: 500,
+        background: "black",
+        }}>
+            <div></div>
+        </div>
+    )
 
-        </BaseContainer>
-    );
 };
-
-// do export here if we create multiple const

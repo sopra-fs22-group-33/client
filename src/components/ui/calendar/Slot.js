@@ -9,6 +9,8 @@ export class Slot extends React.Component {
   constructor(props) {
     super(props);
     this.id = props.id;
+    this.hasUpdated = false;
+    this.startedUpdating = false;
 
     this.state = {
       from: props.from,
@@ -31,12 +33,34 @@ export class Slot extends React.Component {
   onClick(ev) {
     ev.stopPropagation();
     console.log("\n clicked on slot:", this.id, "\n");
-    CalendarGlobal.setSelectedSlot(this.isSelected() ? null : this.id);
-    CalendarEventDispatcher.dispatch("slotSelected");
+    if (!this.hasUpdated) {
+      CalendarGlobal.setSelectedSlot(this.isSelected() ? null : this.id);
+      CalendarEventDispatcher.dispatch("slotSelected");
+    }
+    this.startedUpdating = false;
   }
 
   onMouseDown(ev) {
     ev.stopPropagation();
+    this.startedUpdating = this.isSelected();
+  }
+
+  onMouseUp(ev) {
+    ev.stopPropagation();
+    this.hasUpdated = this.startedUpdating;
+    this.startedUpdating = false;
+    if (this.hasUpdated) {
+      this.setState({ to: Math.ceil(this.state.to) });
+    }
+  }
+
+  onMouseMove(ev) {
+    if (this.isSelected() && this.startedUpdating) {
+      ev.stopPropagation();
+      this.setState({
+        to: this.state.to + ev.movementY / SLOT_SCALING,
+      });
+    }
   }
 
   render() {
@@ -53,6 +77,8 @@ export class Slot extends React.Component {
         }}
         onClick={(ev) => this.onClick(ev)}
         onMouseDown={(ev) => this.onMouseDown(ev)}
+        onMouseMove={(ev) => this.onMouseMove(ev)}
+        onMouseUp={(ev) => this.onMouseUp(ev)}
       >
         from: {this.state.from}
         to: {this.state.to}

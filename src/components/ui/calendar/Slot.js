@@ -29,9 +29,14 @@ export class Slot extends React.Component {
   }
 
   onClick(ev) {
+    ev.stopPropagation();
     console.log("\n clicked on slot:", this.id, "\n");
     CalendarGlobal.setSelectedSlot(this.isSelected() ? null : this.id);
-    CalendarEventDispatcher.dispatch("slotSelected", this);
+    CalendarEventDispatcher.dispatch("slotSelected");
+  }
+
+  onMouseDown(ev) {
+    ev.stopPropagation();
   }
 
   render() {
@@ -47,6 +52,7 @@ export class Slot extends React.Component {
           background: this.isSelected() ? "orange" : "gray",
         }}
         onClick={(ev) => this.onClick(ev)}
+        onMouseDown={(ev) => this.onMouseDown(ev)}
       >
         from: {this.state.from}
         to: {this.state.to}

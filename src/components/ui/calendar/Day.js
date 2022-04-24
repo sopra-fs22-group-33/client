@@ -22,33 +22,28 @@ export class Day extends React.Component {
   }
 
   onClic(ev) {
-    //check whether mouse down was on existing slot
-    for (const slot of this.state.slots) {
-      if (
-        Math.round(this.newSlot.from / SLOT_SCALING) >= slot.from &&
-        Math.round(this.newSlot.from / SLOT_SCALING) <= slot.to
-      ) {
-        return;
-      }
+    ev.stopPropagation();
+    if (this.newSlot.from === undefined) {
+      return;
     }
-
     if (
       Math.round(this.newSlot.to / SLOT_SCALING) -
         Math.round(this.newSlot.from / SLOT_SCALING) <
       1
     ) {
-      this.isSlotDrawn = false;
       return;
     }
-
     this.appendSlot(this.newSlot.from, this.newSlot.to);
+    this.newSlot = {};
   }
 
   onMouseDown(ev) {
+    ev.stopPropagation();
     this.newSlot.from = ev.clientY - this.ref.getBoundingClientRect().y;
   }
 
   onMouseUp(ev) {
+    ev.stopPropagation();
     this.newSlot.to = ev.clientY - this.ref.getBoundingClientRect().y;
   }
 

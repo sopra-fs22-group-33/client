@@ -2,14 +2,22 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { SLOT_SCALING } from "./config";
 import Box from "@mui/material/Box";
+import CalendarGlobal from "./CalendarGlobal";
+import CalendarEventDispatcher from "./CalendarEventDispatcher";
 
 export class Slot extends React.Component {
   constructor(props) {
     super(props);
+    this.id = props.id;
+
     this.state = {
       from: props.from,
       to: props.to,
     };
+  }
+
+  isSelected() {
+    return this.id === CalendarGlobal.getSelectedSlot();
   }
 
   calcHeight() {
@@ -18,6 +26,12 @@ export class Slot extends React.Component {
 
   calcTop() {
     return SLOT_SCALING * this.state.from;
+  }
+
+  onClick(ev) {
+    console.log("\n clicked on slot:", this.id, "\n");
+    CalendarGlobal.setSelectedSlot(this.isSelected() ? null : this.id);
+    CalendarEventDispatcher.dispatch("slotSelected", this);
   }
 
   render() {
@@ -30,8 +44,9 @@ export class Slot extends React.Component {
           position: "absolute",
           height: this.calcHeight(),
           top: this.calcTop(),
-          background: "gray",
+          background: this.isSelected() ? "orange" : "gray",
         }}
+        onClick={(ev) => this.onClick(ev)}
       >
         from: {this.state.from}
         to: {this.state.to}

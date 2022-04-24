@@ -4,10 +4,12 @@ import PropTypes from "prop-types";
 import { DAY_HEIGHT, SLOT_SCALING } from "./config";
 import { Slot } from "./Slot";
 import Box from "@mui/material/Box";
+import {randomId} from "../../../helpers/validations";
 
 export class Day extends React.Component {
   constructor(props) {
     super(props);
+    this.id = props.id;
 
     this.newSlot = {};
     this.ref = undefined;
@@ -20,13 +22,10 @@ export class Day extends React.Component {
   onClic(ev) {
     //check whether mouse down was on existing slot
     for (const slot of this.state.slots) {
-      console.log(slot);
       if (
         Math.round(this.newSlot.from / SLOT_SCALING) >= slot.from &&
         Math.round(this.newSlot.from / SLOT_SCALING) <= slot.to
       ) {
-        console.log("clicked on slot:", slot);
-        // slot editing is handled in Slot
         return;
       }
     }
@@ -36,10 +35,6 @@ export class Day extends React.Component {
         Math.round(this.newSlot.from / SLOT_SCALING) <
       1
     ) {
-      console.log(
-        "Slot too short or inverted",
-        this.newSlot.to - this.newSlot.from
-      );
       this.isSlotDrawn = false;
       return;
     }
@@ -59,6 +54,7 @@ export class Day extends React.Component {
     this.state.slots.push({
       from: Math.round(from / SLOT_SCALING),
       to: Math.round(to / SLOT_SCALING),
+      id: randomId(),
     });
     this.setState({ slots: this.state.slots });
   }
@@ -85,7 +81,7 @@ export class Day extends React.Component {
           onMouseUp={(ev) => this.onMouseUp(ev)}
         >
           {this.state.slots.map((slot) => (
-            <Slot from={slot.from} to={slot.to} />
+            <Slot from={slot.from} to={slot.to} id={slot.id} key={slot.id} />
           ))}
         </Box>
       </Grid>

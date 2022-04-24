@@ -8,6 +8,11 @@ const WEEKDAYS = [
   "SUNDAY",
 ];
 
+export function randomId() {
+  const uint32 = window.crypto.getRandomValues(new Uint32Array(1))[0];
+  return uint32.toString(16);
+}
+
 /**
  * Validates a calendar and tries to get relevant data on assignedUsers if present
  *
@@ -54,6 +59,9 @@ export function validateCalendar(calendar) {
       wrappedError("invalid 'slots'", day);
     }
 
+    // todo: generate unique across calendar on backend
+    day.id = randomId();
+
     for (let i in day.slots) {
       let slot = day.slots[i];
       if (!slot.hasOwnProperty("from") || typeof slot.from !== "number") {
@@ -65,6 +73,9 @@ export function validateCalendar(calendar) {
       if (slot.from === slot.to) {
         wrappedError(`invalid range ${slot.from - slot.to}`, slot);
       }
+
+      // todo: generate unique across calendar on backend
+      slot.id = randomId();
     }
   }
 

@@ -55,8 +55,8 @@ export class Day extends React.Component {
   appendSlot(from, to) {
     const newId = randomId();
     this.state.slots.push({
-      from: Math.round(from / SLOT_SCALING),
-      to: Math.round(to / SLOT_SCALING),
+      from: Math.floor(from / SLOT_SCALING),
+      to: Math.ceil(to / SLOT_SCALING),
       id: newId,
     });
     CalendarGlobal.setSelectedSlot(newId);

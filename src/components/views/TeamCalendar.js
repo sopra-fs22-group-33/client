@@ -1,25 +1,32 @@
 import { useHistory } from "react-router-dom";
-import { doLogout } from "helpers/api";
+import { api, doLogout, handleError } from "helpers/api";
 import * as React from "react";
-import { Calendar } from "components/ui/Calendar";
-import {EXAMPLE_VALIDATED_CALENDAR} from "../../fixtures/exampleCalendar";
-
+import { Calendar } from "components/ui/calendar/Calendar";
+import { validateCalendar } from "helpers/validations";
+import { VALID_TEAM_CALENDAR } from "fixtures/exampleCalendar";
+import { useEffect, useState } from "react";
 
 export const TeamCalendar = () => {
   const history = useHistory();
+  const [calendar, setCalendar] = useState(VALID_TEAM_CALENDAR);
 
-    /**
-     * validates a calendar, tries to get relevant data on assignedUsers
-     *
-     * @param {object} calendar
-     * @returns {{startingDate: string, days: array}}
-     */
-  function validateCalendar(calendar) {
-      let validatedCalendar = EXAMPLE_VALIDATED_CALENDAR;
-      return validatedCalendar;
-  }
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await api.get(
+          `/teams/${localStorage.getItem("teamId")}/calendars`
+        );
 
-  const validatedCalendar = validateCalendar({});
+        setCalendar(response.data);
+      } catch (e) {
+        alert(`Something went wrong during the login: \n${handleError(e)}`);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const validatedCalendar = validateCalendar(calendar);
 
   return (
     <div>
@@ -33,7 +40,10 @@ export const TeamCalendar = () => {
       </div>
       <div>
         calendar container
-        <Calendar startingDate={validatedCalendar.startingDate} days={validatedCalendar.days} />
+        <Calendar
+          startingDate={validatedCalendar.startingDate}
+          days={validatedCalendar.days}
+        />
       </div>
     </div>
   );

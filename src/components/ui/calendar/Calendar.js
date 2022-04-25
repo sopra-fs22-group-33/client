@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { DAY_HEIGHT, DAY_SPACING } from "./config";
 import { Day } from "./Day";
 import CalendarEventDispatcher from "./CalendarEventDispatcher";
+import CalendarGlobal from "./CalendarGlobal";
 
 export class Calendar extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ export class Calendar extends React.Component {
 
     this.state = {
       days: props.days,
-      isSlotSelected: false,
+      selectedSlot: null,
     };
 
     CalendarEventDispatcher.createTopic("onSlotSelected");
@@ -34,15 +35,18 @@ export class Calendar extends React.Component {
   }
 
   handleKeyDown(ev) {
-    if (this.state.isSlotSelected) {
-      console.log("key down");
-      console.log(ev);
+    console.log(ev);
+    if (this.state.selectedSlot) {
+      if (ev.code === "Escape") {
+        CalendarGlobal.setSelectedSlot(null);
+        this.setState({ selectedSlot: null });
+      }
     }
   }
 
   onSlotSelected() {
     // workaround to rerender entire calendar
-    this.setState({ isSlotSelected: true });
+    this.setState({ selectedSlot: CalendarGlobal.getSelectedSlot() });
   }
 
   render() {

@@ -8,9 +8,11 @@ import CalendarEventDispatcher from "./CalendarEventDispatcher";
 export class Slot extends React.Component {
   constructor(props) {
     super(props);
+    this.ref = undefined;
     this.id = props.id;
     this.hasUpdated = false;
     this.startedUpdating = false;
+    this.updatingTop = undefined;
 
     this.state = {
       from: props.from,
@@ -43,6 +45,10 @@ export class Slot extends React.Component {
   onMouseDown(ev) {
     ev.stopPropagation();
     this.startedUpdating = this.isSelected();
+    const rect = this.ref.getBoundingClientRect();
+
+    this.updatingTop = ev.clientY - (rect.y + rect.height / 2) < 0;
+    console.log(this.updatingTop);
   }
 
   onMouseUp(ev) {
@@ -50,22 +56,36 @@ export class Slot extends React.Component {
     this.hasUpdated = this.startedUpdating;
     this.startedUpdating = false;
     if (this.hasUpdated) {
-      this.setState({ to: Math.ceil(this.state.to) });
+      if (this.updatingTop) {
+        this.setState({ from: Math.floor(this.state.from) });
+      } else {
+        this.setState({ to: Math.ceil(this.state.to) });
+      }
     }
   }
 
   onMouseMove(ev) {
     if (this.isSelected() && this.startedUpdating) {
       ev.stopPropagation();
-      this.setState({
-        to: this.state.to + ev.movementY / SLOT_SCALING,
-      });
+
+      if (this.updatingTop) {
+        this.setState({ from: this.state.from + ev.movementY / SLOT_SCALING });
+      } else {
+        this.setState({
+          to: this.state.to + ev.movementY / SLOT_SCALING,
+        });
+      }
+      this.updatingTop = undefined;
     }
   }
 
   render() {
     return (
       <Box
+        ref={(el) => {
+          if (!el) return;
+          this.ref = el;
+        }}
         sx={{
           width: 3 / 4,
         }}

@@ -9,8 +9,12 @@ import CalendarEventDispatcher from "./CalendarEventDispatcher";
 export class Calendar extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+
     this.state = {
       days: props.days,
+      isSlotSelected: false,
     };
 
     CalendarEventDispatcher.createTopic("onSlotSelected");
@@ -19,6 +23,21 @@ export class Calendar extends React.Component {
       this,
       this.onSlotSelected
     );
+  }
+
+  componentDidMount() {
+    window.addEventListener("keydown", this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.handleKeyDown);
+  }
+
+  handleKeyDown(ev) {
+    if (this.state.isSlotSelected) {
+      console.log("key down");
+      console.log(ev);
+    }
   }
 
   onSlotSelected() {

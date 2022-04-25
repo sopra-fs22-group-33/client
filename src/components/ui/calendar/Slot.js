@@ -63,6 +63,7 @@ export class Slot extends React.Component {
         this.setState({ to: Math.ceil(this.state.to) });
       }
     }
+    // todo: update slot in parent day
   }
 
   onMouseMove(ev) {

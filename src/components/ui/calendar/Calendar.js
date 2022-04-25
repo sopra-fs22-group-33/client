@@ -19,6 +19,8 @@ export class Calendar extends React.Component {
     };
 
     CalendarEventDispatcher.createTopic("onSlotSelected");
+    CalendarEventDispatcher.createTopic("onSlotDeleted");
+
     CalendarEventDispatcher.subscribe(
       "onSlotSelected",
       this,
@@ -35,11 +37,16 @@ export class Calendar extends React.Component {
   }
 
   handleKeyDown(ev) {
-    console.log(ev);
     if (this.state.selectedSlot) {
+      // deselect slot
       if (ev.code === "Escape") {
         CalendarGlobal.setSelectedSlot(null);
         this.setState({ selectedSlot: null });
+      }
+      // delete slot
+      else if (ev.code === "Backspace" || ev.code === "Delete") {
+        CalendarEventDispatcher.dispatch("onSlotDeleted");
+
       }
     }
   }

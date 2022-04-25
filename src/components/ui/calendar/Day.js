@@ -19,6 +19,12 @@ export class Day extends React.Component {
     this.state = {
       slots: props.slots,
     };
+
+    CalendarEventDispatcher.subscribe(
+      "onSlotDeleted",
+      this,
+      this.onSlotDeleted
+    );
   }
 
   onClic(ev) {
@@ -45,6 +51,17 @@ export class Day extends React.Component {
   onMouseUp(ev) {
     ev.stopPropagation();
     this.newSlot.to = ev.clientY - this.ref.getBoundingClientRect().y;
+  }
+
+  onSlotDeleted() {
+    const previousLength = this.state.slots.length;
+    const filteredSlots = this.state.slots.filter(
+      (o) => o.id !== CalendarGlobal.getSelectedSlot()
+    );
+    if (filteredSlots.length === previousLength) {
+      return;
+    }
+    this.setState({ slots: filteredSlots });
   }
 
   appendSlot(from, to) {

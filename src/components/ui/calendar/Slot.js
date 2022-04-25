@@ -45,10 +45,11 @@ export class Slot extends React.Component {
   onMouseDown(ev) {
     ev.stopPropagation();
     this.startedUpdating = this.isSelected();
-    const rect = this.ref.getBoundingClientRect();
 
-    this.updatingTop = ev.clientY - (rect.y + rect.height / 2) < 0;
-    console.log(this.updatingTop);
+    if (this.startedUpdating) {
+      const rect = this.ref.getBoundingClientRect();
+      this.updatingTop = ev.clientY - (rect.y + rect.height / 2) < 0;
+    }
   }
 
   onMouseUp(ev) {
@@ -75,7 +76,6 @@ export class Slot extends React.Component {
           to: this.state.to + ev.movementY / SLOT_SCALING,
         });
       }
-      this.updatingTop = undefined;
     }
   }
 

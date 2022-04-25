@@ -13,9 +13,9 @@ export class Calendar extends React.Component {
       days: props.days,
     };
 
-    CalendarEventDispatcher.createTopic("slotSelected");
+    CalendarEventDispatcher.createTopic("onSlotSelected");
     CalendarEventDispatcher.subscribe(
-      "slotSelected",
+      "onSlotSelected",
       this,
       this.onSlotSelected
     );

@@ -37,7 +37,7 @@ export class Slot extends React.Component {
     console.log("\n clicked on slot:", this.id, "\n");
     if (!this.hasUpdated) {
       CalendarGlobal.setSelectedSlot(this.isSelected() ? null : this.id);
-      CalendarEventDispatcher.dispatch("slotSelected");
+      CalendarEventDispatcher.dispatch("onSlotSelected");
     }
     this.startedUpdating = false;
   }

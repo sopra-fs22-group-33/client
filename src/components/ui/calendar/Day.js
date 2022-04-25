@@ -55,7 +55,7 @@ export class Day extends React.Component {
       id: newId,
     });
     CalendarGlobal.setSelectedSlot(newId);
-    CalendarEventDispatcher.dispatch("slotSelected");
+    CalendarEventDispatcher.dispatch("onSlotSelected");
   }
 
   render() {

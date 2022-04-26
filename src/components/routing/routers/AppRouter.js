@@ -6,6 +6,7 @@ import { Register } from "components/views/Register";
 import { AppGuard } from "components/routing/routeProtectors/AppGuard";
 import { UserRouter } from "components/routing/routers/UserRouter";
 import { TeamRouter } from "./TeamRouter";
+import { TeamGuard } from "../routeProtectors/TeamGuard";
 
 const AppRouter = () => {
   return (
@@ -26,12 +27,14 @@ const AppRouter = () => {
         </Route>
         <Route path="/user">
           <AppGuard>
-            <UserRouter base="/user"/>
+            <UserRouter base="/user" />
           </AppGuard>
         </Route>
         <Route path="/team">
           <AppGuard>
-            <TeamRouter base="/team"/>
+            <TeamGuard>
+              <TeamRouter base="/team" />
+            </TeamGuard>
           </AppGuard>
         </Route>
         <Route exact path="/">

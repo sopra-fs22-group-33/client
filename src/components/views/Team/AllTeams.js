@@ -1,8 +1,8 @@
 import {useHistory} from "react-router-dom";
-import {api, doLogout, handleError} from "../../helpers/api";
+import {api, doLogout, handleError} from "../../../helpers/api";
 import {useState} from "react";
-import User from "../../models/User";
-import {Spinner} from "../ui/Spinner";
+import User from "../../../models/User";
+import {Spinner} from "../../ui/Spinner";
 
 //component for a TEAM
 export const Team = ({team, getTeam}) => (

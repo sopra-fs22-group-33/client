@@ -1,5 +1,5 @@
 import {useHistory} from "react-router-dom";
-import {doLogout} from "../../helpers/api";
+import {doLogout} from "../../../helpers/api";
 
 export const UserProfile = () => {
     const history = useHistory();

@@ -1,9 +1,9 @@
 import { Redirect, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
-import {TeamCalendar} from "components/views/TeamCalendar";
-import {TeamProfile} from "components/views/TeamProfile";
-import {AllTeams} from "../../views/AllTeams";
-import {TeamEdit} from "../../views/TeamEdit";
+import {TeamCalendar} from "components/views/Team/TeamCalendar";
+import {TeamProfile} from "components/views/Team/TeamProfile";
+import {AllTeams} from "../../views/Team/AllTeams";
+import {TeamEdit} from "../../views/Team/TeamEdit";
 
 export const TeamRouter = (props) => {
   return (

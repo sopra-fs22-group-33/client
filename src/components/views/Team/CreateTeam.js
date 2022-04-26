@@ -1,10 +1,10 @@
 import { useHistory } from "react-router-dom";
-import {api, doLogout, getToken, handleError} from "../../helpers/api";
+import {api, doLogout, getToken, handleError} from "../../../helpers/api";
 import React, {useState} from "react";
-import BaseContainer from "../ui/BaseContainer";
-import {Button} from "../ui/Button";
-import {FormField} from "../ui/FormField";
-import User from "../../models/User";
+import BaseContainer from "../../ui/BaseContainer";
+import {Button} from "../../ui/Button";
+import {FormField} from "../../ui/FormField";
+import User from "../../../models/User";
 
 export const CreateTeam = () => {
     const history = useHistory();

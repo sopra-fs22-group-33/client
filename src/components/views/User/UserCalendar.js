@@ -1,4 +1,4 @@
-import {doLogout} from "../../helpers/api";
+import {doLogout} from "../../../helpers/api";
 import { useHistory } from "react-router-dom";
 
 export const UserCalendar = () => {

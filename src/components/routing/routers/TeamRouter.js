@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {TeamCalendar} from "components/views/TeamCalendar";
 import {TeamProfile} from "components/views/TeamProfile";
 import {AllTeams} from "../../views/AllTeams";
+import {TeamEdit} from "../../views/TeamEdit";
 
 export const TeamRouter = (props) => {
   return (
@@ -16,6 +17,9 @@ export const TeamRouter = (props) => {
         </Route>
         <Route exact path={`${props.base}/profile`}>
           <TeamProfile />
+        </Route>
+        <Route exact path={`${props.base}/edit`} >
+          <TeamEdit />
         </Route>
         <Route exact path={`${props.base}`}>
           <Redirect to={`${props.base}/calendar`} />

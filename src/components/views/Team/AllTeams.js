@@ -1,7 +1,6 @@
 import {useHistory} from "react-router-dom";
 import {api, doLogout, handleError} from "../../../helpers/api";
 import {useState} from "react";
-import User from "../../../models/User";
 import {Spinner} from "../../ui/Spinner";
 
 //component for a TEAM
@@ -33,7 +32,6 @@ export const TeamMember = ({teamMember}) => (
 
 export const AllTeams = () => {
     const history = useHistory();
-    const user = localStorage.getUser();
 
     //hooks
     const [teams, setTeams] = useState(null);
@@ -41,7 +39,7 @@ export const AllTeams = () => {
     //fetch all teams user is part of from backend
     const fetchData = async (props) => {
         try {
-            const response = await api.get(`/users/${user.id}/teams`);
+            const response = await api.get(`/users/${localStorage.getItem("id")}/teams`);
             setTeams(response.data);
         } catch (error) {
             alert(`Something went wrong with fetching the teams the user is part of: \n${handleError(error)}`);

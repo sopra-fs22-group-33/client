@@ -31,12 +31,16 @@ export const TeamCalendar = () => {
   return (
     <div>
       <div>
-        button container
+        main button container
         <button onClick={() => history.push("/team/profile")}>profile</button>
         <button onClick={() => history.push("/user")}>me</button>
         <button onClick={() => doLogout().then(() => history.push("/"))}>
           logout
         </button>
+      </div>
+      <div>
+        special button container
+        <button onClick={() => history.push("/team/calendar/edit")}>edit</button>
       </div>
       <div>
         calendar container

@@ -1,8 +1,8 @@
 import {useHistory, useParams} from "react-router-dom";
-import {api, doLogout, handleError} from "../../helpers/api";
-import {TeamMember} from "./AllTeams"
+import {api, handleError, doLogout} from "../../../helpers/api";
+import {TeamMember} from "../User/AllTeams"
 import {useState} from "react";
-import {Spinner} from "../ui/Spinner";
+import {Spinner} from "../../ui/Spinner";
 
 export const TeamProfile = () => {
 
@@ -44,6 +44,7 @@ export const TeamProfile = () => {
 
     return (
         <div>
+            <button onClick={() => history.push("/team/profile/edit")}>edit</button>
             <button onClick={() => history.push("/team/calendar")}>calendar</button>
             <button onClick={() => history.push("/user")}>me</button>
             <button onClick={() => doLogout().then(() => history.push("/"))}>

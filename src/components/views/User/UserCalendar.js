@@ -1,4 +1,4 @@
-import {doLogout} from "../../helpers/api";
+import {doLogout} from "../../../helpers/api";
 import { useHistory } from "react-router-dom";
 
 export const UserCalendar = () => {
@@ -7,7 +7,7 @@ export const UserCalendar = () => {
   return (
     <div>
       <button onClick={() => history.push("/user/profile")}>profile</button>
-      <button onClick={() => history.push("/team")}>team</button>
+      <button onClick={() => history.push("/user/teams")}>teams</button>
       <button onClick={() => doLogout().then(() => history.push("/"))}>
         log out
       </button>

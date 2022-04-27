@@ -1,10 +1,9 @@
 import { useHistory } from "react-router-dom";
-import {api, doLogout, getToken, handleError} from "../../helpers/api";
+import {api, doLogout, handleError} from "../../../helpers/api";
 import React, {useState} from "react";
-import BaseContainer from "../ui/BaseContainer";
-import {Button} from "../ui/Button";
-import {FormField} from "../ui/FormField";
-import User from "../../models/User";
+import BaseContainer from "../../ui/BaseContainer";
+import {Button} from "../../ui/Button";
+import {FormField} from "../../ui/FormField";
 
 export const CreateTeam = () => {
     const history = useHistory();
@@ -22,7 +21,9 @@ export const CreateTeam = () => {
 
             console.log(response);
 
-            history.push("/teams");
+            // todo: store teamId in localStorage
+
+            history.push("/user/teams");
         } catch (e) {
             alert(`Something went while creating the team: \n${handleError(e)}`);
         }
@@ -32,7 +33,7 @@ export const CreateTeam = () => {
         <BaseContainer>
             <div>
                 <button onClick={() => history.push("/user/calendar")}>calendar</button>
-                <button onClick={() => history.push("/team")}>team</button>
+                <button onClick={() => history.push("/user/teams")}>teams</button>
                 <button onClick={() => doLogout().then(() => history.push("/"))}>log out</button>
             </div>
             <div className="auth form">

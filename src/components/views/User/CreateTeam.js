@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import {api, doLogout, getToken, handleError} from "../../../helpers/api";
+import {api, doLogout, handleError} from "../../../helpers/api";
 import React, {useState} from "react";
 import BaseContainer from "../../ui/BaseContainer";
 import {Button} from "../../ui/Button";
@@ -33,7 +33,7 @@ export const CreateTeam = () => {
         <BaseContainer>
             <div>
                 <button onClick={() => history.push("/user/calendar")}>calendar</button>
-                <button onClick={() => history.push("/user/teams")}>team</button>
+                <button onClick={() => history.push("/user/teams")}>teams</button>
                 <button onClick={() => doLogout().then(() => history.push("/"))}>log out</button>
             </div>
             <div className="auth form">

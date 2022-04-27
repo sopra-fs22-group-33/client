@@ -7,7 +7,7 @@ export const UserCalendar = () => {
   return (
     <div>
       <button onClick={() => history.push("/user/profile")}>profile</button>
-      <button onClick={() => history.push("/team")}>team</button>
+      <button onClick={() => history.push("/user/teams")}>teams</button>
       <button onClick={() => doLogout().then(() => history.push("/"))}>
         log out
       </button>

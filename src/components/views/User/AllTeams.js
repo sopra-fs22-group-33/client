@@ -73,7 +73,7 @@ export const AllTeams = () => {
 
     return (
         <div>
-            <button onClick={() => history.push("/team/calendar")}>calendar</button>
+            <button onClick={() => history.push("/user/create")}>create team</button>
             <button onClick={() => history.push("/user")}>me</button>
             <button onClick={() => doLogout().then(() => history.push("/"))}>
                 logout

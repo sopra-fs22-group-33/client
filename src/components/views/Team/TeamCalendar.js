@@ -40,7 +40,7 @@ export const TeamCalendar = () => {
       </div>
       <div>
         special button container
-        <button onClick={() => history.push("/team/edit")}>edit</button>
+        <button onClick={() => history.push("/team/calendar/edit")}>edit</button>
       </div>
       <div>
         calendar container

@@ -44,6 +44,7 @@ export const TeamProfile = () => {
 
     return (
         <div>
+            <button onClick={() => history.push("/team/profile/edit")}>edit</button>
             <button onClick={() => history.push("/team/calendar")}>calendar</button>
             <button onClick={() => history.push("/user")}>me</button>
             <button onClick={() => doLogout().then(() => history.push("/"))}>

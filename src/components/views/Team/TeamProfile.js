@@ -1,6 +1,6 @@
 import {useHistory, useParams} from "react-router-dom";
 import {api, handleError, doLogout} from "../../../helpers/api";
-import {TeamMember} from "./AllTeams"
+import {TeamMember} from "../User/AllTeams"
 import {useState} from "react";
 import {Spinner} from "../../ui/Spinner";
 

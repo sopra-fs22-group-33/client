@@ -2,7 +2,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import { UserCalendar } from "components/views/User/UserCalendar";
 import { UserProfile } from "components/views/User/UserProfile";
-import { AllTeams } from "../../views/Team/AllTeams";
+import { AllTeams } from "../../views/User/AllTeams";
 
 export const UserRouter = (props) => {
   return (

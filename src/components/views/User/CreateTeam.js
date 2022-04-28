@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import BaseContainer from "../../ui/BaseContainer";
 import {Button} from "../../ui/Button";
 import {FormField} from "../../ui/FormField";
+import {TEMPLATE_DAYS} from "../../../fixtures/templateCalendar";
 
 export const CreateTeam = () => {
     const history = useHistory();
@@ -14,10 +15,26 @@ export const CreateTeam = () => {
 
     const doCreateTeam = async () => {
         try {
-            const requestBody = JSON.stringify({ name });
-            await api.post("/teams", requestBody, {
+            // create new team
+            const teamRequestBody = JSON.stringify({ name });
+            const response = await api.post("/teams", teamRequestBody, {
               headers: { token: localStorage.getItem("token") },
             });
+
+            // create new calendar for the team
+            const calendarRequestBody = JSON.stringify({
+                // todo: let user choose staring date
+                // startingDate: the date where optimized calendar starts
+              startingDate: Date.now().toString(),
+              days: TEMPLATE_DAYS,
+            });
+            await api.post(
+              `teams/${response.data.id}/calendars`,
+              calendarRequestBody,
+              { headers: { token: localStorage.getItem("token") } }
+            );
+
+
 
             history.push("/user/teams");
         } catch (e) {

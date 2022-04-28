@@ -5,7 +5,7 @@ class Team {
   constructor(data = {}) {
     this.id = null;
     this.name = null;
-    this.users = null;
+    this.memberships = null;
 
     Object.assign(this, data);
   }

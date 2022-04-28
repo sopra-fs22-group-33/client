@@ -11,7 +11,7 @@ export const Team = ({team, getTeam}) => (
         <div className="team id">id: {team.id}</div>
 
         <ul className="team member-list">
-            {team.users.map(teamMember => (
+            {team.memberships.map(teamMember => (
                 <TeamMember
                     teamMember={teamMember}
                 />
@@ -40,6 +40,7 @@ export const AllTeams = () => {
     const fetchData = async (props) => {
         try {
             const response = await api.get(`/users/${localStorage.getItem("id")}/teams`);
+            console.log(response.data);
             setTeams(response.data);
         } catch (error) {
             alert(`Something went wrong with fetching the teams the user is part of: \n${handleError(error)}`);

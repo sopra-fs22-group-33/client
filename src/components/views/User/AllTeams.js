@@ -1,6 +1,6 @@
 import {useHistory} from "react-router-dom";
 import {api, doLogout, handleError} from "../../../helpers/api";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Spinner} from "../../ui/Spinner";
 
 //component for a TEAM
@@ -36,22 +36,32 @@ export const AllTeams = () => {
     //hooks
     const [teams, setTeams] = useState(null);
 
-    //fetch all teams user is part of from backend
-    const fetchData = async (props) => {
+    //fetch all teams user is part of from backend only once
+    useEffect(() => {
+      const fetchData = async (props) => {
         try {
-            const response = await api.get(`/users/${localStorage.getItem("id")}/teams`);
-            console.log(response.data);
-            setTeams(response.data);
+          const response = await api.get(
+            `/users/${localStorage.getItem("id")}/teams`
+          );
+          console.log(response.data);
+          setTeams(response.data);
         } catch (error) {
-            alert(`Something went wrong with fetching the teams the user is part of: \n${handleError(error)}`);
+          alert(
+            `Something went wrong with fetching the teams the user is part of: \n${handleError(
+              error
+            )}`
+          );
         }
-    }
+      };
+
+      //execute
+      fetchData();
+    }, []);
+    
 
     const getTeam = (teamId) => {
         history.push(`/team/${teamId}/profile`);
     }
-    //execute
-    fetchData();
 
     let content = <Spinner/>;
 

@@ -40,9 +40,12 @@ export const AllTeams = () => {
     useEffect(() => {
       const fetchData = async (props) => {
         try {
-          const response = await api.get(
-            `/users/${localStorage.getItem("id")}/teams`
-          );
+            const response = await api.get(
+              `/users/${localStorage.getItem("id")}/teams`,
+              {
+                headers: { token: localStorage.getItem("token") },
+              }
+            );
           console.log(response.data);
           setTeams(response.data);
         } catch (error) {

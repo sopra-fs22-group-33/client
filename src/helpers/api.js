@@ -3,13 +3,15 @@ import { getDomain } from "helpers/getDomain";
 
 export const api = axios.create({
   baseURL: getDomain(),
-  headers: { "Content-Type": "application/json", "token": localStorage.getItem("token") },
+  headers: { "Content-Type": "application/json" },
 });
 
 export async function doLogout() {
   try {
     const requestBody = JSON.stringify({ isOnline: false });
-    await api.put("/users/" + localStorage.getItem("id"), requestBody);
+    await api.put("/users/" + localStorage.getItem("id"), requestBody, {
+      headers: { token: localStorage.getItem("token") },
+    });
   } catch (e) {
     alert(`Something went wrong during logout: \n${handleError(e)}`);
   } finally {

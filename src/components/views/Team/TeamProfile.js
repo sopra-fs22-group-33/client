@@ -14,12 +14,18 @@ export const TeamProfile = () => {
 
     //fetch all teams user is part of from backend
     const fetchData = async (props) => {
-        try {
-            const response = await api.get(`/teams/${accessedTeam.id}/users`);
-            setTeam(response.data);
-        } catch (error) {
-            alert(`Something went wrong with fetching the details of the team: \n${handleError(error)}`);
-        }
+      try {
+        const response = await api.get(`/teams/${accessedTeam.id}/users`, {
+          headers: { token: localStorage.getItem("token") },
+        });
+        setTeam(response.data);
+      } catch (error) {
+        alert(
+          `Something went wrong with fetching the details of the team: \n${handleError(
+            error
+          )}`
+        );
+      }
     }
 
     //execute

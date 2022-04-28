@@ -15,9 +15,7 @@ export const CreateTeam = () => {
     const doCreateTeam = async () => {
         try {
             const requestBody = JSON.stringify({name});
-            const token = localStorage.getItem("token");
-            const response = await api.post("/teams", requestBody, {
-                headers: {token}});
+            const response = await api.post("/teams", requestBody);
 
             console.log(response);
 

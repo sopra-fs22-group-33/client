@@ -7,7 +7,7 @@ import {Spinner} from "../../ui/Spinner";
 export const Team = ({team, getTeam}) => (
 
     <div className="team container">
-        <a className="team name" onClick={() => getTeam(team.id) }>{team.name} </a>
+        <a className="team name" onClick={ () => {localStorage.setItem("teamId", team.id); getTeam()} }>{team.name} </a>
         <div className="team id">id: {team.id}</div>
 
         <ul className="team member-list">
@@ -25,7 +25,9 @@ export const Team = ({team, getTeam}) => (
 export const TeamMember = ({teamMember}) => (
 
     <div className="team member container">
-        <div className="team member id">id: {teamMember.name}</div>
+        <div className="team member id">id: {teamMember.id}</div>
+        <div className="team member id">email: {teamMember.email}</div>
+        <div className="team member id">name: {teamMember.name}</div>
     </div>
 
 );
@@ -46,7 +48,7 @@ export const AllTeams = () => {
                 headers: { token: localStorage.getItem("token") },
               }
             );
-          console.log(response.data);
+          // console.log(response.data);
           setTeams(response.data);
         } catch (error) {
           alert(
@@ -62,8 +64,8 @@ export const AllTeams = () => {
     }, []);
     
 
-    const getTeam = (teamId) => {
-        history.push(`/team/${teamId}/profile`);
+    const getTeam = () => {
+        history.push(`/team/profile`);
     }
 
     let content = <Spinner/>;

@@ -1,43 +1,49 @@
 import {useHistory, useParams} from "react-router-dom";
 import {api, handleError, doLogout} from "../../../helpers/api";
 import {TeamMember} from "../User/AllTeams"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Spinner} from "../../ui/Spinner";
 
 export const TeamProfile = () => {
 
     const history = useHistory();
-    const accessedTeam = useParams();
 
     //hooks
-    const [team, setTeam] = useState(null);
+    const [users, setUsers] = useState(null);
 
-    //fetch all teams user is part of from backend
-    const fetchData = async (props) => {
-      try {
-        const response = await api.get(`/teams/${accessedTeam.id}/users`, {
-          headers: { token: localStorage.getItem("token") },
-        });
-        setTeam(response.data);
-      } catch (error) {
-        alert(
-          `Something went wrong with fetching the details of the team: \n${handleError(
-            error
-          )}`
-        );
-      }
-    }
+    //fetch all users in team only once
+    useEffect(() => {
+      const fetchData = async (props) => {
+        try {
+          const response = await api.get(
+            `/teams/${localStorage.getItem("teamId")}/users`,
+            {
+              headers: { token: localStorage.getItem("token") },
+            }
+          );
+          setUsers(response.data);
+        } catch (error) {
+          alert(
+            `Something went wrong with fetching the details of the team: \n${handleError(
+              error
+            )}`
+          );
+        }
+      };
 
-    //execute
-    fetchData();
+      //execute
+      fetchData();
+    }, [])
+    
 
     let content = <Spinner/>;
 
-    if (team) {
+    if (users) {
+        // console.log(users);
         content = (
             <div className="team">
                 <ul className="team member details-list">
-                    {team.users.map(teamMember => (
+                    {users.map(teamMember => (
                         <TeamMember
                             teamMember={teamMember}
                             onClick={() => history.push(`/user/${teamMember.id}`)}

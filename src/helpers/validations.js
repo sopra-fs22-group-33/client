@@ -34,12 +34,14 @@ export function validateCalendar(calendar) {
 
   for (let i in calendar.days) {
     let day = calendar.days[i];
+    /*
     if (
       !day.hasOwnProperty("weekday") ||
       typeof day.weekday !== "number"
     ) {
       wrappedError("invalid 'weekday'", day);
     }
+    */
     if (
       !day.hasOwnProperty("slots") ||
       !Array.isArray(day.slots)
@@ -49,7 +51,7 @@ export function validateCalendar(calendar) {
     }
 
     // todo: generate unique across calendar on backend
-    day.id = randomId();
+    day.id = day.id ? day.id : randomId();
 
     for (let i in day.slots) {
       let slot = day.slots[i];
@@ -64,7 +66,7 @@ export function validateCalendar(calendar) {
       }
 
       // todo: generate unique across calendar on backend
-      slot.id = randomId();
+      slot.id = slot.id ? slot.id : randomId();
     }
   }
 

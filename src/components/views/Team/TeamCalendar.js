@@ -3,12 +3,11 @@ import { api, doLogout, handleError } from "helpers/api";
 import * as React from "react";
 import { Calendar } from "components/ui/calendar/Calendar";
 import { validateCalendar } from "helpers/validations";
-import { VALID_TEAM_CALENDAR } from "fixtures/exampleCalendar";
 import { useEffect, useState } from "react";
 
 export const TeamCalendar = () => {
   const history = useHistory();
-  const [calendar, setCalendar] = useState(VALID_TEAM_CALENDAR);
+  const [calendar, setCalendar] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -16,17 +15,26 @@ export const TeamCalendar = () => {
         const response = await api.get(
           `/teams/${localStorage.getItem("teamId")}/calendars`
         );
+        console.log(response.data);
 
         setCalendar(response.data);
       } catch (e) {
-        alert(`Something went wrong during the login: \n${handleError(e)}`);
+        alert(`Something went wrong during fetching the calendar: \n${handleError(e)}`);
       }
     }
 
     fetchData();
   }, []);
 
-  const validatedCalendar = validateCalendar(calendar);
+  if (!calendar) {
+    return (
+        <div>
+          kek
+        </div>
+    )
+  }
+
+  let validatedCalendar = validateCalendar(calendar);
 
   return (
     <div>

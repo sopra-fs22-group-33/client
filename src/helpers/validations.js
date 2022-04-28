@@ -1,13 +1,3 @@
-const WEEKDAYS = [
-  "MONDAY",
-  "TUESDAY",
-  "WEDNESDAY",
-  "THURSDAY",
-  "FRIDAY",
-  "SATURDAY",
-  "SUNDAY",
-];
-
 export function randomId() {
   const uint32 = window.crypto.getRandomValues(new Uint32Array(1))[0];
   return uint32.toString(16);
@@ -46,8 +36,7 @@ export function validateCalendar(calendar) {
     let day = calendar.days[i];
     if (
       !day.hasOwnProperty("weekday") ||
-      typeof day.weekday !== "string" ||
-      !WEEKDAYS.includes(day.weekday)
+      typeof day.weekday !== "number"
     ) {
       wrappedError("invalid 'weekday'", day);
     }

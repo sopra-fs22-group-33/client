@@ -1,11 +1,21 @@
 import * as React from "react";
+import { useHistory } from "react-router-dom";
 
-export class TeamCalendarEdit extends React.Component {
-  constructor(props) {
-    super(props);
+export const TeamCalendarEdit = () => {
+  const history = useHistory();
+
+  function doSave() {
+    console.log("save");
   }
 
-  render() {
-    return <div>editable base calendar</div>;
-  }
-}
+  return (
+    <div>
+      <div>
+        button container
+        <button onClick={() => doSave()}>save</button>
+        <button onClick={() => history.push("/team/calendar")}>cancel</button>
+      </div>
+      <div>editable base calendar</div>
+    </div>
+  );
+};

@@ -17,6 +17,9 @@ export class Slot extends React.Component {
     this.state = {
       from: props.from,
       to: props.to,
+
+      base: props.base ? props.base : {},
+      special: props.special ? props.special : {},
     };
   }
 
@@ -109,6 +112,6 @@ export class Slot extends React.Component {
 }
 
 Slot.propTypes = {
-  from: PropTypes.number,
-  to: PropTypes.number,
+    from: PropTypes.number,
+    to: PropTypes.number,
 };

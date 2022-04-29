@@ -11,7 +11,7 @@ export const TeamCalendarEdit = () => {
 
   async function doSave() {
     try {
-      const requestBody = JSON.stringify({ calendar });
+      const requestBody = JSON.stringify({ days: calendar.days, startingDate: calendar.startingDate });
       await api.put(`/teams/${localStorage.getItem("teamId")}/calendars`, requestBody);
 
       history.push("/team/calendar");

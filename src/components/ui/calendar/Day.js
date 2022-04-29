@@ -69,6 +69,8 @@ export class Day extends React.Component {
     this.state.slots.push({
       from: Math.floor(from / SLOT_SCALING),
       to: Math.ceil(to / SLOT_SCALING),
+      special: {},
+      base: {},
       id: newId,
     });
     CalendarGlobal.setSelectedSlot(newId);
@@ -97,7 +99,14 @@ export class Day extends React.Component {
           onMouseUp={(ev) => this.onMouseUp(ev)}
         >
           {this.state.slots.map((slot) => (
-            <Slot from={slot.from} to={slot.to} id={slot.id} key={slot.id} />
+            <Slot
+              from={slot.from}
+              to={slot.to}
+              id={slot.id}
+              key={slot.id}
+              base={slot.base}
+              special={slot.special}
+            />
           ))}
         </Box>
       </Grid>
@@ -106,5 +115,5 @@ export class Day extends React.Component {
 }
 
 Day.propTypes = {
-  slots: PropTypes.array,
+    slots: PropTypes.array,
 };

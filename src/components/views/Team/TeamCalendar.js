@@ -29,7 +29,7 @@ export const TeamCalendar = () => {
   if (!calendar) {
     return (
         <div>
-          kek
+          fetching calendar
         </div>
     )
   }

@@ -2,23 +2,25 @@ import {useHistory} from "react-router-dom";
 import {api, doLogout, handleError} from "../../../helpers/api";
 import {useEffect, useState} from "react";
 import {Spinner} from "../../ui/Spinner";
+import "styles/views/Team.scss"
 
 //component for a TEAM
 export const Team = ({team, getTeam}) => (
 
-    <div className="team container">
-        <a className="team name" onClick={ () => {localStorage.setItem("teamId", team.id); getTeam()} }>{team.name} </a>
+    <ul className="team container" onClick={ () => {localStorage.setItem("teamId", team.id); getTeam()}}>
+        <div className="team name"> name: {team.name} </div>
         <div className="team id">id: {team.id}</div>
 
         <ul className="team member-list">
+            members:
             {team.memberships.map(teamMember => (
                 <TeamMember
-                    teamMember={teamMember}
+                    teamMember={teamMember.user}
                 />
             ))}
         </ul>
 
-    </div>
+    </ul>
 
 );
 //component for a TEAM MEMBER
@@ -26,8 +28,8 @@ export const TeamMember = ({teamMember}) => (
 
     <div className="team member container">
         <div className="team member id">id: {teamMember.id}</div>
-        <div className="team member id">email: {teamMember.email}</div>
-        <div className="team member id">name: {teamMember.name}</div>
+        <div className="team member email">email: {teamMember.email}</div>
+        <div className="team member name">name: {teamMember.name}</div>
     </div>
 
 );
@@ -48,7 +50,7 @@ export const AllTeams = () => {
                 headers: { token: localStorage.getItem("token") },
               }
             );
-          // console.log(response.data);
+          console.log(response.data);
           setTeams(response.data);
         } catch (error) {
           alert(
@@ -72,8 +74,7 @@ export const AllTeams = () => {
 
     if (teams) {
         content = (
-            <div className="team">
-                <ul className="team member-list">
+            <div>
                     {teams.map(team => (
                         <Team
                             team={team}
@@ -81,8 +82,6 @@ export const AllTeams = () => {
                         />
 
                     ))}
-                </ul>
-
             </div>
         );
     }

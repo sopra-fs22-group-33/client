@@ -1,0 +1,28 @@
+@import "styles/theme";
+
+.team {
+  &.container {
+    background: gray;
+  }
+  &.name {
+    background: lightgray;
+  }
+  &.id {
+    background: lightgray;
+  }
+  &.member-list {
+    background: white;
+  }
+
+  &.member {
+    &.id {
+      background: orange;
+    }
+    &.name {
+      background: lightgray;
+    }
+    &.email {
+      background: lightgray;
+    }
+  }
+}

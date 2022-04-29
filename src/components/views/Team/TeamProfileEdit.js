@@ -6,14 +6,7 @@ import { useHistory } from "react-router-dom";
 export const TeamProfileEdit = () => {
   const history = useHistory();
 
-  const [inviteActive, setInviteActive] = useState(false);
-  const [invite, setInvite] = useState(null);
-
   const [users, setUsers] = useState(null);
-
-  async function doInvite() {
-    console.log("sending invite");
-  }
 
   async function doSave() {
     console.log("save");

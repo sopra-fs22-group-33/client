@@ -15,8 +15,8 @@ export class Slot extends React.Component {
     this.updatingTop = undefined;
 
     this.state = {
-      from: props.from,
-      to: props.to,
+      timeFrom: props.timeFrom,
+      timeTo: props.timeTo,
 
       base: props.base ? props.base : {},
       special: props.special ? props.special : {},
@@ -28,11 +28,11 @@ export class Slot extends React.Component {
   }
 
   calcHeight() {
-    return SLOT_SCALING * (this.state.to - this.state.from);
+    return SLOT_SCALING * (this.state.timeTo - this.state.timeFrom);
   }
 
   calcTop() {
-    return SLOT_SCALING * this.state.from;
+    return SLOT_SCALING * this.state.timeFrom;
   }
 
   onClick(ev) {
@@ -61,9 +61,9 @@ export class Slot extends React.Component {
     this.startedUpdating = false;
     if (this.hasUpdated) {
       if (this.updatingTop) {
-        this.setState({ from: Math.floor(this.state.from) });
+        this.setState({ timeFrom: Math.floor(this.state.timeFrom) });
       } else {
-        this.setState({ to: Math.ceil(this.state.to) });
+        this.setState({ timeTo: Math.ceil(this.state.timeFrom) });
       }
     }
     // todo: update slot in parent day
@@ -74,10 +74,10 @@ export class Slot extends React.Component {
       ev.stopPropagation();
 
       if (this.updatingTop) {
-        this.setState({ from: this.state.from + ev.movementY / SLOT_SCALING });
+        this.setState({ timeFrom: this.state.timeFrom + ev.movementY / SLOT_SCALING });
       } else {
         this.setState({
-          to: this.state.to + ev.movementY / SLOT_SCALING,
+          timeTo: this.state.timeTo + ev.movementY / SLOT_SCALING,
         });
       }
     }
@@ -104,14 +104,14 @@ export class Slot extends React.Component {
         onMouseMove={(ev) => this.onMouseMove(ev)}
         onMouseUp={(ev) => this.onMouseUp(ev)}
       >
-        from: {this.state.from}
-        to: {this.state.to}
+        timeFrom: {this.state.timeFrom}
+        timeTo: {this.state.timeTo}
       </Box>
     );
   }
 }
 
 Slot.propTypes = {
-    from: PropTypes.number,
-    to: PropTypes.number,
+    timeFrom: PropTypes.number,
+    timeTo: PropTypes.number,
 };

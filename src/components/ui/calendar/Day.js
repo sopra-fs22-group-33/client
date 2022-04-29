@@ -29,28 +29,28 @@ export class Day extends React.Component {
 
   onClic(ev) {
     ev.stopPropagation();
-    if (this.newSlot.from === undefined) {
+    if (this.newSlot.timeFrom === undefined) {
       return;
     }
     if (
-      Math.round(this.newSlot.to / SLOT_SCALING) -
-        Math.round(this.newSlot.from / SLOT_SCALING) <
+      Math.round(this.newSlot.timeTo / SLOT_SCALING) -
+        Math.round(this.newSlot.timeFrom / SLOT_SCALING) <
       1
     ) {
       return;
     }
-    this.appendSlot(this.newSlot.from, this.newSlot.to);
+    this.appendSlot(this.newSlot.timeFrom, this.newSlot.timeTo);
     this.newSlot = {};
   }
 
   onMouseDown(ev) {
     ev.stopPropagation();
-    this.newSlot.from = ev.clientY - this.ref.getBoundingClientRect().y;
+    this.newSlot.timeFrom = ev.clientY - this.ref.getBoundingClientRect().y;
   }
 
   onMouseUp(ev) {
     ev.stopPropagation();
-    this.newSlot.to = ev.clientY - this.ref.getBoundingClientRect().y;
+    this.newSlot.timeTo = ev.clientY - this.ref.getBoundingClientRect().y;
   }
 
   onSlotDeleted() {
@@ -64,11 +64,11 @@ export class Day extends React.Component {
     this.setState({ slots: filteredSlots });
   }
 
-  appendSlot(from, to) {
+  appendSlot(timeFrom, timeTo) {
     const newId = randomId();
     this.state.slots.push({
-      from: Math.floor(from / SLOT_SCALING),
-      to: Math.ceil(to / SLOT_SCALING),
+      timeFrom: Math.floor(timeFrom / SLOT_SCALING),
+      timeTo: Math.ceil(timeTo / SLOT_SCALING),
       special: {},
       base: {},
       id: newId,
@@ -100,8 +100,8 @@ export class Day extends React.Component {
         >
           {this.state.slots.map((slot) => (
             <Slot
-              from={slot.from}
-              to={slot.to}
+              timeFrom={slot.timeFrom}
+              timeTo={slot.timeTo}
               id={slot.id}
               key={slot.id}
               base={slot.base}

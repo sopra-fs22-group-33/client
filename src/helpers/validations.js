@@ -1,6 +1,6 @@
 export function randomId() {
   const uint32 = window.crypto.getRandomValues(new Uint32Array(1))[0];
-  return uint32.toString(16);
+  return uint32;
 }
 
 /**
@@ -47,7 +47,8 @@ export function validateCalendar(calendar) {
       !Array.isArray(day.slots)
       // slots can be empty
     ) {
-      wrappedError("invalid 'slots'", day);
+      // wrappedError("invalid 'slots'", day);
+      day.slots = [];
     }
 
     // todo: generate unique across calendar on backend
@@ -55,14 +56,14 @@ export function validateCalendar(calendar) {
 
     for (let i in day.slots) {
       let slot = day.slots[i];
-      if (!slot.hasOwnProperty("from") || typeof slot.from !== "number") {
-        wrappedError("invalid 'from'", slot);
+      if (!slot.hasOwnProperty("timeFrom") || typeof slot.timeFrom !== "number") {
+        wrappedError("invalid 'timeFrom'", slot);
       }
-      if (!slot.hasOwnProperty("to") || typeof slot.to !== "number") {
-        wrappedError("invalid 'to'", slot);
+      if (!slot.hasOwnProperty("timeTo") || typeof slot.timeTo !== "number") {
+        wrappedError("invalid 'timeFrom'", slot);
       }
-      if (slot.from === slot.to) {
-        wrappedError(`invalid range ${slot.from - slot.to}`, slot);
+      if (slot.timeFrom === slot.timeTo) {
+        wrappedError(`invalid range ${slot.timeFrom - slot.timeTo}`, slot);
       }
 
       // todo: generate unique across calendar on backend

@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { api, handleError } from "../../../helpers/api";
+import { TeamMember } from "../User/AllTeams";
+import { useHistory } from "react-router-dom";
 
 export const TeamProfileEdit = () => {
+  const history = useHistory();
+
   const [inviteActive, setInviteActive] = useState(false);
   const [invite, setInvite] = useState(null);
 
@@ -9,6 +13,10 @@ export const TeamProfileEdit = () => {
 
   async function doInvite() {
     console.log("sending invite");
+  }
+
+  async function doSave() {
+    console.log("save");
   }
 
   useEffect(() => {
@@ -32,5 +40,30 @@ export const TeamProfileEdit = () => {
     fetchTeamUsers();
   }, []);
 
-  return <div>team profile edit</div>;
+  let content = <div>fetching users</div>;
+
+  if (users) {
+    content = (
+      <ul>
+        {users.map((user) => (
+          <TeamMember teamMember={user} />
+        ))}
+      </ul>
+    );
+  }
+
+  return (
+    <div>
+      <div>
+        <button onClick={doSave}>save</button>
+        <button onClick={() => history.push("/team/profile")}>cancel</button>
+      </div>
+      <div>
+        <button onClick={() => history.push("/team/profile/invite")}>
+          invite new user
+        </button>
+      </div>
+      {content}
+    </div>
+  );
 };

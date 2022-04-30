@@ -37,7 +37,7 @@ export class Game extends React.Component {
     this.snake = new Snake([{ x: 100, y: 100 }]);
 
     this.state = {
-      currentGame: null,
+      apples: null,
     };
   }
 
@@ -72,15 +72,29 @@ export class Game extends React.Component {
         this.snake.updatePos();
         break;
     }
-    this.setState({ kek: "kek" });
+    this.doUpdate();
+  }
+
+  async doUpdate() {
+    try {
+      const requestBody = JSON.stringify({chunks: this.snake.serialize()});
+      await api.put(`/games/${this.gameId}/${this.playerId}`, requestBody);
+      const response = await api.get(`/games/${this.gameId}/${this.playerId}`);
+
+      this.snake.deserialize(response.data.players[0].chunks);
+      this.setState({ apples: response.data.apples });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   mockStartGame = async () => {
     const requestBody = JSON.stringify({
       players: [{ chunks: [{ x: 0, y: 0 }] }],
     });
-    const mockGame = (await api.post("/games", requestBody)).data;
-    console.log("game created");
+    const response = await api.post("/games", requestBody);
+    this.gameId = response.data.id;
+    this.playerId = response.data.players[0].id;
   };
 
   getUpdatedGame = async () => {

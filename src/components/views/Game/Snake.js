@@ -24,26 +24,48 @@ Chunk.propTypes = {
 };
 
 export class Snake {
-    constructor(chunks) {
-        this.chunks = chunks;
+  constructor(chunks) {
+    this.chunks = chunks;
 
-        this.xDir = undefined;
-        this.yDir = undefined;
+    this.xDir = undefined;
+    this.yDir = undefined;
 
-        this.xPos = undefined;
-        this.yPos = undefined;
-    }
+    this.xPos = undefined;
+    this.yPos = undefined;
+  }
 
-    setDir(xDir, yDir) {
-        this.xDir = xDir;
-        this.yDir = yDir;
-    }
+  setDir(xDir, yDir) {
+    this.xDir = xDir;
+    this.yDir = yDir;
+  }
 
-    getDir() {
-        return [this.xDir, this.yDir];
-    }
+  getDir() {
+    return [this.xDir, this.yDir];
+  }
 
-    updatePos() {
-        this.chunks.forEach((chunk) => {chunk.x += this.xDir * CHUNK_LENGTH; chunk.y += this.yDir*CHUNK_LENGTH});
-    }
+  updatePos() {
+    this.chunks.forEach((chunk) => {
+      chunk.x += this.xDir * CHUNK_LENGTH;
+      chunk.y += this.yDir * CHUNK_LENGTH;
+    });
+  }
+
+  serialize() {
+    const chunks = [];
+    this.chunks.forEach((chunk) => {
+      chunks.push({
+        x: (chunk.x /= CHUNK_LENGTH),
+        y: (chunk.y /= CHUNK_LENGTH),
+      });
+    });
+    return this.chunks;
+  }
+
+  deserialize(chunks) {
+    chunks.forEach((chunk) => {
+      chunk.x *= CHUNK_LENGTH;
+      chunk.y *= CHUNK_LENGTH;
+    });
+    this.chunks = chunks;
+  }
 }

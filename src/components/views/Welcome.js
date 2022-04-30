@@ -20,6 +20,7 @@ export const Welcome = () => {
         >
           log out
         </button>
+        <button onClick={() => history.push("/game")}>game</button>
       </div>
     );
   } else {

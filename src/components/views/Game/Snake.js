@@ -6,7 +6,7 @@ const CHUNK_LENGTH = 20;
 export const Chunk = (props) => {
   return (
     <div
-        onClick={() => console.log("x:", props.x, "\ny:", props.y)}
+      onClick={() => console.log("x:", props.x, "\ny:", props.y)}
       style={{
         position: "absolute",
         top: props.y,
@@ -27,6 +27,7 @@ Chunk.propTypes = {
 export class Snake {
   constructor(chunks) {
     this.chunks = chunks;
+    this.status = null;
 
     this.xDir = undefined;
     this.yDir = undefined;
@@ -49,6 +50,13 @@ export class Snake {
       chunk.x += this.xDir * CHUNK_LENGTH;
       chunk.y += this.yDir * CHUNK_LENGTH;
     });
+    if (this.status === "ate") {
+      const last = this.chunks[this.chunks.length - 1];
+      this.chunks.push({
+        x: last.x - this.xDir * CHUNK_LENGTH,
+        y: last.y - this.yDir * CHUNK_LENGTH,
+      });
+    }
   }
 }
 

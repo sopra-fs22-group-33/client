@@ -85,6 +85,7 @@ export class Game extends React.Component {
       const response = await api.get(`/games/${this.gameId}/${this.playerId}`);
 
       this.snake.chunks = deserialize(response.data.players[0].chunks);
+      this.snake.status = response.data.players[0].status;
       this.setState({ apples: deserialize(response.data.apples) });
     } catch (e) {
       console.log(e);
@@ -99,6 +100,7 @@ export class Game extends React.Component {
     this.gameId = response.data.id;
     this.playerId = response.data.players[0].id;
     this.snake.chunks = deserialize(response.data.players[0].chunks);
+    this.snake.status = response.data.players[0].status;
     this.setState({ apples: deserialize(response.data.apples) });
   };
 

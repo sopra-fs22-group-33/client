@@ -3,7 +3,7 @@ import { Welcome } from "components/views/Welcome";
 import { AuthGuard } from "components/routing/routeProtectors/AuthGuard";
 import { Login } from "components/views/Login";
 import { Register } from "components/views/Register";
-import { Game } from "components/views/Game";
+import { Game } from "components/views/Game/Game";
 import { AppGuard } from "components/routing/routeProtectors/AppGuard";
 import { UserRouter } from "components/routing/routers/UserRouter";
 import { TeamRouter } from "./TeamRouter";

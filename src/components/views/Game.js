@@ -1,9 +1,11 @@
 import * as React from "react";
-import { api, handleError } from "helpers/api";
+import { api } from "helpers/api";
 import { Button } from "components/ui/Button";
 import "styles/views/Auth.scss";
-import { Chunk, deserialize, serialize, Snake } from "./Snake";
 import PropTypes from "prop-types";
+import {Chunk} from "../ui/game/Chunk";
+import {Snake} from "../ui/game/Snake";
+import {deserialize, serialize} from "../ui/game/helpers";
 
 const GameBoard = (props) => {
   return (
@@ -104,17 +106,6 @@ export class Game extends React.Component {
     this.setState({ apples: deserialize(response.data.apples) });
   };
 
-  getUpdatedGame = async () => {
-    const currentGame = (await api.get("/games")).data;
-    console.log("yes");
-  };
-
-  // timer works (8fps), api request doesn't, http 500
-  // setInterval(getUpdatedGame, 125);
-
-  makeMove = () => {
-    // PUT request
-  };
 
   render() {
     if (!this.state.apples) {

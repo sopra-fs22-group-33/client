@@ -3,11 +3,17 @@
 .header {
   &.container {
     @include center;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   &.title {
-    font-weight: bold;
-    color: $background;
+    font-weight: bolder;
+    font-size: 50px;
+    font-style: italic;
     text-align: center;
+    background: $gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }

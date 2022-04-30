@@ -6,13 +6,14 @@ const CHUNK_LENGTH = 20;
 export const Chunk = (props) => {
   return (
     <div
+        onClick={() => console.log("x:", props.x, "\ny:", props.y)}
       style={{
-        position: "relative",
+        position: "absolute",
         top: props.y,
         left: props.x,
         height: CHUNK_LENGTH,
         width: CHUNK_LENGTH,
-        background: "green",
+        background: props.background,
       }}
     />
   );
@@ -49,23 +50,26 @@ export class Snake {
       chunk.y += this.yDir * CHUNK_LENGTH;
     });
   }
+}
 
-  serialize() {
-    const chunks = [];
-    this.chunks.forEach((chunk) => {
-      chunks.push({
-        x: (chunk.x /= CHUNK_LENGTH),
-        y: (chunk.y /= CHUNK_LENGTH),
-      });
+export function serialize(chunks) {
+  const newChunks = [];
+  chunks.forEach((chunk) => {
+    newChunks.push({
+      x: Math.ceil((chunk.x /= CHUNK_LENGTH)),
+      y: Math.ceil((chunk.y /= CHUNK_LENGTH)),
     });
-    return this.chunks;
-  }
+  });
+  return newChunks;
+}
 
-  deserialize(chunks) {
-    chunks.forEach((chunk) => {
-      chunk.x *= CHUNK_LENGTH;
-      chunk.y *= CHUNK_LENGTH;
+export function deserialize(chunks) {
+  const newChunks = [];
+  chunks.forEach((chunk) => {
+    newChunks.push({
+      x: Math.ceil((chunk.x *= CHUNK_LENGTH)),
+      y: Math.ceil((chunk.y *= CHUNK_LENGTH)),
     });
-    this.chunks = chunks;
-  }
+  });
+  return newChunks;
 }

@@ -32,12 +32,47 @@ export class Game extends React.Component {
   constructor(props) {
     super(props);
 
-    this.snake = new Snake([{ x: 10, y: 10 }]);
-    console.log(this.snake);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+
+    this.snake = new Snake([{ x: 100, y: 100 }]);
 
     this.state = {
       currentGame: null,
     };
+  }
+
+  componentDidMount() {
+    window.addEventListener("keydown", this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.handleKeyDown);
+  }
+
+  handleKeyDown(ev) {
+    switch (ev.code) {
+      case "KeyA":
+      case "ArrowLeft":
+        this.snake.setDir(-1, 0);
+        this.snake.updatePos();
+        break;
+      case "KeyD":
+      case "ArrowRight":
+        this.snake.setDir(1, 0);
+        this.snake.updatePos();
+        break;
+      case "KeyW":
+      case "ArrowUp":
+        this.snake.setDir(0, -1);
+        this.snake.updatePos();
+        break;
+      case "KeyS":
+      case "ArrowDown":
+        this.snake.setDir(0, 1);
+        this.snake.updatePos();
+        break;
+    }
+    this.setState({ kek: "kek" });
   }
 
   mockStartGame = async () => {

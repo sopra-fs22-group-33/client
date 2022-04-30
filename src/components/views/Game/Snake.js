@@ -1,15 +1,17 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 
+const CHUNK_LENGTH = 20;
+
 export const Chunk = (props) => {
   return (
     <div
       style={{
         position: "relative",
-        top: 0,
-        left: 0,
-        height: 20,
-        width: 20,
+        top: props.y,
+        left: props.x,
+        height: CHUNK_LENGTH,
+        width: CHUNK_LENGTH,
         background: "green",
       }}
     />
@@ -42,7 +44,6 @@ export class Snake {
     }
 
     updatePos() {
-        this.xPos += this.xDir;
-        this.yPos += this.yDir;
+        this.chunks.forEach((chunk) => {chunk.x += this.xDir * CHUNK_LENGTH; chunk.y += this.yDir*CHUNK_LENGTH});
     }
 }

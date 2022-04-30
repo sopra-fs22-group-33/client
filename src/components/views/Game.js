@@ -3,9 +3,9 @@ import { api } from "helpers/api";
 import { Button } from "components/ui/Button";
 import "styles/views/Auth.scss";
 import PropTypes from "prop-types";
-import {Chunk} from "../ui/game/Chunk";
-import {Snake} from "../ui/game/Snake";
-import {deserialize, serialize} from "../ui/game/helpers";
+import { Chunk } from "../ui/game/Chunk";
+import { Snake } from "../ui/game/Snake";
+import { deserialize, serialize } from "../ui/game/helpers";
 
 const GameBoard = (props) => {
   return (
@@ -82,7 +82,9 @@ export class Game extends React.Component {
 
   async doUpdate() {
     try {
-      const requestBody = JSON.stringify({ chunks: serialize(this.snake.chunks) });
+      const requestBody = JSON.stringify({
+        chunks: serialize(this.snake.chunks),
+      });
       await api.put(`/games/${this.gameId}/${this.playerId}`, requestBody);
       const response = await api.get(`/games/${this.gameId}/${this.playerId}`);
 
@@ -95,26 +97,28 @@ export class Game extends React.Component {
   }
 
   mockStartGame = async () => {
-    const requestBody = JSON.stringify({
-      players: [{ chunks: [{ x: 0, y: 0 }] }],
-    });
-    const response = await api.post("/games", requestBody);
-    this.gameId = response.data.id;
-    this.playerId = response.data.players[0].id;
-    this.snake.chunks = deserialize(response.data.players[0].chunks);
-    this.snake.status = response.data.players[0].status;
-    this.setState({ apples: deserialize(response.data.apples) });
+    const response = await api.get("/games");
+    if (response.data.length > 0) {
+      this.gameId = response.data.id;
+      this.playerId = response.data.players[0].id;
+      this.snake.chunks = deserialize(response.data.players[0].chunks);
+      this.snake.status = response.data.players[0].status;
+      this.setState({ apples: deserialize(response.data.apples) });
+    } else {
+      console.log("no game");
+    }
   };
 
-
   render() {
-    if (!this.state.apples) {
-      return <div>waiting for apples</div>;
+    let content = <div>waiting for apples</div>;
+
+    if (this.state.apples) {
+      content = <GameBoard snake={this.snake} apples={this.state.apples} />;
     }
     return (
       <div>
         <Button onClick={this.mockStartGame}>Restart Game</Button>
-        <GameBoard snake={this.snake} apples={this.state.apples} />
+        {content}
       </div>
     );
   }

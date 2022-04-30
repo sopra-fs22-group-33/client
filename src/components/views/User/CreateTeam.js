@@ -31,14 +31,11 @@ export const CreateTeam = () => {
 
     return (
         <BaseContainer>
-            <div>
-                <button onClick={() => history.push("/user/calendar")}>calendar</button>
-                <button onClick={() => history.push("/user/teams")}>teams</button>
-                <button onClick={() => doLogout().then(() => history.push("/"))}>log out</button>
-            </div>
+            <div className="auth container">
             <div className="auth form">
                 <FormField
                     label="Team Name"
+                    placeholder="Team Name"
                     value={name}
                     onChange={(n) => setName(n)}
                 />
@@ -50,6 +47,7 @@ export const CreateTeam = () => {
                         Create Team
                     </Button>
                 </div>
+            </div>
             </div>
         </BaseContainer>
     );

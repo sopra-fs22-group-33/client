@@ -3,8 +3,9 @@
 .header {
   &.container {
     @include center;
-    margin-top: 20px;
+    padding-top: 10px;
     margin-bottom: 20px;
+    background-color: $alignment-helper;
   }
 
   &.title {
@@ -15,5 +16,10 @@
     background: $gradient;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  &.button {
+    position: absolute;
+    right: 200px;
   }
 }

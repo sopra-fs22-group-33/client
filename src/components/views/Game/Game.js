@@ -31,14 +31,9 @@ GameBoard.propTypes = {
 export class Game extends React.Component {
   constructor(props) {
     super(props);
-
     this.handleKeyDown = this.handleKeyDown.bind(this);
-
     this.snake = new Snake([{ x: 100, y: 100 }]);
-
-    this.state = {
-      apples: null,
-    };
+    this.mockStartGame();
   }
 
   componentDidMount() {
@@ -77,7 +72,7 @@ export class Game extends React.Component {
 
   async doUpdate() {
     try {
-      const requestBody = JSON.stringify({chunks: this.snake.serialize()});
+      const requestBody = JSON.stringify({ chunks: this.snake.serialize() });
       await api.put(`/games/${this.gameId}/${this.playerId}`, requestBody);
       const response = await api.get(`/games/${this.gameId}/${this.playerId}`);
 
@@ -95,6 +90,8 @@ export class Game extends React.Component {
     const response = await api.post("/games", requestBody);
     this.gameId = response.data.id;
     this.playerId = response.data.players[0].id;
+    this.snake.deserialize(response.data.players[0].chunks);
+    this.setState({ apples: response.data.apples });
   };
 
   getUpdatedGame = async () => {
@@ -112,7 +109,7 @@ export class Game extends React.Component {
   render() {
     return (
       <div>
-        <Button onClick={this.mockStartGame}>Start Game</Button>
+        <Button onClick={this.mockStartGame}>Restart Game</Button>
         <GameBoard snake={this.snake} />
       </div>
     );

@@ -32,13 +32,13 @@
     height: 40px;
     padding-left: 15px;
     border-radius: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     background: transparentize(white, 0.85);
     color: $textColor;
   }
   &.label {
     color: $textColor;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     font-weight: bold;
   }
   &.button-container {

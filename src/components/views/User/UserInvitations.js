@@ -53,8 +53,8 @@ export const UserInvitations = () => {
 
   async function doDecline(teamId) {
     try {
-      await api.delete(
-        `/users/${localStorage.getItem("id")}/invitations/${teamId}`,
+      await api.put(
+        `/users/${localStorage.getItem("id")}/invitations/${teamId}?accept=false`,
         null,
         {
           headers: { token: localStorage.getItem("token") },

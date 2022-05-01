@@ -6,7 +6,7 @@ import CalendarGlobal from "./CalendarGlobal";
 import CalendarEventDispatcher from "./CalendarEventDispatcher";
 import { FormField } from "../FormField";
 
-export class Slot extends React.Component {
+export class AdminSlot extends React.Component {
   constructor(props) {
     super(props);
     this.ref = undefined;
@@ -132,7 +132,7 @@ export class Slot extends React.Component {
   }
 }
 
-Slot.propTypes = {
+AdminSlot.propTypes = {
     timeFrom: PropTypes.number,
     timeTo: PropTypes.number,
 };

@@ -2,7 +2,7 @@ import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { api, handleError } from "../../../helpers/api";
-import { Calendar } from "../../ui/calendar/Calendar";
+import { AdminCalendar } from "../../ui/calendar/AdminCalendar";
 import { validateCalendar } from "../../../helpers/validations";
 
 export const TeamCalendarEdit = () => {
@@ -62,7 +62,7 @@ export const TeamCalendarEdit = () => {
         <button onClick={() => doSave()}>save</button>
         <button onClick={() => history.push("/team/calendar")}>cancel</button>
       </div>
-      <Calendar startingDate={calendar.startingDate} days={calendar.days} />
+      <AdminCalendar startingDate={calendar.startingDate} days={calendar.days} />
     </div>
   );
 };

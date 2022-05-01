@@ -3,11 +3,11 @@ import Box from "@mui/material/Box";
 import { Grid } from "@mui/material";
 import PropTypes from "prop-types";
 import { DAY_HEIGHT, DAY_SPACING } from "./config";
-import { Day } from "./Day";
+import { AdminDay } from "./AdminDay";
 import CalendarEventDispatcher from "./CalendarEventDispatcher";
 import CalendarGlobal from "./CalendarGlobal";
 
-export class Calendar extends React.Component {
+export class AdminCalendar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -65,7 +65,7 @@ export class Calendar extends React.Component {
           style={{ height: DAY_HEIGHT * 3 }}
         >
           {this.state.days.map((day) => (
-            <Day
+            <AdminDay
               day={day}
               weekday={day.weekday}
               slots={day.slots}
@@ -79,7 +79,7 @@ export class Calendar extends React.Component {
   }
 }
 
-Calendar.propTypes = {
+AdminCalendar.propTypes = {
   startingDate: PropTypes.string,
   days: PropTypes.array,
 };

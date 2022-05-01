@@ -20,7 +20,7 @@ export class MemberSlot extends React.Component {
       assigned: undefined,
     };
 
-    this.setState({ assigned: this.isAssigned });
+    this.setState({ assigned: this.isAssigned() });
   }
 
   calcHeight() {
@@ -32,17 +32,20 @@ export class MemberSlot extends React.Component {
   }
 
   onClick(ev) {
+    const userId = parseInt(localStorage.getItem("id"));
     if (!this.state.assigned) {
-      this.slot.schedules.push({special: localStorage.getItem("id")});
+      this.slot.schedules.push({ special: userId, user: { id: userId } });
     } else {
-      this.slot.schedules = this.slot.schedules.filter((o) => o.special !== localStorage.getItem("id"));
+      this.slot.schedules = this.slot.schedules.filter(
+        (o) => o.special !== userId
+      );
     }
     this.setState({ assigned: !this.state.assigned });
   }
 
   isAssigned() {
     for (const schedule of this.slot.schedules) {
-      if (schedule.special === localStorage.getItem("id")) {
+      if (schedule.special === parseInt(localStorage.getItem("id"))) {
         return true;
       }
     }

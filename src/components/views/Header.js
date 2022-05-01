@@ -1,7 +1,10 @@
 import React from "react";
-import {ReactLogo} from "components/ui/ReactLogo";
 import PropTypes from "prop-types";
 import "styles/views/Header.scss";
+import {doLogout} from "../../helpers/api";
+import {Button} from "components/ui/Button";
+import BurgerMenu from "components/views/BurgerMenu.js";
+
 
 /**
  * This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.
@@ -12,9 +15,20 @@ import "styles/views/Header.scss";
  * @FunctionalComponent
  */
 const Header = props => (
-  <div className="header container" style={{height: props.height}}>
+
+    <div>
+        <BurgerMenu></BurgerMenu>
+        <div className="header container" style={{height: props.height}}>
     <h1 className="header title">Shift Planner</h1>
+
+      <div className="header button">
+          <Button onClick={() => doLogout().then(() => window.history.push("/"))}>Log out</Button>
+      </div>
   </div>
+    </div>
+
+
+
 );
 
 Header.propTypes = {

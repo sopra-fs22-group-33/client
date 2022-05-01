@@ -3,11 +3,23 @@
 .header {
   &.container {
     @include center;
+    padding-top: 10px;
+    margin-bottom: 20px;
+    background-color: $alignment-helper;
   }
 
   &.title {
-    font-weight: bold;
-    color: $background;
+    font-weight: bolder;
+    font-size: 50px;
+    font-style: italic;
     text-align: center;
+    background: $gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &.button {
+    position: absolute;
+    right: 200px;
   }
 }

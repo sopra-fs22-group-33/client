@@ -58,7 +58,6 @@ export const TeamCalendarEdit = () => {
   return (
     <div>
       <div>
-        button container
         <button onClick={() => doSave()}>save</button>
         <button onClick={() => history.push("/team/calendar")}>cancel</button>
       </div>

@@ -12,6 +12,8 @@ export class Day extends React.Component {
   constructor(props) {
     super(props);
     this.id = props.id;
+    // reference to object in parent
+    this.day = props.day;
 
     this.newSlot = {};
     this.ref = undefined;
@@ -61,6 +63,7 @@ export class Day extends React.Component {
     if (filteredSlots.length === previousLength) {
       return;
     }
+    this.day.slots = filteredSlots;
     this.setState({ slots: filteredSlots });
   }
 
@@ -100,6 +103,7 @@ export class Day extends React.Component {
         >
           {this.state.slots.map((slot) => (
             <Slot
+              slot={slot}
               timeFrom={slot.timeFrom}
               timeTo={slot.timeTo}
               id={slot.id}

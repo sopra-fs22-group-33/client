@@ -66,6 +66,7 @@ export class Calendar extends React.Component {
         >
           {this.state.days.map((day) => (
             <Day
+              day={day}
               weekday={day.weekday}
               slots={day.slots}
               id={day.id}

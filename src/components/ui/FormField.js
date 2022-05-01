@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 export const FormField = (props) => {
   return (
-    <div className="auth field">
+    <div onClick={props.onClick} className="auth field">
       <label className="auth label">{props.label}</label>
       <input
         className="auth input"

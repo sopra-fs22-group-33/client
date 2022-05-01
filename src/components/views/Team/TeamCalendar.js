@@ -17,7 +17,7 @@ export const TeamCalendar = () => {
         );
         console.log(response.data);
 
-        setCalendar(response.data);
+        setCalendar(validateCalendar(response.data));
       } catch (e) {
         alert(`Something went wrong during fetching the calendar: \n${handleError(e)}`);
       }
@@ -33,8 +33,6 @@ export const TeamCalendar = () => {
         </div>
     )
   }
-
-  let validatedCalendar = validateCalendar(calendar);
 
   return (
     <div>
@@ -53,8 +51,8 @@ export const TeamCalendar = () => {
       <div>
         calendar container
         <Calendar
-          startingDate={validatedCalendar.startingDate}
-          days={validatedCalendar.days}
+          startingDate={calendar.startingDate}
+          days={calendar.days}
         />
       </div>
     </div>

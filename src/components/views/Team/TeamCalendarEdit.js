@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
-import {useEffect, useState} from "react";
-import {api, handleError} from "../../../helpers/api";
-import {Calendar} from "../../ui/calendar/Calendar";
-import {validateCalendar} from "../../../helpers/validations";
+import { useEffect, useState } from "react";
+import { api, handleError } from "../../../helpers/api";
+import { Calendar } from "../../ui/calendar/Calendar";
+import { validateCalendar } from "../../../helpers/validations";
 
 export const TeamCalendarEdit = () => {
   const history = useHistory();
@@ -11,12 +11,22 @@ export const TeamCalendarEdit = () => {
 
   async function doSave() {
     try {
-      const requestBody = JSON.stringify({ days: calendar.days, startingDate: calendar.startingDate });
-      await api.put(`/teams/${localStorage.getItem("teamId")}/calendars`, requestBody);
+      const requestBody = JSON.stringify({
+        days: calendar.days,
+        startingDate: calendar.startingDate,
+      });
+      await api.put(
+        `/teams/${localStorage.getItem("teamId")}/calendars`,
+        requestBody
+      );
 
       history.push("/team/calendar");
     } catch (error) {
-      alert(`Something went wrong during saving the calendar: \n${handleError(error)}`);
+      alert(
+        `Something went wrong during saving the calendar: \n${handleError(
+          error
+        )}`
+      );
     }
   }
 
@@ -28,9 +38,13 @@ export const TeamCalendarEdit = () => {
         );
         console.log(response.data);
 
-        setCalendar(response.data);
+        setCalendar(validateCalendar(response.data));
       } catch (e) {
-        alert(`Something went wrong during fetching the calendar: \n${handleError(e)}`);
+        alert(
+          `Something went wrong during fetching the calendar: \n${handleError(
+            e
+          )}`
+        );
       }
     }
 
@@ -38,14 +52,8 @@ export const TeamCalendarEdit = () => {
   }, []);
 
   if (!calendar) {
-    return (
-        <div>
-          fetching calendar
-        </div>
-    )
+    return <div>fetching calendar</div>;
   }
-
-  let validatedCalendar = validateCalendar(calendar);
 
   return (
     <div>
@@ -54,10 +62,7 @@ export const TeamCalendarEdit = () => {
         <button onClick={() => doSave()}>save</button>
         <button onClick={() => history.push("/team/calendar")}>cancel</button>
       </div>
-      <Calendar
-          startingDate={validatedCalendar.startingDate}
-          days={validatedCalendar.days}
-        />
+      <Calendar startingDate={calendar.startingDate} days={calendar.days} />
     </div>
   );
 };

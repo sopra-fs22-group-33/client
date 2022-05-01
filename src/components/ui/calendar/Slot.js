@@ -4,27 +4,38 @@ import { SLOT_SCALING } from "./config";
 import Box from "@mui/material/Box";
 import CalendarGlobal from "./CalendarGlobal";
 import CalendarEventDispatcher from "./CalendarEventDispatcher";
+import { FormField } from "../FormField";
 
 export class Slot extends React.Component {
   constructor(props) {
     super(props);
     this.ref = undefined;
-    this.id = props.id;
+    this.id = props.slot.id;
     this.hasUpdated = false;
     this.startedUpdating = false;
     this.updatingTop = undefined;
 
+    // reference to object in parent
+    this.slot = props.slot;
+
     this.state = {
       timeFrom: props.timeFrom,
       timeTo: props.timeTo,
+      requirement: props.requirement,
 
-      base: props.base ? props.base : {},
-      special: props.special ? props.special : {},
+      schedules: props.schedules,
+      base: props.base,
+      special: props.special,
     };
   }
 
   isSelected() {
     return this.id === CalendarGlobal.getSelectedSlot();
+  }
+
+  deselect() {
+    CalendarGlobal.setSelectedSlot(this.isSelected() ? null : this.id);
+    CalendarEventDispatcher.dispatch("onSlotSelected");
   }
 
   calcHeight() {
@@ -37,10 +48,8 @@ export class Slot extends React.Component {
 
   onClick(ev) {
     ev.stopPropagation();
-    console.log("\n clicked on slot:", this.id, "\n");
     if (!this.hasUpdated) {
-      CalendarGlobal.setSelectedSlot(this.isSelected() ? null : this.id);
-      CalendarEventDispatcher.dispatch("onSlotSelected");
+      this.deselect();
     }
     this.startedUpdating = false;
   }
@@ -61,12 +70,15 @@ export class Slot extends React.Component {
     this.startedUpdating = false;
     if (this.hasUpdated) {
       if (this.updatingTop) {
-        this.setState({ timeFrom: Math.floor(this.state.timeFrom) });
+        const newTimeFrom = Math.floor(this.state.timeFrom);
+        this.slot.timeFrom = newTimeFrom;
+        this.setState({ timeFrom: newTimeFrom });
       } else {
-        this.setState({ timeTo: Math.ceil(this.state.timeFrom) });
+        const newTimeTo = Math.floor(this.state.timeTo);
+        this.slot.timeTo = newTimeTo;
+        this.setState({ timeTo: newTimeTo });
       }
     }
-    // todo: update slot in parent day
   }
 
   onMouseMove(ev) {
@@ -74,7 +86,9 @@ export class Slot extends React.Component {
       ev.stopPropagation();
 
       if (this.updatingTop) {
-        this.setState({ timeFrom: this.state.timeFrom + ev.movementY / SLOT_SCALING });
+        this.setState({
+          timeFrom: this.state.timeFrom + ev.movementY / SLOT_SCALING,
+        });
       } else {
         this.setState({
           timeTo: this.state.timeTo + ev.movementY / SLOT_SCALING,
@@ -98,20 +112,25 @@ export class Slot extends React.Component {
           height: this.calcHeight(),
           top: this.calcTop(),
           background: this.isSelected() ? "orange" : "gray",
+          opacity: 0.5,
         }}
         onClick={(ev) => this.onClick(ev)}
         onMouseDown={(ev) => this.onMouseDown(ev)}
         onMouseMove={(ev) => this.onMouseMove(ev)}
         onMouseUp={(ev) => this.onMouseUp(ev)}
       >
-        timeFrom: {this.state.timeFrom}
-        timeTo: {this.state.timeTo}
+        required people:{this.state.requirement}
+        <FormField
+          onClick={() => this.deselect.call(this)}
+          value={this.state.requirement}
+          onChange={(value) => this.setState({ requirement: value })}
+        />
       </Box>
     );
   }
 }
 
 Slot.propTypes = {
-    timeFrom: PropTypes.number,
-    timeTo: PropTypes.number,
+  timeFrom: PropTypes.number,
+  timeTo: PropTypes.number,
 };

@@ -1,9 +1,9 @@
 import { useHistory } from "react-router-dom";
 import { api, doLogout, handleError } from "helpers/api";
 import * as React from "react";
-import { AdminCalendar } from "components/ui/calendar/AdminCalendar";
 import { validateCalendar } from "helpers/validations";
 import { useEffect, useState } from "react";
+import {MemberCalendar} from "../../ui/calendar/MemberCalendar";
 
 export const TeamCalendar = () => {
   const history = useHistory();
@@ -50,7 +50,7 @@ export const TeamCalendar = () => {
       </div>
       <div>
         calendar container
-        <AdminCalendar
+        <MemberCalendar
           startingDate={calendar.startingDate}
           days={calendar.days}
         />

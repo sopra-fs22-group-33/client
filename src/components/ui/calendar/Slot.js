@@ -22,10 +22,7 @@ export class Slot extends React.Component {
       timeFrom: props.timeFrom,
       timeTo: props.timeTo,
       requirement: props.requirement,
-
       schedules: props.schedules,
-      base: props.base,
-      special: props.special,
     };
   }
 
@@ -36,6 +33,11 @@ export class Slot extends React.Component {
   deselect() {
     CalendarGlobal.setSelectedSlot(this.isSelected() ? null : this.id);
     CalendarEventDispatcher.dispatch("onSlotSelected");
+  }
+
+  updateRequirement(value) {
+    this.slot.requirement = value;
+    this.setState({ requirement: value });
   }
 
   calcHeight() {
@@ -123,7 +125,7 @@ export class Slot extends React.Component {
         <FormField
           onClick={() => this.deselect.call(this)}
           value={this.state.requirement}
-          onChange={(value) => this.setState({ requirement: value })}
+          onChange={(value) => this.updateRequirement(value)}
         />
       </Box>
     );
@@ -131,6 +133,6 @@ export class Slot extends React.Component {
 }
 
 Slot.propTypes = {
-  timeFrom: PropTypes.number,
-  timeTo: PropTypes.number,
+    timeFrom: PropTypes.number,
+    timeTo: PropTypes.number,
 };

@@ -106,10 +106,10 @@ export class Day extends React.Component {
               slot={slot}
               timeFrom={slot.timeFrom}
               timeTo={slot.timeTo}
+              schedules={slot.schedules}
+              requirement={slot.requirement}
               id={slot.id}
               key={slot.id}
-              base={slot.base}
-              special={slot.special}
             />
           ))}
         </Box>

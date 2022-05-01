@@ -2,13 +2,13 @@ import * as React from "react";
 import { Grid } from "@mui/material";
 import PropTypes from "prop-types";
 import { DAY_HEIGHT, SLOT_SCALING } from "./config";
-import { Slot } from "./Slot";
+import { AdminSlot } from "./AdminSlot";
 import Box from "@mui/material/Box";
 import { randomId } from "../../../helpers/validations";
 import CalendarGlobal from "./CalendarGlobal";
 import CalendarEventDispatcher from "./CalendarEventDispatcher";
 
-export class Day extends React.Component {
+export class AdminDay extends React.Component {
   constructor(props) {
     super(props);
     this.id = props.id;
@@ -102,14 +102,14 @@ export class Day extends React.Component {
           onMouseUp={(ev) => this.onMouseUp(ev)}
         >
           {this.state.slots.map((slot) => (
-            <Slot
+            <AdminSlot
               slot={slot}
               timeFrom={slot.timeFrom}
               timeTo={slot.timeTo}
+              schedules={slot.schedules}
+              requirement={slot.requirement}
               id={slot.id}
               key={slot.id}
-              base={slot.base}
-              special={slot.special}
             />
           ))}
         </Box>
@@ -118,6 +118,6 @@ export class Day extends React.Component {
   }
 }
 
-Day.propTypes = {
+AdminDay.propTypes = {
     slots: PropTypes.array,
 };

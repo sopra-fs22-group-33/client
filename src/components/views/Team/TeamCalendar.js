@@ -1,9 +1,9 @@
 import { useHistory } from "react-router-dom";
 import { api, doLogout, handleError } from "helpers/api";
 import * as React from "react";
-import { Calendar } from "components/ui/calendar/Calendar";
 import { validateCalendar } from "helpers/validations";
 import { useEffect, useState } from "react";
+import { MemberCalendar } from "../../ui/calendar/MemberCalendar";
 
 export const TeamCalendar = () => {
   const history = useHistory();
@@ -19,25 +19,45 @@ export const TeamCalendar = () => {
 
         setCalendar(validateCalendar(response.data));
       } catch (e) {
-        alert(`Something went wrong during fetching the calendar: \n${handleError(e)}`);
+        alert(
+          `Something went wrong during fetching the calendar: \n${handleError(
+            e
+          )}`
+        );
       }
     }
 
     fetchData();
   }, []);
 
+  async function doSave() {
+    try {
+      const requestBody = JSON.stringify({
+        days: calendar.days,
+        startingDate: calendar.startingDate,
+      });
+      await api.put(
+        `/teams/${localStorage.getItem("teamId")}/calendars`,
+        requestBody
+      );
+
+      alert("Saved successfully");
+    } catch (error) {
+      alert(
+        `Something went wrong during saving the calendar: \n${handleError(
+          error
+        )}`
+      );
+    }
+  }
+
   if (!calendar) {
-    return (
-        <div>
-          fetching calendar
-        </div>
-    )
+    return <div>fetching calendar</div>;
   }
 
   return (
     <div>
       <div>
-        main button container
         <button onClick={() => history.push("/team/profile")}>profile</button>
         <button onClick={() => history.push("/user")}>me</button>
         <button onClick={() => doLogout().then(() => history.push("/"))}>
@@ -45,12 +65,13 @@ export const TeamCalendar = () => {
         </button>
       </div>
       <div>
-        special button container
-        <button onClick={() => history.push("/team/calendar/edit")}>edit</button>
+        <button onClick={() => history.push("/team/calendar/edit")}>
+          edit
+        </button>
+        <button onClick={() => doSave()}>save</button>
       </div>
       <div>
-        calendar container
-        <Calendar
+        <MemberCalendar
           startingDate={calendar.startingDate}
           days={calendar.days}
         />

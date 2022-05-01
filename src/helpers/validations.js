@@ -34,39 +34,49 @@ export function validateCalendar(calendar) {
 
   for (let i in calendar.days) {
     let day = calendar.days[i];
-    /*
-    if (
-      !day.hasOwnProperty("weekday") ||
-      typeof day.weekday !== "number"
-    ) {
-      wrappedError("invalid 'weekday'", day);
+    if (!day.hasOwnProperty("weekday")) {
+      wrappedError("missing 'weekday'", day);
     }
-    */
-    if (
-      !day.hasOwnProperty("slots") ||
-      !Array.isArray(day.slots)
-      // slots can be empty
-    ) {
-      // wrappedError("invalid 'slots'", day);
+    if (!day.hasOwnProperty("slots") || !Array.isArray(day.slots)) {
       day.slots = [];
     }
 
-    // todo: generate unique across calendar on backend
     day.id = day.id ? day.id : randomId();
 
     for (let i in day.slots) {
       let slot = day.slots[i];
-      if (!slot.hasOwnProperty("timeFrom") || typeof slot.timeFrom !== "number") {
+      if (
+        !slot.hasOwnProperty("timeFrom") ||
+        typeof slot.timeFrom !== "number"
+      ) {
         wrappedError("invalid 'timeFrom'", slot);
       }
       if (!slot.hasOwnProperty("timeTo") || typeof slot.timeTo !== "number") {
         wrappedError("invalid 'timeFrom'", slot);
       }
-      if (slot.timeFrom === slot.timeTo) {
-        wrappedError(`invalid range ${slot.timeFrom - slot.timeTo}`, slot);
+      if (!slot.hasOwnProperty("requirement")) {
+        slot.requirement = 1;
+      }
+      if (!slot.hasOwnProperty("schedules")) {
+        slot.schedules = [];
       }
 
-      // todo: generate unique across calendar on backend
+      for (let i in slot.schedules) {
+        let schedule = slot.schedules[i];
+
+        if (!schedule.hasOwnProperty("special")) {
+          schedule.special = -1;
+        }
+        /*
+                if (!schedule.hasOwnProperty("base")) {
+        
+                }
+                */
+        if (!schedule.hasOwnProperty("id")) {
+          wrappedError("invalid 'id'", schedule);
+        }
+      }
+
       slot.id = slot.id ? slot.id : randomId();
     }
   }

@@ -97,16 +97,17 @@ export class Game extends React.Component {
   }
 
   mockStartGame = async () => {
-    const response = await api.get("/games");
-    if (response.data.length > 0) {
-      this.gameId = response.data.id;
-      this.playerId = response.data.players[0].id;
-      this.snake.chunks = deserialize(response.data.players[0].chunks);
-      this.snake.status = response.data.players[0].status;
-      this.setState({ apples: deserialize(response.data.apples) });
-    } else {
-      console.log("no game");
-    }
+    const requestBody = JSON.stringify({
+      players: [{ chunks: [{ x: 0, y: 0 }] }],
+    });
+    const response = await api.post("/games", requestBody);
+
+    this.gameId = response.data.id;
+    this.playerId = response.data.players[0].id;
+    this.snake.chunks = deserialize(response.data.players[0].chunks);
+    this.snake.status = response.data.players[0].status;
+    this.setState({ apples: deserialize(response.data.apples) });
+    console.log(this.state.apples);
   };
 
   render() {
@@ -117,7 +118,7 @@ export class Game extends React.Component {
     }
     return (
       <div>
-        <Button onClick={this.mockStartGame}>Restart Game</Button>
+        <Button onClick={() => this.mockStartGame()}>Restart Game</Button>
         {content}
       </div>
     );

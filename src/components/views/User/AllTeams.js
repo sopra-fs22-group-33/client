@@ -50,7 +50,6 @@ export const AllTeams = () => {
                 headers: { token: localStorage.getItem("token") },
               }
             );
-          console.log(response.data);
           setTeams(response.data);
         } catch (error) {
           alert(

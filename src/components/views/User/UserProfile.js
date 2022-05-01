@@ -3,34 +3,6 @@ import { api, doLogout, handleError } from "../../../helpers/api";
 import { useEffect, useState } from "react";
 import { Team } from "./AllTeams";
 
-async function doAccept(teamId) {
-  try {
-    await api.put(
-      `/users/${localStorage.getItem("id")}/invitations/${teamId}?accept=true`,
-      null,
-      {
-        headers: { token: localStorage.getItem("token") },
-      }
-    );
-  } catch (e) {
-    alert(`Something went wrong while accepting the invitation:\n${handleError(e)}`);
-  }
-}
-
-async function doDecline(teamId) {
-  try {
-    await api.delete(
-      `/users/${localStorage.getItem("id")}/invitations/${teamId}`,
-      null,
-      {
-        headers: { token: localStorage.getItem("token") },
-      }
-    );
-  } catch (e) {
-    alert(`Something went wrong while declining the invitation:\n${handleError(e)}`);
-  }
-}
-
 export const UserProfile = () => {
   const history = useHistory();
   const [invitations, setInvitations] = useState(null);
@@ -56,9 +28,53 @@ export const UserProfile = () => {
     fetchInvitations();
   }, []);
 
-  let content = <div>invitations will appear here</div>;
+  async function doAccept(teamId) {
+    try {
+      await api.put(
+        `/users/${localStorage.getItem(
+          "id"
+        )}/invitations/${teamId}?accept=true`,
+        null,
+        {
+          headers: { token: localStorage.getItem("token") },
+        }
+      );
 
-  if (invitations) {
+      // force reload all invitations
+      setInvitations(null);
+    } catch (e) {
+      alert(
+        `Something went wrong while accepting the invitation:\n${handleError(
+          e
+        )}`
+      );
+    }
+  }
+
+  async function doDecline(teamId) {
+    try {
+      await api.delete(
+        `/users/${localStorage.getItem("id")}/invitations/${teamId}`,
+        null,
+        {
+          headers: { token: localStorage.getItem("token") },
+        }
+      );
+
+      // force reload all invitations
+      setInvitations(null);
+    } catch (e) {
+      alert(
+        `Something went wrong while declining the invitation:\n${handleError(
+          e
+        )}`
+      );
+    }
+  }
+
+  let content = <div>no new invitations</div>;
+  console.log(invitations);
+  if (invitations != null && invitations.length > 0) {
     content = (
       <div>
         <ul>invitations:</ul>

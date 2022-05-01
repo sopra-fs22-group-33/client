@@ -16,8 +16,11 @@ export class MemberSlot extends React.Component {
       timeFrom: props.timeFrom,
       timeTo: props.timeTo,
       requirement: props.requirement,
-      schedules: props.schedules,
+
+      assigned: undefined,
     };
+
+    this.setState({ assigned: this.isAssigned });
   }
 
   calcHeight() {
@@ -29,7 +32,21 @@ export class MemberSlot extends React.Component {
   }
 
   onClick(ev) {
-    console.log("click");
+    if (!this.state.assigned) {
+      this.slot.schedules.push({special: localStorage.getItem("id")});
+    } else {
+      this.slot.schedules = this.slot.schedules.filter((o) => o.special !== localStorage.getItem("id"));
+    }
+    this.setState({ assigned: !this.state.assigned });
+  }
+
+  isAssigned() {
+    for (const schedule of this.slot.schedules) {
+      if (schedule.special === localStorage.getItem("id")) {
+        return true;
+      }
+    }
+    return false;
   }
 
   render() {
@@ -46,18 +63,24 @@ export class MemberSlot extends React.Component {
           position: "absolute",
           height: this.calcHeight(),
           top: this.calcTop(),
-          background: "gray",
+          background: this.state.assigned ? "red" : "gray",
           opacity: 0.5,
         }}
         onClick={(ev) => this.onClick(ev)}
       >
-        required people:{this.state.requirement}
+        <div>required people:{this.state.requirement}</div>
+        <div>
+          assigned people:
+          {this.slot.schedules.map((schedule) => (
+            <div>{schedule.special}</div>
+          ))}
+        </div>
       </Box>
     );
   }
 }
 
 MemberSlot.propTypes = {
-    timeFrom: PropTypes.number,
-    timeTo: PropTypes.number,
+  timeFrom: PropTypes.number,
+  timeTo: PropTypes.number,
 };

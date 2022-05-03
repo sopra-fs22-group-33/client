@@ -1,7 +1,8 @@
 import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { api, doLogout, handleError } from "../../../helpers/api";
 import { Team } from "./AllTeams";
+import BaseContainer from "../../ui/BaseContainer";
 
 export const UserInvitations = () => {
   const history = useHistory();
@@ -90,7 +91,8 @@ export const UserInvitations = () => {
   }
 
   return (
-    <div>
+    <BaseContainer>
+      <h1>Invitations</h1>
       <div>
         <button onClick={() => history.push("/user/calendar")}>calendar</button>
         <button onClick={() => history.push("/user/teams")}>teams</button>
@@ -100,6 +102,6 @@ export const UserInvitations = () => {
       </div>
       <button onClick={() => history.push("/user/profile")}>back</button>
       {content}
-    </div>
+    </BaseContainer>
   );
 };

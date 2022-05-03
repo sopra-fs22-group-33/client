@@ -3,6 +3,7 @@ import {api, doLogout, handleError} from "../../../helpers/api";
 import {useEffect, useState} from "react";
 import {Spinner} from "../../ui/Spinner";
 import "styles/views/Team.scss"
+import BaseContainer from "../../ui/BaseContainer";
 
 //component for a TEAM
 export const Team = ({team, getTeam}) => (
@@ -86,13 +87,12 @@ export const AllTeams = () => {
     }
 
     return (
-        <div>
+        <BaseContainer>
+            <h1>All Teams</h1>
+
             <button onClick={() => history.push("/user/create")}>create team</button>
-            <button onClick={() => history.push("/user")}>me</button>
-            <button onClick={() => doLogout().then(() => history.push("/"))}>
-                logout
-            </button>
+
             {content}
-        </div>
+        </BaseContainer>
     );
 };

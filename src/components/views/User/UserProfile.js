@@ -88,20 +88,12 @@ export const UserProfile = () => {
     ;
 
     return (
-        <BaseContainer className="game container">
-            <div>
-                <button onClick={() => history.push("/user/calendar")}>calendar</button>
-                <button onClick={() => history.push("/user/teams")}>teams</button>
-                <button onClick={() => doLogout().then(() => history.push("/"))}>log out</button>
-            </div>
-            <button onClick={() => history.push("/user/profile/invitations")}>
-                invitations
-            </button>
-
-            <h2>Profile Page</h2>
-            <p className="game paragraph">
-            </p>
+        <BaseContainer>
+            <h1>Profile Page</h1>
             {content}
+            <Button onClick={() => history.push("/user/profile/invitations")}>
+                Open Invitations
+            </Button>
         </BaseContainer>
     );
 };

@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { Chunk } from "../ui/game/Chunk";
 import { Snake } from "../ui/game/Snake";
 import { deserialize, serialize } from "../ui/game/helpers";
+import BaseContainer from "../ui/BaseContainer";
 
 const GameBoard = (props) => {
   return (
@@ -117,10 +118,11 @@ export class Game extends React.Component {
       content = <GameBoard snake={this.snake} apples={this.state.apples} />;
     }
     return (
-      <div>
+      <BaseContainer>
+        <h1>Game</h1>
         <Button onClick={() => this.mockStartGame()}>Restart Game</Button>
         {content}
-      </div>
+      </BaseContainer>
     );
   }
 }

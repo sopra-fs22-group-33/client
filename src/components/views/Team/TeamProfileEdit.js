@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { api, handleError } from "../../../helpers/api";
 import { TeamMember } from "../User/AllTeams";
 import { useHistory } from "react-router-dom";
+import BaseContainer from "../../ui/BaseContainer";
 
 export const TeamProfileEdit = () => {
   const history = useHistory();
@@ -46,7 +47,8 @@ export const TeamProfileEdit = () => {
   }
 
   return (
-    <div>
+    <BaseContainer>
+      <h1>Edit Team</h1>
       <div>
         <button onClick={doSave}>save</button>
         <button onClick={() => history.push("/team/profile")}>cancel</button>
@@ -57,6 +59,6 @@ export const TeamProfileEdit = () => {
         </button>
       </div>
       {content}
-    </div>
+    </BaseContainer>
   );
 };

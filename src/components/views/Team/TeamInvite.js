@@ -2,6 +2,7 @@ import { FormField } from "../../ui/FormField";
 import React, { useState } from "react";
 import { api, handleError } from "../../../helpers/api";
 import { useHistory } from "react-router-dom";
+import BaseContainer from "../../ui/BaseContainer";
 
 export const TeamInvite = () => {
   const history = useHistory();
@@ -27,7 +28,9 @@ export const TeamInvite = () => {
   }
 
   return (
-    <div>
+    <BaseContainer>
+      <h1>Invite User</h1>
+
       <div className="auth form">
         <FormField
           label="invited user email"
@@ -42,6 +45,6 @@ export const TeamInvite = () => {
           </button>
         </div>
       </div>
-    </div>
+    </BaseContainer>
   );
 };

@@ -44,6 +44,8 @@ export const CreateTeam = () => {
 
     return (
         <BaseContainer>
+            <h1>Create Team</h1>
+
             <div className="auth container">
             <div className="auth form">
                 <FormField

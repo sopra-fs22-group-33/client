@@ -24,8 +24,8 @@ const Header = (props) => {
 
             <div className="header container" style={{height: props.height}}>
                 <h1 className="header title">Shift Planner</h1>
-                <div className="header team" onClick={() => doChangeTeam()}>Current
-                    Team: {localStorage.getItem('teamId')}</div>
+                <a className="header team" onClick={() => history.push("/user/teams")}>Current
+                    Team: {localStorage.getItem('teamId')}</a>
                 <div className="header button">
                     <Button onClick={() => doLogout().then(() => history.push("/"))}>Log out</Button>
                 </div>

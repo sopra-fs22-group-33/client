@@ -1,0 +1,19 @@
+@import 'styles/theme';
+
+.navigation-button-container {
+
+  &.container {
+    background-color: pink;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &.title {
+    font-weight: bolder;
+  }
+
+
+  &.button {
+  }
+}

@@ -72,8 +72,9 @@ export class AdminDay extends React.Component {
     this.state.slots.push({
       timeFrom: Math.floor(timeFrom / SLOT_SCALING),
       timeTo: Math.ceil(timeTo / SLOT_SCALING),
-      special: {},
-      base: {},
+      requirement: 1,
+      schedules: [],
+
       id: newId,
     });
     CalendarGlobal.setSelectedSlot(newId);

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "styles/views/Header.scss";
-import {doLogout} from "../../helpers/api";
+import {doLogout, doChangeTeam} from "../../helpers/api";
 import {Button} from "components/ui/Button";
 import BurgerMenu from "components/views/BurgerMenu.js";
 
@@ -18,21 +18,19 @@ const Header = props => (
 
     <div>
         <BurgerMenu></BurgerMenu>
+
         <div className="header container" style={{height: props.height}}>
-    <h1 className="header title">Shift Planner</h1>
-
-      <div className="header button">
-          <Button onClick={() => doLogout().then(() => window.history.push("/"))}>Log out</Button>
-      </div>
-  </div>
+            <h1 className="header title">Shift Planner</h1>
+            <div className="header team" onClick={() => doChangeTeam()}>Current Team: {localStorage.getItem('teamId')}</div>
+            <div className="header button">
+                <Button onClick={() => doLogout().then(() => window.history.push("/"))}>Log out</Button>
+            </div>
+        </div>
     </div>
-
-
-
 );
 
 Header.propTypes = {
-  height: PropTypes.string
+    height: PropTypes.string
 };
 
 /**

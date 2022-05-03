@@ -20,6 +20,10 @@ export async function doLogout() {
   }
 }
 
+export async function doChangeTeam() {
+  window.history.push("/users/teams")
+}
+
 export const handleError = (error) => {
   const response = error.response;
 

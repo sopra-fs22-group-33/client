@@ -2,27 +2,42 @@
 
 .team {
   &.container {
-    background: gray;
+    min-height: 150px;
+    margin-bottom: 24px;
   }
   &.name {
-    background: lightgray;
+    font-size: 24px;
+    font-weight: bolder;
+    margin-bottom: 24px;
   }
-  &.id {
-    background: lightgray;
-  }
+
   &.member-list {
-    background: white;
+    flex-direction: row;
+    display: flex;
   }
 
   &.member {
-    &.id {
-      background: orange;
+    &.container {
+      background: aqua;
+      width: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 25px;
+      flex-direction: column;
     }
-    &.name {
-      background: lightgray;
+
+    &.icon {
+      width: 150px;
+      height:150px;
+      margin-bottom: 25px;
+
+    }
+    &.username{
+
     }
     &.email {
-      background: lightgray;
+      font-weight: bolder;
     }
   }
 }

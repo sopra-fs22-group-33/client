@@ -6,7 +6,7 @@ import "styles/views/Team.scss"
 import "styles/ui/NavigationButtonContainer.scss"
 import BaseContainer from "../../ui/BaseContainer";
 import {Button} from "../../ui/Button";
-import globalEventDispatcher from "../../../helpers/globalEventDispatcher";
+import avatar from "../../../images/avatar1.png"
 
 
 //component for a TEAM
@@ -14,14 +14,10 @@ export const Team = ({team, getTeam}) => (
 
     <ul className="team container" onClick={() => {
         sessionStorage.setItem("teamId", team.id);
-        globalEventDispatcher.dispatch("onTeamIdChanged");
         getTeam()
     }}>
-        <div className="team name"> name: {team.name} </div>
-        <div className="team id">id: {team.id}</div>
-
+        <div className="team name">{team.name} </div>
         <ul className="team member-list">
-            members:
             {team.memberships.map(teamMember => (
                 <TeamMember
                     teamMember={teamMember.user}
@@ -34,11 +30,12 @@ export const Team = ({team, getTeam}) => (
 );
 //component for a TEAM MEMBER
 export const TeamMember = ({teamMember}) => (
-
     <div className="team member container">
-        <div className="team member id">id: {teamMember.id}</div>
-        <div className="team member email">email: {teamMember.email}</div>
-        <div className="team member name">name: {teamMember.name}</div>
+        <div className="team member icon">
+        <img  src={avatar}/>
+        </div>
+        <div className="team member email">{teamMember.email}</div>
+        <div className="team member username">{teamMember.name}</div>
     </div>
 
 );

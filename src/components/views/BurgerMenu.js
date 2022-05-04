@@ -12,7 +12,8 @@ class BurgerMenu extends React.Component {
                 width={ 500}
             >
                 <a className="menu-item" href="/user/profile">My Profile</a>
-                <a className="menu-item" href="/user/calendar">Personal Calendar</a>
+                <a className="menu-item" href="/user/calendar">My Calendar</a>
+                <a className="menu-item" href="/team/profile">Team Profile</a>
                 <a className="menu-item" href="/team/calendar">Team Calendar</a>
                 <a className="menu-item" href="/game">Snake</a>
             </Menu>

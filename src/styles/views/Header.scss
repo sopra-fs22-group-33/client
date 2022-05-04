@@ -2,9 +2,10 @@
 
 .header {
   &.container {
+    //background-color: aquamarine;
     @include center;
     padding-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     background-color: $alignment-helper;
   }
 

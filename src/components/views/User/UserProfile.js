@@ -1,4 +1,4 @@
-import { useHistory , useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {doLogout} from "../../../helpers/api";
 import {Spinner} from 'components/ui/Spinner';
 import PropTypes from "prop-types";
@@ -21,7 +21,7 @@ PlayerProfile.propTypes = {
 };
 
 export const UserProfile = () => {
-  // use react-router-dom's hook to access the history
+    // use react-router-dom's hook to access the history
     const history = useHistory();
 
     const id = useParams();
@@ -89,11 +89,18 @@ export const UserProfile = () => {
 
     return (
         <BaseContainer>
-            <h1>Profile Page</h1>
+            <div className="navigation-button-container container">
+                <div className="navigation-button-container title">
+                    <h1>Profile Page</h1>
+                </div>
+                <div className="navigation-button-container button">
+                    <Button onClick={() => history.push("/user/profile/invitations")}>
+                        Open Invitations
+                    </Button>
+                </div>
+            </div>
             {content}
-            <Button onClick={() => history.push("/user/profile/invitations")}>
-                Open Invitations
-            </Button>
+
         </BaseContainer>
     );
 };

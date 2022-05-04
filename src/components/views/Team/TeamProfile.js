@@ -1,9 +1,11 @@
 import {useHistory, useParams} from "react-router-dom";
 import {api, handleError, doLogout} from "../../../helpers/api";
 import {TeamMember} from "../User/AllTeams";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Spinner} from "../../ui/Spinner";
 import BaseContainer from "../../ui/BaseContainer";
+import {Button} from "../../ui/Button";
+import {TeamInvite} from "./TeamInvite";
 
 export const TeamProfile = () => {
     const history = useHistory();
@@ -55,8 +57,16 @@ export const TeamProfile = () => {
 
     return (
         <BaseContainer>
+            <div className="navigation-button-container container">
+                <div className="navigation-button-container title">
+                    <h1>Team Profile</h1>
+                </div>
+                <div className="navigation-button-container button">
+                    <Button onClick={() => history.push("/team/profile/invite")}>Invite User</Button>
+                    <Button onClick={() => history.push("/team/profile/edit")}>Edit</Button>
+                </div>
+            </div>
             <div>
-                <button onClick={() => history.push("/team/profile/edit")}>edit</button>
             </div>
             {content}
         </BaseContainer>

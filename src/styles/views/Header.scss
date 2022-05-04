@@ -2,9 +2,10 @@
 
 .header {
   &.container {
+    //background-color: aquamarine;
     @include center;
     padding-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     background-color: $alignment-helper;
   }
 
@@ -16,6 +17,14 @@
     background: $gradient;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  &.team {
+    font-weight: bolder;
+    font-size: 13px;
+    text-align: center;
+    position: absolute;
+    right: 350px;
   }
 
   &.button {

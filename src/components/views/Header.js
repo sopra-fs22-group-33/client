@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "styles/views/Header.scss";
-import {doLogout} from "../../helpers/api";
+import {doLogout, doChangeTeam} from "../../helpers/api";
 import {Button} from "components/ui/Button";
 import BurgerMenu from "components/views/BurgerMenu.js";
+import {useHistory} from "react-router-dom";
 
 
 /**
@@ -14,25 +15,28 @@ import BurgerMenu from "components/views/BurgerMenu.js";
  * https://reactjs.org/docs/components-and-props.html
  * @FunctionalComponent
  */
-const Header = props => (
+const Header = (props) => {
 
-    <div>
-        <BurgerMenu></BurgerMenu>
-        <div className="header container" style={{height: props.height}}>
-    <h1 className="header title">Shift Planner</h1>
+    const history = useHistory();
+    return (
+        < div>
+            < BurgerMenu> < /BurgerMenu>
 
-      <div className="header button">
-          <Button onClick={() => doLogout().then(() => window.history.push("/"))}>Log out</Button>
-      </div>
-  </div>
-    </div>
+            <div className="header container" style={{height: props.height}}>
+                <h1 className="header title">Shift Planner</h1>
+                <button className="header team" onClick={() => history.push("/users/teams")}>Current
+                    Team: {localStorage.getItem('teamId')}</button>
+                <div className="header button">
+                    <Button onClick={() => doLogout().then(() => history.push("/"))}>Log out</Button>
+                </div>
+            </div>
+        </div>
+    );
+};
 
-
-
-);
 
 Header.propTypes = {
-  height: PropTypes.string
+    height: PropTypes.string
 };
 
 /**

@@ -1,0 +1,39 @@
+@import 'styles/theme';
+
+.user-profile {
+  &.container {
+    min-height: 300px;
+    //background-color:rosybrown;
+    flex-direction: column;
+  }
+
+  &.text {
+    font-size: 24px;
+    font-style: $fontDefault;
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &.label {
+    font-size: 24px;
+    font-weight: bolder;
+    font-style: $fontDefault;
+    margin-bottom: 6px;
+  }
+
+  &.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 60%;
+    max-width: 30em;
+    height: auto;
+    font-size: 16px;
+    font-weight: 300;
+    padding-left: 37px;
+    padding-right: 37px;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+}

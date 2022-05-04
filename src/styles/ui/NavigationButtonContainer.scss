@@ -1,0 +1,20 @@
+@import 'styles/theme';
+
+.navigation-button-container {
+
+  &.container {
+    //background-color: pink;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+
+  &.title {
+    font-weight: bolder;
+  }
+
+
+  &.button {
+  }
+}

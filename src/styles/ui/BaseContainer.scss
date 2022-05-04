@@ -1,10 +1,8 @@
 @import 'styles/theme';
 
 .base-container {
-  margin-left: auto;
-  padding-left: 50px;
-  margin-right: auto;
-  padding-right: 15px;
-  max-width: $DESKTOP_WIDTH;
+  margin-left: 200px;
+  margin-right: 200px;
   color: $textColor;
+  //background-color: pink;
 }

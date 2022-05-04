@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { api, handleError } from "../../../helpers/api";
 import { AdminCalendar } from "../../ui/calendar/AdminCalendar";
 import { validateCalendar } from "../../../helpers/validations";
+import {Button} from "../../ui/Button";
+import BaseContainer from "../../ui/BaseContainer";
 
 export const TeamCalendarEdit = () => {
   const history = useHistory();
@@ -57,10 +59,16 @@ export const TeamCalendarEdit = () => {
 
   return (
     <div>
-      <div>
-        <button onClick={() => doSave()}>save</button>
-        <button onClick={() => history.push("/team/calendar")}>cancel</button>
-      </div>
+      <BaseContainer>
+        <div className="navigation-button-container container">
+          <div className="navigation-button-container title">
+            <h1>Edit Team Calendar</h1>
+          </div>
+          <div className="navigation-button-container button">
+            <Button onClick={() => doSave()}>Save</Button>
+            <Button onClick={() => history.push("/team/calendar")}>Cancel</Button>          </div>
+        </div>
+      </BaseContainer>
       <AdminCalendar startingDate={calendar.startingDate} days={calendar.days} />
     </div>
   );

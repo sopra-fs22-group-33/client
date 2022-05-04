@@ -44,6 +44,14 @@ export const CreateTeam = () => {
 
     return (
         <BaseContainer>
+            <div className="navigation-button-container container">
+                <div className="navigation-button-container title">
+                <h1>Create Team</h1>
+                </div>
+                <div className="navigation-button-container button">
+
+                </div>
+            </div>
             <div className="auth container">
             <div className="auth form">
                 <FormField

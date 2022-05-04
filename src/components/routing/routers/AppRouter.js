@@ -8,10 +8,12 @@ import { AppGuard } from "components/routing/routeProtectors/AppGuard";
 import { UserRouter } from "components/routing/routers/UserRouter";
 import { TeamRouter } from "./TeamRouter";
 import { TeamGuard } from "../routeProtectors/TeamGuard";
+import Header from "../../views/Header";
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
+      <Header height={"100"}/>
       <Switch>
         <Route exact path="/welcome">
           <Welcome />

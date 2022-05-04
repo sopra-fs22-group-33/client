@@ -13,7 +13,6 @@ export const UserCalendar = () => {
                 <h1>User Calendar</h1>
             </div>
             <div className="navigation-button-container button">
-                <Button onClick={() => history.push("/user/teams")}>See Teams</Button>
             </div>
         </div>
 

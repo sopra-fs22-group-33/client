@@ -8,11 +8,15 @@ import {Button} from "components/ui/Button";
 import BaseContainer from "components/ui/BaseContainer";
 
 
+
 const PlayerProfile = ({user}) => (
-    <div className="player-profile">
-        <div className="player-profile id">ID: {user.id}</div>
-        <div className="player-profile username">Email: {user.email}</div>
-        <div className="player-profile online state">Online state: {user.status}</div>
+    <div className="user-profile container">
+        <div className="user-profile label">Email</div>
+        <div className="user-profile text">{user.email}</div>
+        <div className="user-profile label">Username</div>
+        <div className="user-profile text">{user.username}</div>
+        <div className="user-profile label">Online State</div>
+        <div className="user-profile text">{user.status}</div>
     </div>
 );
 
@@ -91,9 +95,11 @@ export const UserProfile = () => {
         <BaseContainer>
             <div className="navigation-button-container container">
                 <div className="navigation-button-container title">
-                    <h1>Profile Page</h1>
+                    <h1>User Profile</h1>
                 </div>
                 <div className="navigation-button-container button">
+                    <Button onClick={() => history.push("/user/teams")}>See Teams</Button>
+
                     <Button onClick={() => history.push("/user/profile/invitations")}>
                         Open Invitations
                     </Button>

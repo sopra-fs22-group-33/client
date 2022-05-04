@@ -5,7 +5,8 @@ import React, {useEffect, useState} from "react";
 import {Spinner} from "../../ui/Spinner";
 import BaseContainer from "../../ui/BaseContainer";
 import {Button} from "../../ui/Button";
-import {TeamInvite} from "./TeamInvite";
+import "styles/views/ProfileInfo.scss";
+
 
 export const TeamProfile = () => {
     const history = useHistory();

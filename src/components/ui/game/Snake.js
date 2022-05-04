@@ -1,4 +1,4 @@
-import {CHUNK_LENGTH} from "./helpers";
+import { CHUNK_LENGTH } from "./helpers";
 
 export class Snake {
   constructor(chunks) {
@@ -22,16 +22,18 @@ export class Snake {
   }
 
   updatePos() {
-    this.chunks.forEach((chunk) => {
-      chunk.x += this.xDir * CHUNK_LENGTH;
-      chunk.y += this.yDir * CHUNK_LENGTH;
-    });
-    if (this.status === "ate") {
-      const last = this.chunks[this.chunks.length - 1];
-      this.chunks.push({
-        x: last.x - this.xDir * CHUNK_LENGTH,
-        y: last.y - this.yDir * CHUNK_LENGTH,
-      });
+    console.log(this.status);
+    const oldHead = this.chunks[0];
+    const newHead = [
+      {
+        x: oldHead.x + CHUNK_LENGTH * this.xDir,
+        y: oldHead.y + CHUNK_LENGTH * this.yDir,
+      },
+    ];
+    if (this.status !== "ate") {
+      this.chunks.pop();
     }
+
+    this.chunks = newHead.concat(this.chunks);
   }
 }

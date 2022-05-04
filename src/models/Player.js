@@ -1,15 +1,22 @@
-import { CHUNK_LENGTH } from "./helpers";
+import { CHUNK_LENGTH } from "../components/ui/game/helpers";
 
-export class Snake {
-  constructor(chunks) {
-    this.chunks = chunks;
+/**
+ * Snake/Player model
+ */
+export class Player {
+  constructor(data = {}) {
+    this.id = null;
+    this.chunks = null;
     this.status = null;
+    this.rank = null;
 
     this.xDir = undefined;
     this.yDir = undefined;
 
     this.xPos = undefined;
     this.yPos = undefined;
+
+    Object.assign(this, data);
   }
 
   setDir(xDir, yDir) {
@@ -22,7 +29,6 @@ export class Snake {
   }
 
   updatePos() {
-    console.log(this.status);
     const oldHead = this.chunks[0];
     const newHead = [
       {

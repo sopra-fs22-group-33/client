@@ -4,7 +4,7 @@ import { Button } from "components/ui/Button";
 import "styles/views/Auth.scss";
 import PropTypes from "prop-types";
 import { Chunk } from "../ui/game/Chunk";
-import { Snake } from "../ui/game/Snake";
+import { Player } from "../../models/Player";
 import { deserialize, serialize } from "../ui/game/helpers";
 import BaseContainer from "../ui/BaseContainer";
 
@@ -20,7 +20,7 @@ const GameBoard = (props) => {
         background: "black",
       }}
     >
-      {props.snake.chunks.map((chunk) => (
+      {props.player.chunks.map((chunk) => (
         <Chunk x={chunk.x} y={chunk.y} background={"green"} />
       ))}
       {props.apples.map((apple) => (
@@ -31,7 +31,7 @@ const GameBoard = (props) => {
 };
 
 GameBoard.propTypes = {
-  snake: PropTypes.objectOf(Snake),
+  player: PropTypes.objectOf(Player),
   apples: PropTypes.arrayOf(Chunk),
 };
 
@@ -43,8 +43,8 @@ export class Game extends React.Component {
     };
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.snake = new Snake([{ x: 100, y: 100 }]);
-    this.mockStartGame();
+    this.player = null;
+    this.doStartGame();
   }
 
   componentDidMount() {
@@ -56,7 +56,7 @@ export class Game extends React.Component {
   }
 
   handleKeyDown(ev) {
-    const [oldX, oldY] = this.snake.getDir();
+    const [oldX, oldY] = this.player.getDir();
     let [newX, newY] = [0, 0];
     switch (ev.code) {
       case "KeyA":
@@ -75,43 +75,54 @@ export class Game extends React.Component {
       case "ArrowDown":
         newY = 1;
         break;
+      default:
+        return;
     }
     if (
       (newX !== oldX || newY !== oldY) &&
       (newY !== -1 * oldY ||
         newX !== -1 * oldX) /* prevent snake moving into itself */
     ) {
-      this.snake.setDir(newX, newY);
+      this.player.setDir(newX, newY);
     }
-    this.snake.updatePos();
+    this.player.updatePos();
     this.doUpdate();
   }
 
   async doUpdate() {
     try {
       const requestBody = JSON.stringify({
-        chunks: serialize(this.snake.chunks),
+        chunks: serialize(this.player.chunks),
       });
-      await api.put(`/games/${this.gameId}/${this.playerId}`, requestBody);
-      const response = await api.get(`/games/${this.gameId}/${this.playerId}`);
+      await api.put(`/games/${this.gameId}/${this.player.id}`, requestBody);
 
-      this.snake.chunks = deserialize(response.data.players[0].chunks);
-      this.snake.status = response.data.players[0].status;
+      const response = await api.get(`/games/${this.gameId}/${this.player.id}`);
+
+      const playerData = response.data.players.filter(
+        (player) => player.id === this.player.id
+      )[0];
+      this.player.chunks = deserialize(playerData.chunks);
+      this.player.status = playerData.status;
+
       this.setState({ apples: deserialize(response.data.apples) });
     } catch (e) {
       console.log(e);
     }
   }
 
-  mockStartGame = async () => {
-    const response = await api.get("/games");
+  doStartGame = async () => {
+    console.log("starting game");
+    const response = await api.get(
+      `/users/${localStorage.getItem("id")}/games`
+    );
 
+    // todo: let choose
     const game = response.data[0];
-
     this.gameId = game.id;
-    this.playerId = game.players[0].id;
-    this.snake.chunks = deserialize(game.players[0].chunks);
-    this.snake.status = game.players[0].status;
+
+    // todo: filter based on stored userId
+    this.player = new Player(game.players[0]);
+    this.player.chunks = deserialize(this.player.chunks);
     this.setState({ apples: deserialize(game.apples) });
   };
 
@@ -119,12 +130,12 @@ export class Game extends React.Component {
     let content = <div>waiting for apples</div>;
 
     if (this.state.apples) {
-      content = <GameBoard snake={this.snake} apples={this.state.apples} />;
+      content = <GameBoard player={this.player} apples={this.state.apples} />;
     }
     return (
       <BaseContainer>
         <h1>Game</h1>
-        <Button onClick={() => this.mockStartGame()}>Restart Game</Button>
+        <Button onClick={() => this.doStartGame()}>Restart Game</Button>
         {content}
       </BaseContainer>
     );

@@ -56,28 +56,34 @@ export class Game extends React.Component {
   }
 
   handleKeyDown(ev) {
+    const [oldX, oldY] = this.snake.getDir();
+    let [newX, newY] = [0, 0];
     switch (ev.code) {
       case "KeyA":
       case "ArrowLeft":
-        this.snake.setDir(-1, 0);
-        this.snake.updatePos();
+        newX = -1;
         break;
       case "KeyD":
       case "ArrowRight":
-        this.snake.setDir(1, 0);
-        this.snake.updatePos();
+        newX = 1;
         break;
       case "KeyW":
       case "ArrowUp":
-        this.snake.setDir(0, -1);
-        this.snake.updatePos();
+        newY = -1;
         break;
       case "KeyS":
       case "ArrowDown":
-        this.snake.setDir(0, 1);
-        this.snake.updatePos();
+        newY = 1;
         break;
     }
+    if (
+      (newX !== oldX || newY !== oldY) &&
+      (newY !== -1 * oldY ||
+        newX !== -1 * oldX) /* prevent snake moving into itself */
+    ) {
+      this.snake.setDir(newX, newY);
+    }
+    this.snake.updatePos();
     this.doUpdate();
   }
 

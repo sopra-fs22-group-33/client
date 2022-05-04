@@ -23,6 +23,11 @@ const GameBoard = (props) => {
       {props.player.chunks.map((chunk) => (
         <Chunk x={chunk.x} y={chunk.y} background={"green"} />
       ))}
+      {props.playerFoes.map((player) =>
+        player.chunks.map((chunk) => (
+          <Chunk x={chunk.x} y={chunk.y} background={"orange"} />
+        ))
+      )}
       {props.apples.map((apple) => (
         <Chunk x={apple.x} y={apple.y} background={"red"} />
       ))}
@@ -32,6 +37,7 @@ const GameBoard = (props) => {
 
 GameBoard.propTypes = {
   player: PropTypes.objectOf(Player),
+  playerFoes: PropTypes.arrayOf(Player),
   apples: PropTypes.arrayOf(Chunk),
 };
 
@@ -44,6 +50,7 @@ export class Game extends React.Component {
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.player = null;
+    this.playerFoes = [];
     this.doStartGame();
   }
 
@@ -98,11 +105,24 @@ export class Game extends React.Component {
 
       const response = await api.get(`/games/${this.gameId}/${this.player.id}`);
 
-      const playerData = response.data.players.filter(
-        (player) => player.id === this.player.id
-      )[0];
-      this.player.chunks = deserialize(playerData.chunks);
-      this.player.status = playerData.status;
+      const game = response.data;
+
+      for (let d = 0; d < game.players.length; d++) {
+        const player = game.players[d];
+
+        if (this.player.id === player.id) {
+          this.player.chunks = deserialize(player.chunks);
+          this.player.status = player.status;
+        } else {
+          for (let p = 0; p < this.playerFoes.length; p++) {
+            const playerFoe = this.playerFoes[p];
+            if (playerFoe.id === player.id) {
+              playerFoe.chunks = deserialize(player.chunks);
+              playerFoe.status = player.status;
+            }
+          }
+        }
+      }
 
       this.setState({ apples: deserialize(response.data.apples) });
     } catch (e) {
@@ -121,8 +141,15 @@ export class Game extends React.Component {
     this.gameId = game.id;
 
     // todo: filter based on stored userId
-    this.player = new Player(game.players[0]);
+    this.player = new Player(game.players.pop());
     this.player.chunks = deserialize(this.player.chunks);
+
+    for (let p = 0; p < game.players.length; p++) {
+      const player = new Player(game.players[p]);
+      player.chunks = deserialize(player.chunks);
+      this.playerFoes.push(player);
+    }
+
     this.setState({ apples: deserialize(game.apples) });
   };
 
@@ -130,7 +157,13 @@ export class Game extends React.Component {
     let content = <div>waiting for apples</div>;
 
     if (this.state.apples) {
-      content = <GameBoard player={this.player} apples={this.state.apples} />;
+      content = (
+        <GameBoard
+          player={this.player}
+          playerFoes={this.playerFoes}
+          apples={this.state.apples}
+        />
+      );
     }
     return (
       <BaseContainer>

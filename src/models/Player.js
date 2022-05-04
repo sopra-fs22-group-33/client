@@ -6,7 +6,7 @@ import { CHUNK_LENGTH } from "../components/ui/game/helpers";
 export class Player {
   constructor(data = {}) {
     this.id = null;
-    this.chunks = null;
+    this.chunks = [];
     this.status = null;
     this.rank = null;
 

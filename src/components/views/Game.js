@@ -98,17 +98,15 @@ export class Game extends React.Component {
   }
 
   mockStartGame = async () => {
-    const requestBody = JSON.stringify({
-      players: [{ chunks: [{ x: 0, y: 0 }] }],
-    });
-    const response = await api.post("/games", requestBody);
+    const response = await api.get("/games");
 
-    this.gameId = response.data.id;
-    this.playerId = response.data.players[0].id;
-    this.snake.chunks = deserialize(response.data.players[0].chunks);
-    this.snake.status = response.data.players[0].status;
-    this.setState({ apples: deserialize(response.data.apples) });
-    console.log(this.state.apples);
+    const game = response.data[0];
+
+    this.gameId = game.id;
+    this.playerId = game.players[0].id;
+    this.snake.chunks = deserialize(game.players[0].chunks);
+    this.snake.status = game.players[0].status;
+    this.setState({ apples: deserialize(game.apples) });
   };
 
   render() {

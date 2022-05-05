@@ -5,8 +5,8 @@ import { DAY_HEIGHT, SLOT_SCALING } from "./config";
 import { AdminSlot } from "./AdminSlot";
 import Box from "@mui/material/Box";
 import { randomId } from "../../../helpers/validations";
-import CalendarGlobal from "./CalendarGlobal";
-import CalendarEventDispatcher from "./CalendarEventDispatcher";
+import calendarGlobal from "./calendarGlobal";
+import CalendarEventDispatcher from "./calendarEventDispatcher";
 
 export class AdminDay extends React.Component {
   constructor(props) {
@@ -57,7 +57,7 @@ export class AdminDay extends React.Component {
   onSlotDeleted() {
     const previousLength = this.state.slots.length;
     const filteredSlots = this.state.slots.filter(
-      (o) => o.id !== CalendarGlobal.getSelectedSlot()
+      (o) => o.id !== calendarGlobal.getSelectedSlot()
     );
     if (filteredSlots.length === previousLength) {
       return;
@@ -76,13 +76,13 @@ export class AdminDay extends React.Component {
 
       id: newId,
     });
-    CalendarGlobal.setSelectedSlot(newId);
+    calendarGlobal.setSelectedSlot(newId);
     CalendarEventDispatcher.dispatch("onSlotSelected");
   }
 
   render() {
     return (
-      <Grid item xs={12 / 7}>
+      <Grid item xs={12 / 5}>
         <Box sx={{ width: 1 }} style={{ background: "gray" }}>
           weekday: {this.props.weekday}
         </Box>

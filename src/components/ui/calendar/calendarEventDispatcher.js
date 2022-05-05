@@ -3,9 +3,9 @@ const _events = {};
 /**
  * Framework for creating event topics, subscribing to topics and dispatching events
  *
- * @type {{dispatch: EventDispatcher.dispatch, createTopic: EventDispatcher.createTopic, subscribe: EventDispatcher.subscribe}}
+ * @type {{dispatch: calendarEventDispatcher.dispatch, createTopic: calendarEventDispatcher.createTopic, subscribe: calendarEventDispatcher.subscribe}}
  */
-const EventDispatcher = {
+const calendarEventDispatcher = {
   /**
    * Create new event type
    *
@@ -38,5 +38,5 @@ const EventDispatcher = {
     }
   },
 };
-Object.freeze(EventDispatcher);
-export default EventDispatcher;
+Object.freeze(calendarEventDispatcher);
+export default calendarEventDispatcher;

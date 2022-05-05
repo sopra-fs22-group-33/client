@@ -2,9 +2,15 @@
 
 .team {
   &.container {
-    min-height: 150px;
-    margin-bottom: 24px;
-    //background-color: lightgrey;
+    &:hover {
+      transform: translateY(-3px);
+      opacity: 0.4;
+    }
+    //min-height: 150px;
+    margin-bottom: 1.5%;
+    background-color: #F5F5F5 ;
+    padding-top: 1.5%;
+    border-radius: 20px;
   }
   &.name {
     font-size: 24px;
@@ -19,18 +25,21 @@
 
   &.member {
     &.container {
+      &:hover {
+        transform: none;
+        opacity:100;
+      }
       //background: aqua;
-      width: 200px;
+      width: 12.5%;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-right: 25px;
+      margin-right: 2%;
       flex-direction: column;
     }
   &.icon{
     display: flex;
     justify-content: center;
-
   }
 
     &.icon img{
@@ -41,10 +50,12 @@
     }
 
     &.username{
-
+      font-weight: bolder;
+      padding-bottom: 6px;
     }
     &.email {
-      font-weight: bolder;
+      color: grey;
+      font-size: 12px;
     }
   }
 }

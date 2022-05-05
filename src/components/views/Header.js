@@ -20,15 +20,16 @@ class Header extends React.Component {
         <BurgerMenu />
 
         <div className="header container" style={{ height: this.props.height }}>
+
           <h1 className="header title">Shift Planner</h1>
-          <button
+          <Button
             className="header team"
             onClick={() => this.props.history.push("/user/teams")}
           >
             Current Team: {sessionStorage.getItem("teamId")}
-          </button>
+          </Button>
           <div className="header button">
-            <Button onClick={() => doLogout().then(() => this.props.push("/"))}>
+            <Button onClick={() => doLogout().then(() => this.props.history.push("/"))}>
               Log out
             </Button>
           </div>

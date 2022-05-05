@@ -6,15 +6,19 @@ import {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import {Button} from "components/ui/Button";
 import BaseContainer from "components/ui/BaseContainer";
+import avatar from "../../../images/avatar1.png";
 
 
 
 const PlayerProfile = ({user}) => (
     <div className="user-profile container">
-        <div className="user-profile label">Email</div>
-        <div className="user-profile text">{user.email}</div>
+        <div className="user-profile icon">
+            <img src={avatar} />
+        </div>
         <div className="user-profile label">Username</div>
         <div className="user-profile text">{user.username}</div>
+        <div className="user-profile label">Email</div>
+        <div className="user-profile text">{user.email}</div>
         <div className="user-profile label">Online State</div>
         <div className="user-profile text">{user.status}</div>
     </div>

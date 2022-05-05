@@ -6,34 +6,29 @@
     //background-color:rosybrown;
     flex-direction: column;
   }
+  &.icon {
+
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    margin-top: 50px;
+  }
+
 
   &.text {
-    font-size: 24px;
+    font-size: 16px;
     font-style: $fontDefault;
     margin-bottom: 18px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
   }
 
   &.label {
-    font-size: 24px;
+    font-size: 16px;
     font-weight: bolder;
     font-style: $fontDefault;
     margin-bottom: 6px;
-  }
-
-  &.form {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    width: 60%;
-    max-width: 30em;
-    height: auto;
-    font-size: 16px;
-    font-weight: 300;
-    padding-left: 37px;
-    padding-right: 37px;
-    transition: opacity 0.5s ease, transform 0.5s ease;
   }
 }

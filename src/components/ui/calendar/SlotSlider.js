@@ -7,9 +7,6 @@ import "styles/ui/Calendar.scss";
  * Generic slot slider with functionality required in any calendar
  */
 export class SlotSlider extends React.Component {
-  handleMouseDown(ev) {
-    ev.stopPropagation();
-  }
 
   render() {
     return (
@@ -18,7 +15,7 @@ export class SlotSlider extends React.Component {
         style={this.props.style}
         onClick={this.props.onClick}
         onChange={this.props.onChange}
-        onMouseDown={this.handleMouseDown}
+        onMouseDown={this.props.onMouseDown}
         value={this.props.value}
         valueLabelDisplay={this.props.valueLabelDisplay}
         step={this.props.step}

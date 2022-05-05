@@ -8,23 +8,13 @@ import "styles/ui/Calendar.scss";
  * Generic reused slot component which can calculate its top, height and width
  */
 export class Slot extends React.Component {
-  constructor(props) {
-    super(props);
-    this.id = props.id;
-    this.handleClick = props.handleClick;
-
-    this.state = {
-      timeFrom: props.timeFrom,
-      timeTo: props.timeTo,
-    };
-  }
 
   calcTop() {
-    return SLOT_SCALING * this.state.timeFrom;
+    return SLOT_SCALING * this.props.timeFrom;
   }
 
   calcHeight() {
-    return SLOT_SCALING * (this.state.timeTo - this.state.timeFrom);
+    return SLOT_SCALING * (this.props.timeTo - this.props.timeFrom);
   }
 
   render() {

@@ -46,8 +46,6 @@ export class AdminSlot extends React.Component {
         style={{ background: "gray" }}
         onClick={(ev) => this.handleSlotClick(ev)}
         onMouseDown={(ev) => this.handleMouseDown(ev)}
-        onMouseMove={(ev) => this.handleMouseMove(ev)}
-        onMouseUp={(ev) => this.handleMouseUp(ev)}
       >
         {this.state.isSelected ? (
           <SlotSlider

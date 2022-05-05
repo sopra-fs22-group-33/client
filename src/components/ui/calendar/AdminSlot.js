@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Slot } from "./Slot";
 import { SlotSlider } from "./SlotSlider";
 import { MAX_REQUIREMENT, MIN_REQUIREMENT, SLOT_SCALING } from "./config";
+import calendarGlobal from "./calendarGlobal";
+import calendarEventDispatcher from "./calendarEventDispatcher";
 
 export class AdminSlot extends React.Component {
   constructor(props) {
@@ -21,20 +23,17 @@ export class AdminSlot extends React.Component {
       timeFrom: props.timeFrom,
       timeTo: props.timeTo,
       requirement: props.requirement ? props.requirement : 1,
-
-      isSelected: false,
     };
   }
 
   handleSlotMouseDown(ev) {
     // prevent creation of new slot
     ev.stopPropagation();
-    if (this.state.isSelected) {
-      window.addEventListener("mouseup", this.handleGlobalMouseUp);
-      window.addEventListener("mousemove", this.handleGlobalMouseMove);
-      this.isDragged = true;
-      this.setState({ isSelected: false });
-    }
+    calendarGlobal.setSelectedSlot(this.id);
+    calendarEventDispatcher.dispatch("onSlotSelected");
+    window.addEventListener("mouseup", this.handleGlobalMouseUp);
+    window.addEventListener("mousemove", this.handleGlobalMouseMove);
+    this.isDragged = true;
   }
 
   handleGlobalMouseMove(ev) {
@@ -46,24 +45,20 @@ export class AdminSlot extends React.Component {
   }
 
   handleGlobalMouseUp(ev) {
-    if (this.isDragged) {
-      window.removeEventListener("mouseup", this.handleGlobalMouseUp);
-      window.removeEventListener("mousemove", this.handleGlobalMouseUp);
-      this.isDragged = false;
-      this.setState({ isSelected: true });
+    window.removeEventListener("mouseup", this.handleGlobalMouseUp);
+    window.removeEventListener("mousemove", this.handleGlobalMouseUp);
+    this.isDragged = false;
 
-      let from = Math.floor(this.state.timeFrom),
-        to = Math.ceil(this.state.timeTo);
-      if (to - from < 1) {
-        to = from + 1;
-      }
-      this.setState({ timeFrom: from, timeTo: to });
+    let from = Math.floor(this.state.timeFrom),
+      to = Math.ceil(this.state.timeTo);
+    if (to - from < 1) {
+      to = from + 1;
     }
+    this.setState({ timeFrom: from, timeTo: to });
   }
 
   handleSlotClick(ev) {
     ev.stopPropagation();
-    this.setState({ isSelected: true });
   }
 
   handleSliderChange(ev, value) {
@@ -82,16 +77,22 @@ export class AdminSlot extends React.Component {
   }
 
   render() {
-
     return (
       <Slot
-        style={{ background: this.state.isSelected ? "rgba(0, 0, 255, ".concat(this.state.requirement/MAX_REQUIREMENT, ")" ) : null}}
+        style={{
+          background: !this.isDragged
+            ? "rgba(50, 0, 255, ".concat(
+                (this.state.requirement / MAX_REQUIREMENT).toString(),
+                ")"
+              )
+            : null,
+        }}
         timeFrom={this.state.timeFrom}
         timeTo={this.state.timeTo}
         onClick={(ev) => this.handleSlotClick(ev)}
         onMouseDown={(ev) => this.handleSlotMouseDown(ev)}
       >
-        {this.state.isSelected ? (
+        {this.id === calendarGlobal.getSelectedSlot() ? (
           <SlotSlider
             style={{
               position: "relative",

@@ -55,6 +55,7 @@ export class AdminDay extends React.Component {
   }
 
   onSlotDeleted() {
+    console.log("deleting")
     const previousLength = this.state.slots.length;
     const filteredSlots = this.state.slots.filter(
       (o) => o.id !== calendarGlobal.getSelectedSlot()

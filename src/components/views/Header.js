@@ -1,45 +1,45 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "styles/views/Header.scss";
-import {doLogout, doChangeTeam} from "../../helpers/api";
-import {Button} from "components/ui/Button";
+import { doLogout } from "../../helpers/api";
+import { Button } from "components/ui/Button";
 import BurgerMenu from "components/views/BurgerMenu.js";
-import {useHistory} from "react-router-dom";
+import globalEventDispatcher from "../../helpers/globalEventDispatcher";
+import { withRouter } from "react-router-dom";
 
+class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    globalEventDispatcher.createTopic("onTeamIdChanged");
+    globalEventDispatcher.subscribe("onTeamIdChanged", this, this.render);
+  }
 
-/**
- * This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.
- * Conceptually, components are like JavaScript functions. They accept arbitrary inputs (called “props”) and return React elements describing what should appear on the screen.
- * They are reusable pieces, and think about each piece in isolation.
- * Functional components have to return always something. However, they don't need a "render()" method.
- * https://reactjs.org/docs/components-and-props.html
- * @FunctionalComponent
- */
-const Header = (props) => {
-
-    const history = useHistory();
+  render() {
     return (
-        < div>
-            < BurgerMenu> < /BurgerMenu>
+      <div>
+        <BurgerMenu />
 
-            <div className="header container" style={{height: props.height}}>
-                <h1 className="header title">Shift Planner</h1>
-                <button className="header team" onClick={() => history.push("/user/teams")}>Current
-                    Team: {localStorage.getItem('teamId')}</button>
-                <div className="header button">
-                    <Button onClick={() => doLogout().then(() => history.push("/"))}>Log out</Button>
-                </div>
-            </div>
+        <div className="header container" style={{ height: this.props.height }}>
+          <h1 className="header title">Shift Planner</h1>
+          <button
+            className="header team"
+            onClick={() => this.props.history.push("/user/teams")}
+          >
+            Current Team: {localStorage.getItem("teamId")}
+          </button>
+          <div className="header button">
+            <Button onClick={() => doLogout().then(() => this.props.push("/"))}>
+              Log out
+            </Button>
+          </div>
         </div>
+      </div>
     );
-};
-
+  }
+}
 
 Header.propTypes = {
-    height: PropTypes.string
+  height: PropTypes.string,
 };
 
-/**
- * Don't forget to export your component!
- */
-export default Header;
+export default withRouter(Header);

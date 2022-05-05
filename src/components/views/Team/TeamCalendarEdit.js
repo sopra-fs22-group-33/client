@@ -68,8 +68,8 @@ export const TeamCalendarEdit = () => {
             <Button onClick={() => doSave()}>Save</Button>
             <Button onClick={() => history.push("/team/calendar")}>Cancel</Button>          </div>
         </div>
+        <AdminCalendar startingDate={calendar.startingDate} days={calendar.days} />
       </BaseContainer>
-      <AdminCalendar startingDate={calendar.startingDate} days={calendar.days} />
     </div>
   );
 };

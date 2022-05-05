@@ -71,13 +71,11 @@ export const TeamCalendar = () => {
                         <Button onClick={() => history.push("/team/profile")}>Team Profile</Button>
                     </div>
                 </div>
-            </BaseContainer>
-            <div>
                 <MemberCalendar
                     startingDate={calendar.startingDate}
                     days={calendar.days}
                 />
-            </div>
+            </BaseContainer>
         </div>
 
     );

@@ -32,7 +32,7 @@ export const Team = ({team, getTeam}) => (
 export const TeamMember = ({teamMember}) => (
     <div className="team member container">
         <div className="team member icon">
-        <img  src={avatar}/>
+            <img src={avatar}/>
         </div>
         <div className="team member email">{teamMember.email}</div>
         <div className="team member username">{teamMember.name}</div>

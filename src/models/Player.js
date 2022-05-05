@@ -11,6 +11,7 @@ export class Player {
     this.status = null;
     // rank is used to display winner
     this.rank = null;
+    this.user = null;
 
     this.xDir = undefined;
     this.yDir = undefined;

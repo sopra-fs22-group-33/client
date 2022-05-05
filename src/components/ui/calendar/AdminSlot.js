@@ -45,16 +45,20 @@ export class AdminSlot extends React.Component {
   }
 
   handleGlobalMouseUp(ev) {
-    window.removeEventListener("mouseup", this.handleGlobalMouseUp);
-    window.removeEventListener("mousemove", this.handleGlobalMouseUp);
-    this.isDragged = false;
+    if (this.isDragged) {
+      window.removeEventListener("mouseup", this.handleGlobalMouseUp);
+      window.removeEventListener("mousemove", this.handleGlobalMouseUp);
+      this.isDragged = false;
 
-    let from = Math.floor(this.state.timeFrom),
-      to = Math.ceil(this.state.timeTo);
-    if (to - from < 1) {
-      to = from + 1;
+      let from = Math.floor(this.state.timeFrom),
+        to = Math.ceil(this.state.timeTo);
+      if (to - from < 1) {
+        to = from + 1;
+      }
+      this.slot.timeFrom = from;
+      this.slot.timeTo = to;
+      this.setState({ timeFrom: from, timeTo: to });
     }
-    this.setState({ timeFrom: from, timeTo: to });
   }
 
   handleSlotClick(ev) {
@@ -79,6 +83,7 @@ export class AdminSlot extends React.Component {
   render() {
     return (
       <Slot
+        sx={this.props.sx}
         style={{
           background: !this.isDragged
             ? "rgba(50, 0, 255, ".concat(

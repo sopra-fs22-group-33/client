@@ -1,7 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
-import { SLOT_SCALING } from "./config";
+import {SLOT_REL_WIDTH, SLOT_SCALING} from "./config";
 import "styles/ui/Calendar.scss";
 
 /**
@@ -23,8 +23,9 @@ export class Slot extends React.Component {
         sx={{
           position: "absolute",
           height: this.calcHeight(),
-          width: 3 / 4,
           top: this.calcTop(),
+          width: this.props.sx.width ? this.props.sx.width : SLOT_REL_WIDTH,
+          left: this.props.sx.left,
         }}
         style={this.props.style} /* overrides */
         onMouseDown={this.props.onMouseDown}

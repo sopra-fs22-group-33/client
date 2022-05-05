@@ -1,12 +1,13 @@
 import * as React from "react";
 import { Grid } from "@mui/material";
 import PropTypes from "prop-types";
-import { DAY_HEIGHT, SLOT_SCALING } from "./config";
+import {DAY_HEIGHT, SLOT_REL_WIDTH, SLOT_SCALING} from "./config";
 import { AdminSlot } from "./AdminSlot";
 import Box from "@mui/material/Box";
 import { randomId } from "../../../helpers/validations";
 import calendarGlobal from "./calendarGlobal";
 import CalendarEventDispatcher from "./calendarEventDispatcher";
+import {valueToStrPercent} from "../../../helpers/valueToStrPercent";
 
 export class AdminDay extends React.Component {
   constructor(props) {
@@ -19,6 +20,7 @@ export class AdminDay extends React.Component {
     this.ref = undefined;
 
     this.state = {
+      //slots: this.handleOverlap(JSON.parse(JSON.stringify(props.slots))),
       slots: props.slots,
     };
 
@@ -55,7 +57,7 @@ export class AdminDay extends React.Component {
   }
 
   onSlotDeleted() {
-    console.log("deleting")
+    console.log("deleting");
     const previousLength = this.state.slots.length;
     const filteredSlots = this.state.slots.filter(
       (o) => o.id !== calendarGlobal.getSelectedSlot()
@@ -81,9 +83,46 @@ export class AdminDay extends React.Component {
     CalendarEventDispatcher.dispatch("onSlotSelected");
   }
 
+  handleOverlap(slots) {
+    if (slots.length === 0) {
+      return slots;
+    }
+    const newSlots = [];
+    const overlap = [];
+    let evaluated, slot;
+    let s, count;
+    while (slots.length > 0) {
+      evaluated = slots.pop();
+      overlap.push(evaluated);
+
+      for (s = 0; s < slots.length; s++) {
+        slot = slots.pop();
+        if (evaluated.timeFrom <= slot.timeFrom && evaluated.timeTo > slot.timeTo) {
+          console.log("overlap")
+          overlap.push(slot);
+        } else {
+          slots.push(slot);
+        }
+      }
+      count = overlap.length;
+      s = 0;
+      while (overlap.length > 0) {
+        slot = overlap.pop();
+        slot.width = valueToStrPercent(SLOT_REL_WIDTH/count);
+        slot.left = valueToStrPercent(s * SLOT_REL_WIDTH/count);
+        newSlots.push(slot);
+        s ++;
+      }
+    }
+    if (newSlots.length > 0) {
+      console.log(newSlots);
+    }
+    return newSlots;
+  }
+
   render() {
     return (
-      <Grid item xs={12 / 5}>
+      <Grid item xs={12 / 7}>
         <Box sx={{ width: 1 }} style={{ background: "gray" }}>
           weekday: {this.props.weekday}
         </Box>
@@ -92,9 +131,9 @@ export class AdminDay extends React.Component {
             if (!el) return;
             this.ref = el;
           }}
-          sx={{ width: 1 / 7 }}
-          style={{
+          sx={{
             position: "absolute",
+            width: 1 / 10,
             height: DAY_HEIGHT,
             background: "lightgray",
           }}
@@ -105,6 +144,8 @@ export class AdminDay extends React.Component {
           {this.state.slots.map((slot) => (
             <AdminSlot
               slot={slot}
+              sx = {{width: slot.width, left: slot.left}}
+
               timeFrom={slot.timeFrom}
               timeTo={slot.timeTo}
               schedules={slot.schedules}

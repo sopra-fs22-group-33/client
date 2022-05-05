@@ -1,0 +1,10 @@
+@import 'styles/theme';
+
+.calendar {
+  &.slot {
+    background: rgba(100, 100, 100, 0.3); /* alpha to show hour-lines behind without affecting children */
+  }
+  &.slot-slider {
+    background: white;
+  }
+}

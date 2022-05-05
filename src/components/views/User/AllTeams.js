@@ -7,6 +7,7 @@ import "styles/ui/NavigationButtonContainer.scss"
 import BaseContainer from "../../ui/BaseContainer";
 import {Button} from "../../ui/Button";
 import avatar from "../../../images/avatar1.png"
+import globalEventDispatcher from "../../../helpers/globalEventDispatcher";
 
 
 //component for a TEAM
@@ -14,6 +15,7 @@ export const Team = ({team, getTeam}) => (
 
     <ul className="team container" onClick={() => {
         sessionStorage.setItem("teamId", team.id);
+        globalEventDispatcher.dispatch("onTeamIdChanged");
         getTeam()
     }}>
         <div className="team name">{team.name} </div>

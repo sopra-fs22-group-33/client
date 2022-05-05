@@ -7,7 +7,9 @@ export class Player {
   constructor(data = {}) {
     this.id = null;
     this.chunks = [];
+    // isDead or ate something
     this.status = null;
+    // rank is used to display winner
     this.rank = null;
 
     this.xDir = undefined;

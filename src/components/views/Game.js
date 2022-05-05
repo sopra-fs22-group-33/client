@@ -133,7 +133,7 @@ export class Game extends React.Component {
   doStartGame = async () => {
     console.log("starting game");
     const response = await api.get(
-      `/users/${localStorage.getItem("id")}/games`
+      `/users/${sessionStorage.getItem("id")}/games`
     );
 
     // todo: let choose

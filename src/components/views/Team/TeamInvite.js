@@ -13,10 +13,10 @@ export const TeamInvite = () => {
         try {
             const requestBody = JSON.stringify({email});
             await api.post(
-                `/teams/${localStorage.getItem("teamId")}/users`,
+                `/teams/${sessionStorage.getItem("teamId")}/users`,
                 requestBody,
                 {
-                    headers: {token: localStorage.getItem("token")},
+                    headers: {token: sessionStorage.getItem("token")},
                 }
             );
 

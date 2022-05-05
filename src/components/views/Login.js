@@ -19,8 +19,8 @@ export const Login = (props) => {
 
             const user = new User(response.data);
             user.token = getToken(response)
-            localStorage.setItem("token", user.token);
-            localStorage.setItem("id", user.id);
+            sessionStorage.setItem("token", user.token);
+            sessionStorage.setItem("id", user.id);
 
             history.push("/user");
         } catch (error) {

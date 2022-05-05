@@ -18,7 +18,7 @@ export const CreateTeam = () => {
             // create new team
             const teamRequestBody = JSON.stringify({ name });
             const response = await api.post("/teams", teamRequestBody, {
-              headers: { token: localStorage.getItem("token") },
+              headers: { token: sessionStorage.getItem("token") },
             });
 
             // create new calendar for the team
@@ -31,7 +31,7 @@ export const CreateTeam = () => {
             await api.post(
               `teams/${response.data.id}/calendars`,
               calendarRequestBody,
-              { headers: { token: localStorage.getItem("token") } }
+              { headers: { token: sessionStorage.getItem("token") } }
             );
 
 

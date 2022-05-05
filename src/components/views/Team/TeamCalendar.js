@@ -15,7 +15,7 @@ export const TeamCalendar = () => {
         async function fetchData() {
             try {
                 const response = await api.get(
-                    `/teams/${localStorage.getItem("teamId")}/calendars`
+                    `/teams/${sessionStorage.getItem("teamId")}/calendars`
                 );
                 console.log(response.data);
 
@@ -39,7 +39,7 @@ export const TeamCalendar = () => {
                 startingDate: calendar.startingDate,
             });
             await api.put(
-                `/teams/${localStorage.getItem("teamId")}/calendars`,
+                `/teams/${sessionStorage.getItem("teamId")}/calendars`,
                 requestBody
             );
 

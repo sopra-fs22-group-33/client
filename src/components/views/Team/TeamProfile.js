@@ -19,9 +19,9 @@ export const TeamProfile = () => {
         const fetchData = async (props) => {
             try {
                 const response = await api.get(
-                    `/teams/${localStorage.getItem("teamId")}/users`,
+                    `/teams/${sessionStorage.getItem("teamId")}/users`,
                     {
-                        headers: {token: localStorage.getItem("token")},
+                        headers: {token: sessionStorage.getItem("token")},
                     }
                 );
                 setUsers(response.data);

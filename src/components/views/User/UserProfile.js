@@ -54,8 +54,8 @@ export const UserProfile = () => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchData() {
             try {
-                const token = localStorage.getItem("token");
-                const id = localStorage.getItem("id")
+                const token = sessionStorage.getItem("token");
+                const id = sessionStorage.getItem("id")
                 const response = await api.get(`/users/${id}`, {
                     headers: {token}
                 });

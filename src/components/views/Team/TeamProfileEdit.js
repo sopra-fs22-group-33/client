@@ -39,11 +39,13 @@ export const TeamProfileEdit = () => {
 
   if (users) {
     content = (
-      <ul>
+        <div className="team container">
+          <ul className="team member-list">
         {users.map((user) => (
           <TeamMember teamMember={user} />
         ))}
       </ul>
+        </div>
     );
   }
 

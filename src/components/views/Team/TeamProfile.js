@@ -43,8 +43,8 @@ export const TeamProfile = () => {
     if (users) {
         // console.log(users);
         content = (
-            <div className="team">
-                <ul className="team member details-list">
+            <div className="team container">
+                <ul className="team member-list">
                     {users.map((teamMember) => (
                         <TeamMember
                             teamMember={teamMember}

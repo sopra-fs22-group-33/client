@@ -37,18 +37,20 @@ export const TeamInvite = () => {
                 <div className="navigation-button-container button">
                 </div>
             </div>
+            <div className="auth container">
             <div className="auth form">
                 <FormField
-                    label="invited user email"
+                    label="User email"
                     value={email}
                     onChange={(n) => setEmail(n)}
                 />
                 <div className="button-container">
-                    <button onClick={doInvite}>invite</button>
-                    <button onClick={() => history.push("/team/profile/edit")}>
-                        cancel
-                    </button>
+                    <Button onClick={doInvite}>Invite</Button>
+                    <Button onClick={() => history.push("/team/profile/edit")}>
+                        Cancel
+                    </Button>
                 </div>
+            </div>
             </div>
         </BaseContainer>
     );

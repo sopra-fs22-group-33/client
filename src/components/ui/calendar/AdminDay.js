@@ -20,7 +20,7 @@ export class AdminDay extends React.Component {
     this.ref = undefined;
 
     this.state = {
-      slots: this.handleOverlap(JSON.parse(JSON.stringify(props.slots))),
+      slots: this.handleOverlap(this.day.slots),
     };
 
     CalendarEventDispatcher.subscribe(
@@ -64,7 +64,7 @@ export class AdminDay extends React.Component {
       return;
     }
     this.day.slots = filteredSlots;
-    this.setState({ slots: this.handleOverlap(JSON.parse(JSON.stringify(filteredSlots))) });
+    this.setState({ slots: this.handleOverlap(this.day.slots) });
   }
 
   appendSlot(timeFrom, timeTo) {
@@ -83,38 +83,64 @@ export class AdminDay extends React.Component {
   }
 
   handleOverlap(slots) {
-    const newSlots = [];
-    const overlap = [];
+    slots.forEach((slot) => {
+      slot.overlapCount = null;
+      slot.left = null;
+      slot.width = null;
+    });
     let evaluated, slot;
-    let s, count;
-    while (slots.length > 0) {
-      evaluated = slots.pop();
-      overlap.push(evaluated);
-
-      while (slots.length > 0) {
-        slot = slots.pop();
+    // calculate overlaps
+    for (evaluated of slots) {
+      if (!evaluated.overlapCount) {
+        evaluated.overlapCount = 1;
+      }
+      for (slot of slots) {
+        if (evaluated === slot) {
+          continue;
+        }
+        if (!slot.overlapCount) {
+          slot.overlapCount = 1;
+        }
+        // check only one subcase to avoid duplication
         if (
+          (evaluated.timeFrom >= slot.timeFrom &&
+            evaluated.timeTo <= slot.timeFrom) ||
           (evaluated.timeFrom <= slot.timeFrom &&
-            evaluated.timeTo > slot.timeFrom) ||
-          (evaluated.timeFrom <= slot.timeTo &&
-            evaluated.timeTo > slot.timeTo)
+            evaluated.timeTo > slot.timeFrom)
         ) {
-          overlap.push(slot);
-        } else {
-          slots.push(slot);
+          evaluated.overlapCount++;
+          slot.overlapCount++;
+
+          evaluated.overlapCount = Math.min(
+            evaluated.overlapCount,
+            slot.overlapCount
+          );
+          slot.overlapCount = Math.min(
+            evaluated.overlapCount,
+            slot.overlapCount
+          );
         }
       }
-      count = overlap.length;
-      s = 0;
-      while (overlap.length > 0) {
-        slot = overlap.pop();
-        slot.width = valueToStrPercent(SLOT_REL_WIDTH / count);
-        slot.left = valueToStrPercent((s * SLOT_REL_WIDTH) / count);
-        newSlots.push(slot);
-        s++;
-      }
     }
-    return newSlots;
+    // set properties
+    let s = 0;
+    for (slot of slots) {
+      if (slot.overlapCount < 2) {
+        continue;
+      }
+      if (slot.overlapCount > 2) {
+        alert("opa, not allowed");
+        slots = slots.filter((o) => o !== slot);
+        slots = this.handleOverlap(slots);
+      }
+      slot.width = valueToStrPercent(SLOT_REL_WIDTH / 2);
+      slot.left = valueToStrPercent((s * SLOT_REL_WIDTH) / 2);
+      // needs resetting, otherwise incremented forever
+      slot.overlapCount = 1;
+      s++;
+    }
+
+    return slots;
   }
 
   render() {
@@ -157,5 +183,5 @@ export class AdminDay extends React.Component {
 }
 
 AdminDay.propTypes = {
-    slots: PropTypes.array,
+  slots: PropTypes.array,
 };

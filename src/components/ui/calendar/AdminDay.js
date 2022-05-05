@@ -51,7 +51,6 @@ export class AdminDay extends React.Component {
   }
 
   onMouseUp(ev) {
-    ev.stopPropagation();
     this.newSlot.timeTo = ev.clientY - this.ref.getBoundingClientRect().y;
   }
 

@@ -2,9 +2,11 @@
 
 .calendar {
   &.slot {
+    user-select: none;
     background: rgba(100, 100, 100, 0.3); /* alpha to show hour-lines behind without affecting children */
   }
   &.slot-slider {
+    user-select: none;
     background: white;
   }
 }

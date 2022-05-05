@@ -51,6 +51,13 @@ export class AdminSlot extends React.Component {
       window.removeEventListener("mousemove", this.handleGlobalMouseUp);
       this.isDragged = false;
       this.setState({ isSelected: true });
+
+      let from = Math.floor(this.state.timeFrom),
+        to = Math.ceil(this.state.timeTo);
+      if (to - from < 1) {
+        to = from + 1;
+      }
+      this.setState({ timeFrom: from, timeTo: to });
     }
   }
 
@@ -70,16 +77,17 @@ export class AdminSlot extends React.Component {
   }
 
   handleSliderMouseDown(ev) {
-    // prevent creation of new slot
+    // prevent creation of new slot and dragging
     ev.stopPropagation();
   }
 
   render() {
+
     return (
       <Slot
+        style={{ background: this.state.isSelected ? "rgba(0, 0, 255, ".concat(this.state.requirement/MAX_REQUIREMENT, ")" ) : null}}
         timeFrom={this.state.timeFrom}
         timeTo={this.state.timeTo}
-        style={{ background: "gray" }}
         onClick={(ev) => this.handleSlotClick(ev)}
         onMouseDown={(ev) => this.handleSlotMouseDown(ev)}
       >

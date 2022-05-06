@@ -139,8 +139,22 @@ export class AdminDay extends React.Component {
       }
     }
 
+    // inverted sorting to put first shift left
+    function compareFunc(b, a) {
+      if (a.timeFrom < b.timeFrom) {
+        return 1;
+      }
+      if (a.timeFrom > b.timeFrom) {
+        return -1;
+      }
+      return 0;
+    }
+
+    slots = slots.sort(compareFunc);
+
     // set properties
     let isPushedRight = false;
+    evaluated = slots[0];
     for (slot of slots) {
       if (slot.overlapCount < 1) {
         continue;
@@ -159,7 +173,10 @@ export class AdminDay extends React.Component {
         slot.left = valueToStrPercent(SLOT_REL_WIDTH / 2);
       }
       //alternate
-      isPushedRight = !isPushedRight;
+      if (evaluated.timeTo <= slot.timeTo) {
+        isPushedRight = !isPushedRight;
+        evaluated = slot;
+      }
     }
 
     return slots;

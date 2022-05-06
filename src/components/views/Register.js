@@ -10,10 +10,12 @@ export const Register = (props) => {
     const history = useHistory();
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
+    const [username, setUsername] = useState(null);
+
 
     const doRegister = async (props) => {
         try {
-            const requestBody = JSON.stringify({email, password});
+            const requestBody = JSON.stringify({email, password, username});
             const response = await api.post("/users", requestBody);
 
             const user = new User(response.data);
@@ -37,13 +39,18 @@ export const Register = (props) => {
                         onChange={(n) => setEmail(n)}
                     />
                     <FormField
+                        label="Username"
+                        value={username}
+                        onChange={(uun) => setUsername(uun)}
+                    />
+                    <FormField
                         label="Password"
                         value={password}
                         onChange={(un) => setPassword(un)}
                     />
                     <div className="auth button-container">
                         <Button
-                            disabled={!email || !password}
+                            disabled={!email || !password || !username}
                             onClick={() => doRegister()}
                         >
                             Register

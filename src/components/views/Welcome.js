@@ -1,6 +1,8 @@
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import { doLogout } from "helpers/api";
+import {Button} from "../ui/Button";
+import BaseContainer from "../ui/BaseContainer";
 
 export const Welcome = () => {
   const history = useHistory();
@@ -12,23 +14,33 @@ export const Welcome = () => {
 
   if (isAuthenticated) {
     content = (
-      <div>
-        <button onClick={() => history.push("/user")}>me</button>
-        <button onClick={() => history.push("/team")}>team</button>
-        <button
-          onClick={() => doLogout().then(() => setIsAuthenticated(false))}
-        >
-          log out
-        </button>
-        <button onClick={() => history.push("/game")}>game</button>
-      </div>
+        <BaseContainer>
+        <div className="navigation-button-container container">
+            <div className="navigation-button-container title">
+                <h1>Welcome!</h1>
+            </div>
+            <div className="navigation-button-container button">
+                <Button onClick={() => history.push("/user")}>Me</Button>
+                <Button onClick={() => history.push("/team")}>Team</Button>
+                <Button onClick={() => history.push("/game")}>Game</Button>
+            </div>
+        </div>
+  </BaseContainer>
     );
   } else {
     content = (
-      <div>
-        <button onClick={() => history.push("/login")}>sign in</button>
-        <button onClick={() => history.push("/register")}>sign up</button>
-      </div>
+        <BaseContainer>
+        <div className="navigation-button-container container">
+            <div className="navigation-button-container title">
+                <h1>Welcome!</h1>
+            </div>
+            <div className="navigation-button-container button">
+                <Button onClick={() => history.push("/login")}>sign in</Button>
+                <Button onClick={() => history.push("/register")}>sign up</Button>
+            </div>
+        </div>
+            Maybe we can just get rid of this view and forward to log in if not authenticated/forward to user calendar if authenticated
+        </BaseContainer>
     );
   }
 

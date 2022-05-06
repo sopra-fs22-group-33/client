@@ -79,12 +79,11 @@ export const UserInvitations = () => {
     if (invitations != null && invitations.length > 0) {
         content = (
             <div>
-                <ul>invitations:</ul>
                 {invitations.map((team) => (
                     <ul>
                         <Team team={team}/>
-                        <button onClick={() => doAccept(team.id)}>accept</button>
-                        <button onClick={() => doDecline(team.id)}>decline</button>
+                        <Button onClick={() => doAccept(team.id)}>Accept</Button>
+                        <Button onClick={() => doDecline(team.id)}>Decline</Button>
                     </ul>
                 ))}
             </div>
@@ -98,8 +97,6 @@ export const UserInvitations = () => {
                     <h1>Invitations</h1>
                 </div>
                 <div className="navigation-button-container button">
-                    <Button onClick={() => history.push("/user/calendar")}>Calendar</Button>
-                    <Button onClick={() => history.push("/user/teams")}>Teams</Button>
                     <Button onClick={() => history.push("/user/profile")}>Back</Button>
                 </div>
             </div>

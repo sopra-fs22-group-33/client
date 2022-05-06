@@ -2,27 +2,60 @@
 
 .team {
   &.container {
-    background: gray;
+    &:hover {
+      transform: translateY(-3px);
+      opacity: 0.4;
+    }
+    //min-height: 150px;
+    margin-bottom: 1.5%;
+    background-color: #F5F5F5 ;
+    padding-top: 1.5%;
+    border-radius: 20px;
   }
   &.name {
-    background: lightgray;
+    font-size: 24px;
+    font-weight: bolder;
+    margin-bottom: 24px;
   }
-  &.id {
-    background: lightgray;
-  }
+
   &.member-list {
-    background: white;
+    flex-direction: row;
+    display: flex;
   }
 
   &.member {
-    &.id {
-      background: orange;
+    &.container {
+      &:hover {
+        transform: none;
+        opacity:100;
+      }
+      //background: aqua;
+      width: 12.5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 2%;
+      flex-direction: column;
     }
-    &.name {
-      background: lightgray;
+  &.icon{
+    display: flex;
+    justify-content: center;
+  }
+
+    &.icon img{
+      width: 80%;
+      height: auto;
+      margin-bottom: 16px;
+      align-self: center;
+    }
+
+    &.username{
+      font-weight: bolder;
+      padding-bottom: 6px;
     }
     &.email {
-      background: lightgray;
+      color: grey;
+      font-size: 12px;
     }
   }
 }

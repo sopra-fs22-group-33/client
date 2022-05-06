@@ -93,7 +93,7 @@ export class AdminDay extends React.Component {
 
       id: newId,
     });
-    this.day.slots = this.handleOverlap(this.state.slots);
+    this.day.slots = this.handleOverlap(this.state.slots, this.state.slots[this.state.slots.length - 1]);
     this.setState({ slots: this.day.slots });
     calendarGlobal.setSelectedSlot(newId);
     CalendarEventDispatcher.dispatch("onSlotSelected");

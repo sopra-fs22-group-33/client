@@ -9,15 +9,19 @@ export const api = axios.create({
 export async function doLogout() {
   try {
     const requestBody = JSON.stringify({ isOnline: false });
-    await api.put("/users/" + localStorage.getItem("id"), requestBody, {
-      headers: { token: localStorage.getItem("token") },
+    await api.put("/users/" + sessionStorage.getItem("id"), requestBody, {
+      headers: { token: sessionStorage.getItem("token") },
     });
   } catch (e) {
     alert(`Something went wrong during logout: \n${handleError(e)}`);
   } finally {
-    localStorage.removeItem("token");
-    localStorage.removeItem("id");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("id");
   }
+}
+
+export async function doChangeTeam() {
+  window.history.push("/users/teams")
 }
 
 export const handleError = (error) => {

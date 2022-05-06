@@ -1,4 +1,4 @@
-import { useHistory , useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {doLogout} from "../../../helpers/api";
 import {Spinner} from 'components/ui/Spinner';
 import PropTypes from "prop-types";
@@ -8,11 +8,15 @@ import {Button} from "components/ui/Button";
 import BaseContainer from "components/ui/BaseContainer";
 
 
+
 const PlayerProfile = ({user}) => (
-    <div className="player-profile">
-        <div className="player-profile id">ID: {user.id}</div>
-        <div className="player-profile username">Email: {user.email}</div>
-        <div className="player-profile online state">Online state: {user.status}</div>
+    <div className="user-profile container">
+        <div className="user-profile label">Email</div>
+        <div className="user-profile text">{user.email}</div>
+        <div className="user-profile label">Username</div>
+        <div className="user-profile text">{user.username}</div>
+        <div className="user-profile label">Online State</div>
+        <div className="user-profile text">{user.status}</div>
     </div>
 );
 
@@ -21,7 +25,7 @@ PlayerProfile.propTypes = {
 };
 
 export const UserProfile = () => {
-  // use react-router-dom's hook to access the history
+    // use react-router-dom's hook to access the history
     const history = useHistory();
 
     const id = useParams();
@@ -50,8 +54,8 @@ export const UserProfile = () => {
         // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
         async function fetchData() {
             try {
-                const token = localStorage.getItem("token");
-                const id = localStorage.getItem("id")
+                const token = sessionStorage.getItem("token");
+                const id = sessionStorage.getItem("id")
                 const response = await api.get(`/users/${id}`, {
                     headers: {token}
                 });
@@ -88,20 +92,21 @@ export const UserProfile = () => {
     ;
 
     return (
-        <BaseContainer className="game container">
-            <div>
-                <button onClick={() => history.push("/user/calendar")}>calendar</button>
-                <button onClick={() => history.push("/user/teams")}>teams</button>
-                <button onClick={() => doLogout().then(() => history.push("/"))}>log out</button>
-            </div>
-            <button onClick={() => history.push("/user/profile/invitations")}>
-                invitations
-            </button>
+        <BaseContainer>
+            <div className="navigation-button-container container">
+                <div className="navigation-button-container title">
+                    <h1>User Profile</h1>
+                </div>
+                <div className="navigation-button-container button">
+                    <Button onClick={() => history.push("/user/teams")}>See Teams</Button>
 
-            <h2>Profile Page</h2>
-            <p className="game paragraph">
-            </p>
+                    <Button onClick={() => history.push("/user/profile/invitations")}>
+                        Open Invitations
+                    </Button>
+                </div>
+            </div>
             {content}
+
         </BaseContainer>
     );
 };

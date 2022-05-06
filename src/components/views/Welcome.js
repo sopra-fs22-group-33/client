@@ -5,7 +5,7 @@ import { doLogout } from "helpers/api";
 export const Welcome = () => {
   const history = useHistory();
   const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("token") && !!localStorage.getItem("id")
+    !!sessionStorage.getItem("token") && !!sessionStorage.getItem("id")
   );
 
   let content;

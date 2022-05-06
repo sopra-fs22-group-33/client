@@ -1,16 +1,21 @@
 import {doLogout} from "../../../helpers/api";
 import { useHistory } from "react-router-dom";
+import BaseContainer from "../../ui/BaseContainer";
+import {Button} from "../../ui/Button";
 
 export const UserCalendar = () => {
   const history = useHistory();
 
   return (
-    <div>
-      <button onClick={() => history.push("/user/profile")}>profile</button>
-      <button onClick={() => history.push("/user/teams")}>teams</button>
-      <button onClick={() => doLogout().then(() => history.push("/"))}>
-        log out
-      </button>
-    </div>
+    <BaseContainer>
+        <div className="navigation-button-container container">
+            <div className="navigation-button-container title">
+                <h1>User Calendar</h1>
+            </div>
+            <div className="navigation-button-container button">
+            </div>
+        </div>
+
+    </BaseContainer>
   );
 };

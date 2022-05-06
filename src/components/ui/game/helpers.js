@@ -1,5 +1,7 @@
 export const CHUNK_LENGTH = 20;
-
+/*
+converts information from backend to what we need in frontend and the other way around
+ */
 export function serialize(chunks) {
   const newChunks = [];
   chunks.forEach((chunk) => {

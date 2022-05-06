@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
  * @returns {JSX.Element|*}
  */
 export const AuthGuard = (props) => {
-  if (!localStorage.getItem("token")) {
+  if (!sessionStorage.getItem("token")) {
     return props.children;
   }
   return <Redirect to="/welcome" />;

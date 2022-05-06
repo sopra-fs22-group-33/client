@@ -32,7 +32,7 @@ export class MemberSlot extends React.Component {
   }
 
   onClick(ev) {
-    const userId = parseInt(localStorage.getItem("id"));
+    const userId = parseInt(sessionStorage.getItem("id"));
     if (!this.state.assigned) {
       this.slot.schedules.push({ special: userId, user: { id: userId } });
     } else {
@@ -45,7 +45,7 @@ export class MemberSlot extends React.Component {
 
   isAssigned() {
     for (const schedule of this.slot.schedules) {
-      if (schedule.special === parseInt(localStorage.getItem("id"))) {
+      if (schedule.special === parseInt(sessionStorage.getItem("id"))) {
         return true;
       }
     }

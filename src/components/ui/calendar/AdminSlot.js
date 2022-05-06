@@ -26,6 +26,14 @@ export class AdminSlot extends React.Component {
     };
   }
 
+  handleHandleMouseDown(ev) {
+    // prevent creation of new slot
+    ev.stopPropagation();
+    window.addEventListener("mouseup", this.handleGlobalMouseUp);
+    window.addEventListener("mousemove", this.handleGlobalMouseMove);
+    this.setState({ isResized: true });
+  }
+
   handleSlotMouseDown(ev) {
     // prevent creation of new slot
     ev.stopPropagation();
@@ -39,23 +47,30 @@ export class AdminSlot extends React.Component {
   handleGlobalMouseMove(ev) {
     if (this.state.isDragged) {
       this.setState({
+        timeFrom: this.state.timeFrom + ev.movementY / SLOT_SCALING,
         timeTo: this.state.timeTo + ev.movementY / SLOT_SCALING,
+      });
+    }
+    if (this.state.isResized) {
+      let to = this.state.timeTo + ev.movementY / SLOT_SCALING;
+      to = (to > this.state.timeFrom) ? to : this.state.timeFrom + 1;
+      this.setState({
+        timeTo: to,
       });
     }
   }
 
   handleGlobalMouseUp(ev) {
     // global, make sure this is being changed
-    if (this.state.isDragged) {
+    if (this.state.isDragged || this.state.isResized) {
       window.removeEventListener("mouseup", this.handleGlobalMouseUp);
       window.removeEventListener("mousemove", this.handleGlobalMouseUp);
-      this.setState({ isDragged: false });
+      this.setState({ isDragged: false, isResized: false });
 
-      let from = Math.floor(this.state.timeFrom),
-        to = Math.ceil(this.state.timeTo);
-      if (to - from < 1) {
-        to = from + 1;
-      }
+      let from = Math.round(this.state.timeFrom);
+      let to = Math.round(this.state.timeTo);
+      from = (from > 0) ? from : 0;
+      to = (to - from >= 1) ? to : from + 1;
       this.slot.timeFrom = from;
       this.slot.timeTo = to;
       this.setState({ timeFrom: from, timeTo: to });
@@ -117,7 +132,11 @@ export class AdminSlot extends React.Component {
               min={MIN_REQUIREMENT}
               max={MAX_REQUIREMENT}
             />
-            <SlotHandle timeFrom={this.state.timeFrom} timeTo={this.state.timeTo}/>
+            <SlotHandle
+              onMouseDown={(ev) => this.handleHandleMouseDown(ev)}
+              timeFrom={this.state.timeFrom}
+              timeTo={this.state.timeTo}
+            />
           </div>
         ) : null}
       </Slot>

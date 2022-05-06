@@ -5,6 +5,7 @@ import { SlotSlider } from "./SlotSlider";
 import { MAX_REQUIREMENT, MIN_REQUIREMENT, SLOT_SCALING } from "./config";
 import calendarGlobal from "./calendarGlobal";
 import calendarEventDispatcher from "./calendarEventDispatcher";
+import { SlotHandle } from "./SlotHandle";
 
 export class AdminSlot extends React.Component {
   constructor(props) {
@@ -100,21 +101,24 @@ export class AdminSlot extends React.Component {
       >
         {!this.state.isDragged &&
         this.id === calendarGlobal.getSelectedSlot() ? (
-          <SlotSlider
-            style={{
-              position: "relative",
-              top: -20 /* easier than trying to find height of slot */,
-            }}
-            onClick={(ev) => this.handleSliderClick(ev)}
-            onChange={(ev, value) => this.handleSliderChange(ev, value)}
-            onMouseDown={(ev) => this.handleSliderMouseDown(ev)}
-            value={this.state.requirement}
-            valueLabelDisplay={"auto"}
-            step={1}
-            marks
-            min={MIN_REQUIREMENT}
-            max={MAX_REQUIREMENT}
-          />
+          <div>
+            <SlotSlider
+              style={{
+                position: "relative",
+                top: -20 /* easier than trying to find height of slot */,
+              }}
+              onClick={(ev) => this.handleSliderClick(ev)}
+              onChange={(ev, value) => this.handleSliderChange(ev, value)}
+              onMouseDown={(ev) => this.handleSliderMouseDown(ev)}
+              value={this.state.requirement}
+              valueLabelDisplay={"auto"}
+              step={1}
+              marks
+              min={MIN_REQUIREMENT}
+              max={MAX_REQUIREMENT}
+            />
+            <SlotHandle timeFrom={this.state.timeFrom} timeTo={this.state.timeTo}/>
+          </div>
         ) : null}
       </Slot>
     );

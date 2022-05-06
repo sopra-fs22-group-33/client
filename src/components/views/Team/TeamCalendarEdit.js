@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { api, handleError } from "../../../helpers/api";
 import { AdminCalendar } from "../../ui/calendar/AdminCalendar";
 import { validateCalendar } from "../../../helpers/validations";
-import {Button} from "../../ui/Button";
+import { Button } from "../../ui/Button";
 import BaseContainer from "../../ui/BaseContainer";
 
 export const TeamCalendarEdit = () => {
@@ -66,10 +66,16 @@ export const TeamCalendarEdit = () => {
           </div>
           <div className="navigation-button-container button">
             <Button onClick={() => doSave()}>Save</Button>
-            <Button onClick={() => history.push("/team/calendar")}>Cancel</Button>          </div>
+            <Button onClick={() => history.push("/team/calendar")}>
+              Cancel
+            </Button>
+          </div>
         </div>
+        <AdminCalendar
+          startingDate={calendar.startingDate}
+          days={calendar.days}
+        />
       </BaseContainer>
-      <AdminCalendar startingDate={calendar.startingDate} days={calendar.days} />
     </div>
   );
 };

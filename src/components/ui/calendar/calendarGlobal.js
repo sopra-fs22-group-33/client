@@ -8,9 +8,9 @@ const _data = {
  *
  * @type {{getSelectedSlot: (function(id): boolean), setSelectedSlot: (function(): id)}}
  */
-const CalendarGlobal = {
+const calendarGlobal = {
   setSelectedSlot: (id) => (_data.selectedSlot = id),
   getSelectedSlot: () => _data.selectedSlot,
 };
-Object.freeze(CalendarGlobal);
-export default CalendarGlobal;
+Object.freeze(calendarGlobal);
+export default calendarGlobal;

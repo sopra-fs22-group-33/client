@@ -4,8 +4,8 @@ import { Grid } from "@mui/material";
 import PropTypes from "prop-types";
 import { DAY_HEIGHT, DAY_SPACING } from "./config";
 import { AdminDay } from "./AdminDay";
-import CalendarEventDispatcher from "./CalendarEventDispatcher";
-import CalendarGlobal from "./CalendarGlobal";
+import calendarEventDispatcher from "./calendarEventDispatcher";
+import calendarGlobal from "./calendarGlobal";
 
 export class AdminCalendar extends React.Component {
   constructor(props) {
@@ -18,10 +18,11 @@ export class AdminCalendar extends React.Component {
       selectedSlot: null,
     };
 
-    CalendarEventDispatcher.createTopic("onSlotSelected");
-    CalendarEventDispatcher.createTopic("onSlotDeleted");
+    calendarEventDispatcher.createTopic("onSlotSelected");
+    calendarEventDispatcher.createTopic("onSlotDeleted");
+    calendarEventDispatcher.createTopic("onSlotUpdated");
 
-    CalendarEventDispatcher.subscribe(
+    calendarEventDispatcher.subscribe(
       "onSlotSelected",
       this,
       this.onSlotSelected
@@ -40,20 +41,19 @@ export class AdminCalendar extends React.Component {
     if (this.state.selectedSlot) {
       // deselect slot
       if (ev.code === "Escape") {
-        CalendarGlobal.setSelectedSlot(null);
+        calendarGlobal.setSelectedSlot(null);
         this.setState({ selectedSlot: null });
       }
       // delete slot
       else if (ev.code === "Backspace" || ev.code === "Delete") {
-        CalendarEventDispatcher.dispatch("onSlotDeleted");
-
+        calendarEventDispatcher.dispatch("onSlotDeleted");
       }
     }
   }
 
   onSlotSelected() {
     // workaround to rerender entire calendar
-    this.setState({ selectedSlot: CalendarGlobal.getSelectedSlot() });
+    this.setState({ selectedSlot: calendarGlobal.getSelectedSlot() });
   }
 
   render() {

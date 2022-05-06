@@ -16,13 +16,12 @@ export class AdminSlot extends React.Component {
     this.handleGlobalMouseUp = this.handleGlobalMouseUp.bind(this);
     this.handleGlobalMouseMove = this.handleGlobalMouseMove.bind(this);
 
-    // no need to rerender on change
-    this.isDragged = false;
-
     this.state = {
       timeFrom: props.timeFrom,
       timeTo: props.timeTo,
       requirement: props.requirement ? props.requirement : 1,
+
+      isDragged: false,
     };
   }
 
@@ -33,11 +32,11 @@ export class AdminSlot extends React.Component {
     calendarEventDispatcher.dispatch("onSlotSelected");
     window.addEventListener("mouseup", this.handleGlobalMouseUp);
     window.addEventListener("mousemove", this.handleGlobalMouseMove);
-    this.isDragged = true;
+    this.setState({ isDragged: true });
   }
 
   handleGlobalMouseMove(ev) {
-    if (this.isDragged) {
+    if (this.state.isDragged) {
       this.setState({
         timeTo: this.state.timeTo + ev.movementY / SLOT_SCALING,
       });
@@ -45,10 +44,11 @@ export class AdminSlot extends React.Component {
   }
 
   handleGlobalMouseUp(ev) {
-    if (this.isDragged) {
+    // global, make sure this is being changed
+    if (this.state.isDragged) {
       window.removeEventListener("mouseup", this.handleGlobalMouseUp);
       window.removeEventListener("mousemove", this.handleGlobalMouseUp);
-      this.isDragged = false;
+      this.setState({ isDragged: false });
 
       let from = Math.floor(this.state.timeFrom),
         to = Math.ceil(this.state.timeTo);
@@ -58,6 +58,7 @@ export class AdminSlot extends React.Component {
       this.slot.timeFrom = from;
       this.slot.timeTo = to;
       this.setState({ timeFrom: from, timeTo: to });
+      calendarEventDispatcher.dispatch("onSlotUpdated");
     }
   }
 
@@ -85,7 +86,7 @@ export class AdminSlot extends React.Component {
       <Slot
         sx={this.props.sx}
         style={{
-          background: !this.isDragged
+          background: !this.state.isDragged
             ? "rgba(50, 0, 255, ".concat(
                 (this.state.requirement / MAX_REQUIREMENT).toString(),
                 ")"
@@ -97,7 +98,8 @@ export class AdminSlot extends React.Component {
         onClick={(ev) => this.handleSlotClick(ev)}
         onMouseDown={(ev) => this.handleSlotMouseDown(ev)}
       >
-        {this.id === calendarGlobal.getSelectedSlot() ? (
+        {!this.state.isDragged &&
+        this.id === calendarGlobal.getSelectedSlot() ? (
           <SlotSlider
             style={{
               position: "relative",

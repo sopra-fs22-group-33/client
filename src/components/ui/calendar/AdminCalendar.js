@@ -20,6 +20,7 @@ export class AdminCalendar extends React.Component {
 
     calendarEventDispatcher.createTopic("onSlotSelected");
     calendarEventDispatcher.createTopic("onSlotDeleted");
+    calendarEventDispatcher.createTopic("onSlotUpdated");
 
     calendarEventDispatcher.subscribe(
       "onSlotSelected",
@@ -46,7 +47,6 @@ export class AdminCalendar extends React.Component {
       // delete slot
       else if (ev.code === "Backspace" || ev.code === "Delete") {
         calendarEventDispatcher.dispatch("onSlotDeleted");
-
       }
     }
   }

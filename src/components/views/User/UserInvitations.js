@@ -13,8 +13,8 @@ export const UserInvitations = () => {
         async function fetchInvitations() {
             try {
                 const response = await api.get(
-                    `/users/${localStorage.getItem("id")}/invitations`,
-                    {headers: {token: localStorage.getItem("token")}}
+                    `/users/${sessionStorage.getItem("id")}/invitations`,
+                    {headers: {token: sessionStorage.getItem("token")}}
                 );
                 console.log(response.data);
                 setInvitations(response.data);
@@ -33,12 +33,12 @@ export const UserInvitations = () => {
     async function doAccept(teamId) {
         try {
             await api.put(
-                `/users/${localStorage.getItem(
+                `/users/${sessionStorage.getItem(
                     "id"
                 )}/invitations/${teamId}?accept=true`,
                 null,
                 {
-                    headers: {token: localStorage.getItem("token")},
+                    headers: {token: sessionStorage.getItem("token")},
                 }
             );
 
@@ -56,10 +56,10 @@ export const UserInvitations = () => {
     async function doDecline(teamId) {
         try {
             await api.put(
-                `/users/${localStorage.getItem("id")}/invitations/${teamId}?accept=false`,
+                `/users/${sessionStorage.getItem("id")}/invitations/${teamId}?accept=false`,
                 null,
                 {
-                    headers: {token: localStorage.getItem("token")},
+                    headers: {token: sessionStorage.getItem("token")},
                 }
             );
 

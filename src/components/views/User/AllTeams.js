@@ -13,7 +13,7 @@ import globalEventDispatcher from "../../../helpers/globalEventDispatcher";
 export const Team = ({team, getTeam}) => (
 
     <ul className="team container" onClick={() => {
-        localStorage.setItem("teamId", team.id);
+        sessionStorage.setItem("teamId", team.id);
         globalEventDispatcher.dispatch("onTeamIdChanged");
         getTeam()
     }}>
@@ -54,9 +54,9 @@ export const AllTeams = () => {
         const fetchData = async (props) => {
             try {
                 const response = await api.get(
-                    `/users/${localStorage.getItem("id")}/teams`,
+                    `/users/${sessionStorage.getItem("id")}/teams`,
                     {
-                        headers: {token: localStorage.getItem("token")},
+                        headers: {token: sessionStorage.getItem("token")},
                     }
                 );
                 setTeams(response.data);

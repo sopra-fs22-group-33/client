@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
  * @returns {JSX.Element|*}
  */
 export const TeamGuard = (props) => {
-  if (localStorage.getItem("teamId")) {
+  if (sessionStorage.getItem("teamId")) {
     return props.children;
   }
   return <Redirect to="/user" />;

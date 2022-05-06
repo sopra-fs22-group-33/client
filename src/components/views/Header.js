@@ -25,7 +25,7 @@ class Header extends React.Component {
             className="header team"
             onClick={() => this.props.history.push("/user/teams")}
           >
-            Current Team: {localStorage.getItem("teamId")}
+            Current Team: {sessionStorage.getItem("teamId")}
           </button>
           <div className="header button">
             <Button onClick={() => doLogout().then(() => this.props.push("/"))}>

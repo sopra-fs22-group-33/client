@@ -24,7 +24,7 @@
   }
 
   &.member {
-    &.container {
+    &.container2 {
       &:hover {
         transform: none;
         opacity:100;
@@ -32,14 +32,15 @@
       //background: aqua;
       width: 12.5%;
       display: flex;
-      justify-content: center;
       align-items: center;
       margin-right: 2%;
+      margin-bottom: 10px;
       flex-direction: column;
     }
   &.icon{
     display: flex;
     justify-content: center;
+
   }
 
     &.icon img{
@@ -56,6 +57,20 @@
     &.email {
       color: grey;
       font-size: 12px;
+      padding-bottom: 8px;
+    }
+
+    &.admin {
+      font-weight: bolder;
+      font-size: 12px;
+      margin-bottom: 6px;
+      color: white;
+      background-color: #648DFF;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      padding-left: 6px;
+      padding-right: 6px;
+      border-radius: 10px;
     }
   }
 }

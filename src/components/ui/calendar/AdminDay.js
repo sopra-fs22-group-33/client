@@ -69,8 +69,8 @@ export class AdminDay extends React.Component {
       window.removeEventListener("mouseup", this.handleGlobalMouseUP);
       window.removeEventListener("mousemove", this.handleGlobalMouseMove);
 
-      let from = this.state.newSlot.timeFrom;
-      let to = this.state.newSlot.timeTo;
+      let from = Math.round(this.state.newSlot.timeFrom);
+      let to = Math.round(this.state.newSlot.timeTo);
 
       // if not at least one hour long, then it's a simple click
       if (to - from >= 1) {

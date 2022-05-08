@@ -13,7 +13,7 @@ export class Calendar extends React.Component {
         <Grid
           container
           spacing={DAY_SPACING}
-          style={{ height: DAY_HEIGHT * 3 }}
+          style={{ height: DAY_HEIGHT * 1.2 }}
         >
           {this.props.children}
         </Grid>

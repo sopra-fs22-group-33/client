@@ -48,6 +48,8 @@ const UserProfileEdit = () => {
           <Button disabled={!username || !email} onClick={() => doSaveEditProfile()}>
             Save
           </Button>
+          <Button onClick={() => history.push("/team/profile")}>Cancel</Button>
+
         </div>
       </div>
     </div>
@@ -60,7 +62,6 @@ const UserProfileEdit = () => {
           <h1>Edit Profile</h1>
         </div>
         <div className="navigation-button-container button">
-          <Button onClick={() => history.push("/user/profile")}>Back</Button>
         </div>
       </div>
       {content}

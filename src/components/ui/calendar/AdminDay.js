@@ -8,6 +8,7 @@ import { randomId } from "../../../helpers/validations";
 import calendarGlobal from "./calendarGlobal";
 import CalendarEventDispatcher from "./calendarEventDispatcher";
 import { valueToStrPercent } from "../../../helpers/valueToStrPercent";
+import { Slot } from "./Slot";
 
 export class AdminDay extends React.Component {
   constructor(props) {
@@ -73,12 +74,11 @@ export class AdminDay extends React.Component {
       let from = this.state.newSlot.timeFrom;
       let to = this.state.newSlot.timeTo;
 
-      // slot is at least one hour long
-      if (to - from < 1) {
-        to = from + 1;
+      // if not at least one hour long, then it's a simple click
+      if (to - from > 1) {
+        this.appendSlot(from, to);
       }
 
-      this.appendSlot(from, to);
       this.setState({ isDrawn: false, newSlot: {} });
     }
   }
@@ -226,18 +226,26 @@ export class AdminDay extends React.Component {
           }}
           onMouseDown={(ev) => this.onMouseDown(ev)}
         >
-          {this.state.slots.map((slot) => (
-            <AdminSlot
-              slot={slot}
-              sx={{ width: slot.width, left: slot.left }}
-              timeFrom={slot.timeFrom}
-              timeTo={slot.timeTo}
-              schedules={slot.schedules}
-              requirement={slot.requirement}
-              id={slot.id}
-              key={slot.id}
-            />
-          ))}
+          <div>
+            {this.state.slots.map((slot) => (
+              <AdminSlot
+                slot={slot}
+                sx={{ width: slot.width, left: slot.left }}
+                timeFrom={slot.timeFrom}
+                timeTo={slot.timeTo}
+                schedules={slot.schedules}
+                requirement={slot.requirement}
+                id={slot.id}
+                key={slot.id}
+              />
+            ))}
+            {this.state.isSlotDrawn ? (
+              <Slot
+                timeFrom={this.state.newSlot.timeFrom}
+                timeTo={this.state.newSlot.timeTo}
+              />
+            ) : null}
+          </div>
         </Box>
       </Grid>
     );

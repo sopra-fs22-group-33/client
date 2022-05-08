@@ -1,7 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
-import {SLOT_REL_WIDTH, PIXEL_TO_HOUR} from "./config";
+import { SLOT_REL_WIDTH, PIXEL_TO_HOUR } from "./config";
 import "styles/ui/Calendar.scss";
 
 /**
@@ -24,8 +24,11 @@ export class Slot extends React.Component {
           position: "absolute",
           height: this.calcHeight(),
           top: this.calcTop(),
-          width: this.props.sx.width ? this.props.sx.width : SLOT_REL_WIDTH,
-          left: this.props.sx.left,
+          width:
+            this.props.sx && this.props.sx.width
+              ? this.props.sx.width
+              : SLOT_REL_WIDTH,
+          left: this.props.sx && this.props.sx.left ? this.props.sx.left : null,
         }}
         style={this.props.style} /* overrides */
         onMouseDown={this.props.onMouseDown}

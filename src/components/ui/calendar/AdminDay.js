@@ -55,12 +55,15 @@ export class AdminDay extends React.Component {
 
   handleGlobalMouseMove(ev) {
     if (this.state.isSlotDrawn) {
-      this.setState({
-        newSlot: {
-          timeFrom: this.state.newSlot.timeFrom,
-          timeTo: this.state.newSlot.timeTo + ev.movementY / PIXEL_TO_HOUR,
-        },
-      });
+      const to = this.state.newSlot.timeTo + ev.movementY / PIXEL_TO_HOUR;
+      if (to <= 24) {
+        this.setState({
+          newSlot: {
+            timeFrom: this.state.newSlot.timeFrom,
+            timeTo: to,
+          },
+        });
+      }
     }
   }
 
@@ -155,7 +158,7 @@ export class AdminDay extends React.Component {
 }
 
 AdminDay.propTypes = {
-  id: PropTypes.number.isRequired,
-  day: PropTypes.object.isRequired,
-  slots: PropTypes.array,
+    id: PropTypes.number.isRequired,
+    day: PropTypes.object.isRequired,
+    slots: PropTypes.array,
 };

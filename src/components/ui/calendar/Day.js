@@ -4,6 +4,13 @@ import PropTypes from "prop-types";
 import { DAY_HEIGHT, SLOT_REL_WIDTH } from "./config";
 import Box from "@mui/material/Box";
 
+/**
+ * Takes slots and assigns left and width style properties to overlapping slots
+ *
+ * @param slots
+ * @param newSlot
+ * @returns {slots}
+ */
 export function handleOverlap(slots, newSlot) {
   function valueToStrPercent(value) {
     return (value * 100).toString().concat("%");
@@ -99,6 +106,9 @@ export function handleOverlap(slots, newSlot) {
   return slots;
 }
 
+/**
+ * Generic day component that defines day styling
+ */
 export class Day extends React.Component {
   render() {
     return (

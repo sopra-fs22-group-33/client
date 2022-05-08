@@ -3,6 +3,9 @@ import {Grid} from "@mui/material";
 import {DAY_HEIGHT, DAY_SPACING} from "./config";
 import * as React from "react";
 
+/**
+ * Generic calendar component that defines calendar styling
+ */
 export class Calendar extends React.Component {
     render() {
         return (

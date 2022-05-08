@@ -1,6 +1,9 @@
 import PropTypes from "prop-types";
 import { PIXEL_TO_HOUR } from "./config";
 
+/**
+ * Generic handle for resizable slots
+ */
 export const SlotHandle = (props) => {
   // finds bottom of the slot relative to slider
   // todo: find relative to slot top

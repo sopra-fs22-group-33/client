@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Grid } from "@mui/material";
 import PropTypes from "prop-types";
-import { DAY_HEIGHT, SLOT_REL_WIDTH, SLOT_SCALING } from "./config";
+import { DAY_HEIGHT, SLOT_REL_WIDTH, PIXEL_TO_HOUR } from "./config";
 import { AdminSlot } from "./AdminSlot";
 import Box from "@mui/material/Box";
 import { randomId } from "../../../helpers/validations";
@@ -17,11 +17,16 @@ export class AdminDay extends React.Component {
     this.day = props.day;
     this.day.slots = this.handleOverlap(this.day.slots);
 
-    this.newSlot = {};
     this.ref = undefined;
+
+    this.handleGlobalMouseUP = this.handleGlobalMouseUP.bind(this);
+    this.handleGlobalMouseMove = this.handleGlobalMouseMove.bind(this);
 
     this.state = {
       slots: this.day.slots,
+
+      isSlotDrawn: false,
+      newSlot: {},
     };
 
     CalendarEventDispatcher.subscribe(
@@ -36,29 +41,46 @@ export class AdminDay extends React.Component {
     );
   }
 
-  onClick(ev) {
-    ev.stopPropagation();
-    if (this.newSlot.timeFrom === undefined) {
-      return;
-    }
-    if (
-      Math.round(this.newSlot.timeTo / SLOT_SCALING) -
-        Math.round(this.newSlot.timeFrom / SLOT_SCALING) <
-      1
-    ) {
-      return;
-    }
-    this.appendSlot(this.newSlot.timeFrom, this.newSlot.timeTo);
-    this.newSlot = {};
-  }
-
   onMouseDown(ev) {
     ev.stopPropagation();
-    this.newSlot.timeFrom = ev.clientY - this.ref.getBoundingClientRect().y;
+    window.addEventListener("mousemove", this.handleGlobalMouseMove);
+    window.addEventListener("mouseup", this.handleGlobalMouseUP);
+
+    let time =
+      (ev.clientY - this.ref.getBoundingClientRect().y) / PIXEL_TO_HOUR;
+    this.setState({
+      isSlotDrawn: true,
+      newSlot: { timeFrom: time, timeTo: time },
+    });
   }
 
-  onMouseUp(ev) {
-    this.newSlot.timeTo = ev.clientY - this.ref.getBoundingClientRect().y;
+  handleGlobalMouseMove(ev) {
+    if (this.state.isSlotDrawn) {
+      this.setState({
+        newSlot: {
+          timeFrom: this.state.newSlot.timeFrom,
+          timeTo: this.state.newSlot.timeTo + ev.movementY / PIXEL_TO_HOUR,
+        },
+      });
+    }
+  }
+
+  handleGlobalMouseUP(ev) {
+    if (this.state.isSlotDrawn) {
+      window.removeEventListener("mouseup", this.handleGlobalMouseUP);
+      window.removeEventListener("mousemove", this.handleGlobalMouseMove);
+
+      let from = this.state.newSlot.timeFrom;
+      let to = this.state.newSlot.timeTo;
+
+      // slot is at least one hour long
+      if (to - from < 1) {
+        to = from + 1;
+      }
+
+      this.appendSlot(from, to);
+      this.setState({ isDrawn: false, newSlot: {} });
+    }
   }
 
   onSlotDeleted() {
@@ -86,14 +108,17 @@ export class AdminDay extends React.Component {
   appendSlot(timeFrom, timeTo) {
     const newId = randomId();
     this.state.slots.push({
-      timeFrom: Math.floor(timeFrom / SLOT_SCALING),
-      timeTo: Math.ceil(timeTo / SLOT_SCALING),
+      timeFrom: timeFrom,
+      timeTo: timeTo,
       requirement: 1,
       schedules: [],
 
       id: newId,
     });
-    this.day.slots = this.handleOverlap(this.state.slots, this.state.slots[this.state.slots.length - 1]);
+    this.day.slots = this.handleOverlap(
+      this.state.slots,
+      this.state.slots[this.state.slots.length - 1]
+    );
     this.setState({ slots: this.day.slots });
     calendarGlobal.setSelectedSlot(newId);
     CalendarEventDispatcher.dispatch("onSlotSelected");
@@ -199,9 +224,7 @@ export class AdminDay extends React.Component {
             height: DAY_HEIGHT,
             background: "lightgray",
           }}
-          onClick={(ev) => this.onClick(ev)}
           onMouseDown={(ev) => this.onMouseDown(ev)}
-          onMouseUp={(ev) => this.onMouseUp(ev)}
         >
           {this.state.slots.map((slot) => (
             <AdminSlot
@@ -222,5 +245,5 @@ export class AdminDay extends React.Component {
 }
 
 AdminDay.propTypes = {
-  slots: PropTypes.array,
+    slots: PropTypes.array,
 };

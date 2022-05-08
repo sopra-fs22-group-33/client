@@ -1,14 +1,14 @@
 import PropTypes from "prop-types";
-import { SLOT_SCALING } from "./config";
+import { PIXEL_TO_HOUR } from "./config";
 
 export const SlotHandle = (props) => {
-  const calcBottom = () => SLOT_SCALING * (props.timeTo - props.timeFrom - 1);
+  const calcBottom = () => PIXEL_TO_HOUR * (props.timeTo - props.timeFrom - 1);
   return (
     <div
       style={{
         position: "relative",
-        top: calcBottom() - SLOT_SCALING / 3,
-        height: SLOT_SCALING / 3,
+        top: calcBottom() - PIXEL_TO_HOUR / 3,
+        height: PIXEL_TO_HOUR / 3,
         background: "white",
       }}
       onMouseDown={props.onMouseDown}

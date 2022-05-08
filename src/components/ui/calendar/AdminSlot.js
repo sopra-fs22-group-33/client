@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Slot } from "./Slot";
 import { SlotSlider } from "./SlotSlider";
-import { MAX_REQUIREMENT, MIN_REQUIREMENT, SLOT_SCALING } from "./config";
+import { MAX_REQUIREMENT, MIN_REQUIREMENT, PIXEL_TO_HOUR } from "./config";
 import calendarGlobal from "./calendarGlobal";
 import calendarEventDispatcher from "./calendarEventDispatcher";
 import { SlotHandle } from "./SlotHandle";
@@ -47,12 +47,12 @@ export class AdminSlot extends React.Component {
   handleGlobalMouseMove(ev) {
     if (this.state.isDragged) {
       this.setState({
-        timeFrom: this.state.timeFrom + ev.movementY / SLOT_SCALING,
-        timeTo: this.state.timeTo + ev.movementY / SLOT_SCALING,
+        timeFrom: this.state.timeFrom + ev.movementY / PIXEL_TO_HOUR,
+        timeTo: this.state.timeTo + ev.movementY / PIXEL_TO_HOUR,
       });
     }
     if (this.state.isResized) {
-      let to = this.state.timeTo + ev.movementY / SLOT_SCALING;
+      let to = this.state.timeTo + ev.movementY / PIXEL_TO_HOUR;
       to = (to > this.state.timeFrom) ? to : this.state.timeFrom + 1;
       this.setState({
         timeTo: to,
@@ -64,7 +64,7 @@ export class AdminSlot extends React.Component {
     // global, make sure this is being changed
     if (this.state.isDragged || this.state.isResized) {
       window.removeEventListener("mouseup", this.handleGlobalMouseUp);
-      window.removeEventListener("mousemove", this.handleGlobalMouseUp);
+      window.removeEventListener("mousemove", this.handleGlobalMouseMove);
       this.setState({ isDragged: false, isResized: false });
 
       let from = Math.round(this.state.timeFrom);

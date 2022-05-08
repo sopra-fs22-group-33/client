@@ -1,6 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { SLOT_SCALING } from "./config";
+import { PIXEL_TO_HOUR } from "./config";
 import Box from "@mui/material/Box";
 
 export class MemberSlot extends React.Component {
@@ -24,11 +24,11 @@ export class MemberSlot extends React.Component {
   }
 
   calcHeight() {
-    return SLOT_SCALING * (this.state.timeTo - this.state.timeFrom);
+    return PIXEL_TO_HOUR * (this.state.timeTo - this.state.timeFrom);
   }
 
   calcTop() {
-    return SLOT_SCALING * this.state.timeFrom;
+    return PIXEL_TO_HOUR * this.state.timeFrom;
   }
 
   onClick(ev) {

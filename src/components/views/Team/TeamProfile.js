@@ -1,12 +1,23 @@
 import {useHistory, useParams} from "react-router-dom";
 import {api, handleError, doLogout} from "../../../helpers/api";
-import {TeamMember} from "../User/AllTeams";
 import React, {useEffect, useState} from "react";
 import {Spinner} from "../../ui/Spinner";
 import BaseContainer from "../../ui/BaseContainer";
 import {Button} from "../../ui/Button";
 import "styles/views/ProfileInfo.scss";
+import avatar from "../../../images/avatar1.png";
 
+//component for a TEAM MEMBER
+export const TeamMember = ({ teamMember }) => (
+    <div className="team member container2">
+        <div className="team member icon">
+            <img src={avatar} />
+        </div>
+        <div className="team member username">{teamMember.username}</div>
+        <div className="team member email">{teamMember.email}</div>
+
+    </div>
+);
 
 export const TeamProfile = () => {
     const history = useHistory();

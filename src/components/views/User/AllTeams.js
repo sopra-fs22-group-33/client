@@ -22,19 +22,22 @@ export const Team = ({ team, getTeam }) => (
     <div className="team name">{team.name} </div>
     <ul className="team member-list">
       {team.memberships.map((teamMember) => (
-        <TeamMember teamMember={teamMember.user} />
+        <TeamMember teamMember={teamMember} />
       ))}
     </ul>
   </ul>
 );
 //component for a TEAM MEMBER
 export const TeamMember = ({ teamMember }) => (
-  <div className="team member container">
+  <div className="team member container2">
     <div className="team member icon">
       <img src={avatar} />
     </div>
-      <div className="team member username">{teamMember.username}</div>
-      <div className="team member email">{teamMember.email}</div>
+      <div className="team member username">{teamMember.user.username}</div>
+      <div className="team member email">{teamMember.user.email}</div>
+    {teamMember.isAdmin
+        ? <div className="team member admin">Admin</div> :''
+    }
   </div>
 );
 

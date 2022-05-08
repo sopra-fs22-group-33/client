@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Slot } from "./Slot";
 import { SlotSlider } from "./SlotSlider";
-import { MAX_REQUIREMENT, MIN_REQUIREMENT, PIXEL_TO_HOUR } from "./config";
+import { MAX_REQUIREMENT, MIN_REQUIREMENT, HOUR_HEIGHT } from "./config";
 import calendarGlobal from "./calendarGlobal";
 import calendarEventDispatcher from "./calendarEventDispatcher";
 import { SlotHandle } from "./SlotHandle";
@@ -46,8 +46,8 @@ export class AdminSlot extends React.Component {
 
   handleGlobalMouseMove(ev) {
     if (this.state.isDragged) {
-      const from = this.state.timeFrom + ev.movementY / PIXEL_TO_HOUR;
-      const to = this.state.timeTo + ev.movementY / PIXEL_TO_HOUR;
+      const from = this.state.timeFrom + ev.movementY / HOUR_HEIGHT;
+      const to = this.state.timeTo + ev.movementY / HOUR_HEIGHT;
       if (from >= 0 && to <= 24) {
         this.setState({
         timeFrom: from,
@@ -56,7 +56,7 @@ export class AdminSlot extends React.Component {
       }
     }
     if (this.state.isResized) {
-      const to = this.state.timeTo + ev.movementY / PIXEL_TO_HOUR;
+      const to = this.state.timeTo + ev.movementY / HOUR_HEIGHT;
       if (to - this.state.timeFrom >= 1) {
         this.setState({
         timeTo: to,

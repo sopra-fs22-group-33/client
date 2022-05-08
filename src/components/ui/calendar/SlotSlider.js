@@ -2,32 +2,37 @@ import * as React from "react";
 import { Slider } from "@mui/material";
 import PropTypes from "prop-types";
 import "styles/ui/Calendar.scss";
+import { HOUR_HEIGHT } from "./config";
 
 /**
  * Generic slot slider with functionality required in any calendar
  */
-export class SlotSlider extends React.Component {
-  render() {
-    return (
-      <Slider
-        className={"calendar slot-slider"}
-        style={{
-          position: "relative",
-          top: -20 /* easier than trying to find height of slot */,
-        }}
-        onClick={this.props.onClick}
-        onChange={this.props.onChange}
-        onMouseDown={this.props.onMouseDown}
-        value={this.props.value}
-        valueLabelDisplay={this.props.valueLabelDisplay}
-        step={this.props.step}
-        marks={this.props.marks}
-        min={this.props.min}
-        max={this.props.max}
-      />
-    );
-  }
-}
+export const SlotSlider = (props) => {
+  const padding = HOUR_HEIGHT / 2;
+  const height = 4;
+  return (
+    <Slider
+      className={"calendar slot-slider"}
+      style={{
+        position: "absolute",
+        top: -2 * padding - height,
+        height: height,
+        background: "white",
+        padding: padding,
+      }}
+      onClick={props.onClick}
+      onChange={props.onChange}
+      onMouseDown={props.onMouseDown}
+      value={props.value}
+      size={"small"}
+      valueLabelDisplay={props.valueLabelDisplay}
+      step={props.step}
+      marks={props.marks}
+      min={props.min}
+      max={props.max}
+    />
+  );
+};
 
 SlotSlider.propTypes = {
   onClick: PropTypes.func,

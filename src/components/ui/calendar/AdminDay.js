@@ -1,6 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { PIXEL_TO_HOUR } from "./config";
+import { HOUR_HEIGHT } from "./config";
 import { AdminSlot } from "./AdminSlot";
 import { randomId } from "../../../helpers/validations";
 import calendarGlobal from "./calendarGlobal";
@@ -46,7 +46,7 @@ export class AdminDay extends React.Component {
     window.addEventListener("mouseup", this.handleGlobalMouseUP);
 
     let time =
-      (ev.clientY - this.ref.getBoundingClientRect().y) / PIXEL_TO_HOUR;
+      (ev.clientY - this.ref.getBoundingClientRect().y) / HOUR_HEIGHT;
     this.setState({
       isSlotDrawn: true,
       newSlot: { timeFrom: time, timeTo: time },
@@ -55,7 +55,7 @@ export class AdminDay extends React.Component {
 
   handleGlobalMouseMove(ev) {
     if (this.state.isSlotDrawn) {
-      const to = this.state.newSlot.timeTo + ev.movementY / PIXEL_TO_HOUR;
+      const to = this.state.newSlot.timeTo + ev.movementY / HOUR_HEIGHT;
       if (to <= 24) {
         this.setState({
           newSlot: {

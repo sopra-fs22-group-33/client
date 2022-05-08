@@ -1,19 +1,20 @@
 import PropTypes from "prop-types";
-import { PIXEL_TO_HOUR } from "./config";
+import { HOUR_HEIGHT } from "./config";
 
 /**
  * Generic handle for resizable slots
  */
 export const SlotHandle = (props) => {
-  // finds bottom of the slot relative to slider
-  // todo: find relative to slot top
-  const calcBottom = () => PIXEL_TO_HOUR * (props.timeTo - props.timeFrom - 1);
+  const height = HOUR_HEIGHT / 2; /* half an hour */
+  const calcBottom = () => HOUR_HEIGHT * (props.timeTo - props.timeFrom);
+
   return (
     <div
       style={{
-        position: "relative",
-        top: calcBottom() - PIXEL_TO_HOUR / 3,
-        height: PIXEL_TO_HOUR / 3,
+        position: "absolute",
+        top: calcBottom() - height,
+        height: height,
+        width: "100%",
         background: "white",
       }}
       onMouseDown={props.onMouseDown}

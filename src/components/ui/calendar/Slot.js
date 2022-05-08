@@ -1,7 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
-import { SLOT_REL_WIDTH, PIXEL_TO_HOUR } from "./config";
+import { SLOT_REL_WIDTH, HOUR_HEIGHT } from "./config";
 import "styles/ui/Calendar.scss";
 
 /**
@@ -9,11 +9,11 @@ import "styles/ui/Calendar.scss";
  */
 export class Slot extends React.Component {
   calcTop() {
-    return PIXEL_TO_HOUR * this.props.timeFrom;
+    return HOUR_HEIGHT * this.props.timeFrom;
   }
 
   calcHeight() {
-    return PIXEL_TO_HOUR * (this.props.timeTo - this.props.timeFrom);
+    return HOUR_HEIGHT * (this.props.timeTo - this.props.timeFrom);
   }
 
   render() {

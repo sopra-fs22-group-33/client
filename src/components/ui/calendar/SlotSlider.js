@@ -7,12 +7,14 @@ import "styles/ui/Calendar.scss";
  * Generic slot slider with functionality required in any calendar
  */
 export class SlotSlider extends React.Component {
-
   render() {
     return (
       <Slider
         className={"calendar slot-slider"}
-        style={this.props.style}
+        style={{
+          position: "relative",
+          top: -20 /* easier than trying to find height of slot */,
+        }}
         onClick={this.props.onClick}
         onChange={this.props.onChange}
         onMouseDown={this.props.onMouseDown}
@@ -28,7 +30,6 @@ export class SlotSlider extends React.Component {
 }
 
 SlotSlider.propTypes = {
-  style: PropTypes.object,
   onClick: PropTypes.func,
   onChange: PropTypes.func,
   // from Slider

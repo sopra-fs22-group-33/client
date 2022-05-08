@@ -25,7 +25,7 @@ export class AdminCalendar extends React.Component {
     calendarEventDispatcher.subscribe(
       "onSlotSelected",
       this,
-      this.onSlotSelected
+      this.handleSlotSelected
     );
   }
 
@@ -51,7 +51,7 @@ export class AdminCalendar extends React.Component {
     }
   }
 
-  onSlotSelected() {
+  handleSlotSelected() {
     // workaround to rerender entire calendar
     this.setState({ selectedSlot: calendarGlobal.getSelectedSlot() });
   }

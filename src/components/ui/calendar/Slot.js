@@ -30,7 +30,7 @@ export class Slot extends React.Component {
               : SLOT_REL_WIDTH,
           left: this.props.sx && this.props.sx.left ? this.props.sx.left : null,
         }}
-        style={this.props.style} /* overrides */
+        style={this.props.style} /* background */
         onMouseDown={this.props.onMouseDown}
         onMouseMove={this.props.onMouseMove}
         onClick={this.props.onClick}
@@ -46,6 +46,8 @@ export class Slot extends React.Component {
 Slot.propTypes = {
   timeFrom: PropTypes.number.isRequired,
   timeTo: PropTypes.number.isRequired,
+
+  sx: PropTypes.object,
   style: PropTypes.object,
   onMouseDown: PropTypes.func,
   onMouseMove: PropTypes.func,

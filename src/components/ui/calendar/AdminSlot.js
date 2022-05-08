@@ -123,10 +123,6 @@ export class AdminSlot extends React.Component {
         this.id === calendarGlobal.getSelectedSlot() ? (
           <div>
             <SlotSlider
-              style={{
-                position: "relative",
-                top: -20 /* easier than trying to find height of slot */,
-              }}
               onClick={(ev) => this.handleSliderClick(ev)}
               onChange={(ev, value) => this.handleSliderChange(ev, value)}
               onMouseDown={(ev) => this.handleSliderMouseDown(ev)}
@@ -151,8 +147,10 @@ export class AdminSlot extends React.Component {
 
 AdminSlot.propTypes = {
   id: PropTypes.number.isRequired,
-  slot: PropTypes.object,
+  slot: PropTypes.object.isRequired,
   timeFrom: PropTypes.number.isRequired,
   timeTo: PropTypes.number.isRequired,
   requirement: PropTypes.number,
+
+  sx: PropTypes.object,
 };

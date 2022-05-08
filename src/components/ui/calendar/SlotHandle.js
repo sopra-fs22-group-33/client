@@ -21,5 +21,6 @@ export const SlotHandle = (props) => {
 SlotHandle.propTypes = {
   timeFrom: PropTypes.number,
   timeTo: PropTypes.number,
+
   onMouseDown: PropTypes.func,
 };

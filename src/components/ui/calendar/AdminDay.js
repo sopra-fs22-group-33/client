@@ -33,16 +33,16 @@ export class AdminDay extends React.Component {
     CalendarEventDispatcher.subscribe(
       "onSlotDeleted",
       this,
-      this.onSlotDeleted
+      this.handleSlotDeleted
     );
     CalendarEventDispatcher.subscribe(
       "onSlotUpdated",
       this,
-      this.onSlotUpdated
+      this.handleSlotUpdated
     );
   }
 
-  onMouseDown(ev) {
+  handleMouseDown(ev) {
     ev.stopPropagation();
     window.addEventListener("mousemove", this.handleGlobalMouseMove);
     window.addEventListener("mouseup", this.handleGlobalMouseUP);
@@ -83,7 +83,7 @@ export class AdminDay extends React.Component {
     }
   }
 
-  onSlotDeleted() {
+  handleSlotDeleted() {
     const previousLength = this.state.slots.length;
     const filteredSlots = this.state.slots.filter(
       (o) => o.id !== calendarGlobal.getSelectedSlot()
@@ -95,7 +95,7 @@ export class AdminDay extends React.Component {
     this.setState({ slots: this.day.slots });
   }
 
-  onSlotUpdated() {
+  handleSlotUpdated() {
     const updatedId = calendarGlobal.getSelectedSlot();
     for (let slot of this.state.slots) {
       if (slot.id === updatedId) {
@@ -224,19 +224,18 @@ export class AdminDay extends React.Component {
             height: DAY_HEIGHT,
             background: "lightgray",
           }}
-          onMouseDown={(ev) => this.onMouseDown(ev)}
+          onMouseDown={(ev) => this.handleMouseDown(ev)}
         >
           <div>
             {this.state.slots.map((slot) => (
               <AdminSlot
-                slot={slot}
+                key={slot.id}
                 sx={{ width: slot.width, left: slot.left }}
+                id={slot.id}
+                slot={slot}
                 timeFrom={slot.timeFrom}
                 timeTo={slot.timeTo}
-                schedules={slot.schedules}
                 requirement={slot.requirement}
-                id={slot.id}
-                key={slot.id}
               />
             ))}
             {this.state.isSlotDrawn ? (

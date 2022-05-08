@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Slot } from "./Slot";
 import { MAX_SPECIAL, MIN_SPECIAL } from "./config";
 import { SlotSlider } from "./SlotSlider";
+import Box from "@mui/material/Box";
+import { SlotPopper } from "./SlotPopper";
 
 /**
  * Convert frontend to backend representation
@@ -49,12 +51,16 @@ export class MemberSlot extends React.Component {
 
     this.state = {
       isSelected: false,
+      anchorEl: null,
       mySchedule: this.getSchedule(),
     };
   }
 
   handleClick(ev) {
-    this.setState({ isSelected: !this.state.isSelected });
+    this.setState({
+      isSelected: true,
+      anchorEl: ev.currentTarget,
+    });
   }
 
   handleSliderChange(ev, value) {
@@ -102,21 +108,21 @@ export class MemberSlot extends React.Component {
         onClick={(ev) => this.handleClick(ev)}
       >
         {this.state.isSelected ? (
-          <SlotSlider
-            onChange={(ev, value) => this.handleSliderChange(ev, value)}
-            value={backToFrontSpecial(this.state.mySchedule.special)}
-            valueLabelDisplay={"auto"}
-            step={1}
-            marks
-            min={MIN_SPECIAL}
-            max={MAX_SPECIAL}
-          />
-        ) : null}
-        <div>req: {this.props.requirement}</div>
-        {this.state.mySchedule ? (
-          <div>
-            my special: {backToFrontSpecial(this.state.mySchedule.special)}
-          </div>
+          <SlotPopper anchorEl={this.state.anchorEl}>
+            <SlotSlider
+              onChange={(ev, value) => this.handleSliderChange(ev, value)}
+              value={backToFrontSpecial(this.state.mySchedule.special)}
+              valueLabelDisplay={"auto"}
+              step={1}
+              marks
+              min={MIN_SPECIAL}
+              max={MAX_SPECIAL}
+            />
+            <div>requirement: {this.props.requirement}</div>
+            <div>
+              my special: {backToFrontSpecial(this.state.mySchedule.special)}
+            </div>
+          </SlotPopper>
         ) : null}
       </Slot>
     );

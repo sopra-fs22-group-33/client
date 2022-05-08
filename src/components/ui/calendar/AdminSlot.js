@@ -6,6 +6,8 @@ import { MAX_REQUIREMENT, MIN_REQUIREMENT, HOUR_HEIGHT } from "./config";
 import calendarGlobal from "./calendarGlobal";
 import calendarEventDispatcher from "./calendarEventDispatcher";
 import { SlotHandle } from "./SlotHandle";
+import {SlotPopper} from "./SlotPopper";
+import Box from "@mui/material/Box";
 
 export class AdminSlot extends React.Component {
   constructor(props) {
@@ -23,6 +25,7 @@ export class AdminSlot extends React.Component {
       requirement: props.requirement ? props.requirement : 1,
 
       isDragged: false,
+      anchorEl: null,
     };
   }
 
@@ -41,7 +44,7 @@ export class AdminSlot extends React.Component {
     calendarEventDispatcher.dispatch("onSlotSelected");
     window.addEventListener("mouseup", this.handleGlobalMouseUp);
     window.addEventListener("mousemove", this.handleGlobalMouseMove);
-    this.setState({ isDragged: true });
+    this.setState({ isDragged: true, anchorEl: ev.currentTarget});
   }
 
   handleGlobalMouseMove(ev) {
@@ -122,7 +125,8 @@ export class AdminSlot extends React.Component {
         {!this.state.isDragged &&
         this.id === calendarGlobal.getSelectedSlot() ? (
           <div>
-            <SlotSlider
+            <SlotPopper anchorEl={this.state.anchorEl} >
+              <SlotSlider
               onClick={(ev) => this.handleSliderClick(ev)}
               onChange={(ev, value) => this.handleSliderChange(ev, value)}
               onMouseDown={(ev) => this.handleSliderMouseDown(ev)}
@@ -133,6 +137,8 @@ export class AdminSlot extends React.Component {
               min={MIN_REQUIREMENT}
               max={MAX_REQUIREMENT}
             />
+              <div>requirement: {this.state.requirement}</div>
+            </SlotPopper>
             <SlotHandle
               onMouseDown={(ev) => this.handleHandleMouseDown(ev)}
               timeFrom={this.state.timeFrom}

@@ -8,23 +8,18 @@ import { HOUR_HEIGHT } from "./config";
  * Generic slot slider with functionality required in any calendar
  */
 export const SlotSlider = (props) => {
-  const padding = HOUR_HEIGHT / 2;
-  const height = 4;
   return (
     <Slider
       className={"calendar slot-slider"}
       style={{
-        position: "absolute",
-        top: -2 * padding - height,
-        height: height,
+        position: "relative",
         background: "white",
-        padding: padding,
       }}
       onClick={props.onClick}
       onChange={props.onChange}
       onMouseDown={props.onMouseDown}
       value={props.value}
-      size={"small"}
+      size={"medium"}
       valueLabelDisplay={props.valueLabelDisplay}
       step={props.step}
       marks={props.marks}

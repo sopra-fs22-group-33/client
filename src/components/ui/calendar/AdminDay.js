@@ -75,7 +75,7 @@ export class AdminDay extends React.Component {
       let to = this.state.newSlot.timeTo;
 
       // if not at least one hour long, then it's a simple click
-      if (to - from > 1) {
+      if (to - from >= 1) {
         this.appendSlot(from, to);
       }
 

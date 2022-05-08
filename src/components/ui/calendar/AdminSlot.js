@@ -46,17 +46,22 @@ export class AdminSlot extends React.Component {
 
   handleGlobalMouseMove(ev) {
     if (this.state.isDragged) {
-      this.setState({
-        timeFrom: this.state.timeFrom + ev.movementY / PIXEL_TO_HOUR,
-        timeTo: this.state.timeTo + ev.movementY / PIXEL_TO_HOUR,
-      });
-    }
-    if (this.state.isResized) {
-      let to = this.state.timeTo + ev.movementY / PIXEL_TO_HOUR;
-      to = (to > this.state.timeFrom) ? to : this.state.timeFrom + 1;
-      this.setState({
+      const from = this.state.timeFrom + ev.movementY / PIXEL_TO_HOUR;
+      const to = this.state.timeTo + ev.movementY / PIXEL_TO_HOUR;
+      if (from >= 0 && to <= 24) {
+        this.setState({
+        timeFrom: from,
         timeTo: to,
       });
+      }
+    }
+    if (this.state.isResized) {
+      const to = this.state.timeTo + ev.movementY / PIXEL_TO_HOUR;
+      if (to - this.state.timeFrom >= 1) {
+        this.setState({
+        timeTo: to,
+      });
+      }
     }
   }
 

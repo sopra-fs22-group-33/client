@@ -40,12 +40,14 @@ export function handleOverlap(slots, newSlot) {
       if (!slot.overlapCount) {
         slot.overlapCount = 0;
       }
-      // check only one subcase to avoid duplication
+
       if (
-        (evaluated.timeFrom >= slot.timeFrom &&
-          evaluated.timeTo <= slot.timeFrom) ||
+        // check only one subcase to avoid duplication
+        (evaluated.timeFrom > slot.timeFrom &&
+          evaluated.timeTo <= slot.timeTo) ||
         (evaluated.timeFrom <= slot.timeFrom &&
-          evaluated.timeTo > slot.timeFrom)
+          evaluated.timeTo > slot.timeFrom &&
+          evaluated.timeTo < slot.timeTo)
       ) {
         evaluated.overlapCount++;
         slot.overlapCount++;
@@ -55,6 +57,12 @@ export function handleOverlap(slots, newSlot) {
           slot.overlapCount
         );
         slot.overlapCount = evaluated.overlapCount;
+      } else if (
+        // treated separately to avoid duplication
+        evaluated.timeFrom === slot.timeFrom &&
+        evaluated.timeTo === slot.timeTo
+      ) {
+        evaluated.overlapCount++;
       }
     }
   }

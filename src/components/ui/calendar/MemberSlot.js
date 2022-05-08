@@ -2,6 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { PIXEL_TO_HOUR } from "./config";
 import Box from "@mui/material/Box";
+import { Slot } from "./Slot";
 
 export class MemberSlot extends React.Component {
   constructor(props) {
@@ -11,27 +12,15 @@ export class MemberSlot extends React.Component {
 
     // reference to object in parent
     this.slot = props.slot;
+    this.timeFrom = props.timeFrom;
+    this.timeTo = props.timeTo;
 
     this.state = {
-      timeFrom: props.timeFrom,
-      timeTo: props.timeTo,
-      requirement: props.requirement,
-
-      assigned: undefined,
+      assigned: this.isAssigned(),
     };
-
-    this.setState({ assigned: this.isAssigned() });
   }
 
-  calcHeight() {
-    return PIXEL_TO_HOUR * (this.state.timeTo - this.state.timeFrom);
-  }
-
-  calcTop() {
-    return PIXEL_TO_HOUR * this.state.timeFrom;
-  }
-
-  onClick(ev) {
+  handleClick(ev) {
     const userId = parseInt(sessionStorage.getItem("id"));
     if (!this.state.assigned) {
       this.slot.schedules.push({ special: userId, user: { id: userId } });
@@ -41,6 +30,7 @@ export class MemberSlot extends React.Component {
       );
     }
     this.setState({ assigned: !this.state.assigned });
+    console.log(this.slot.schedules);
   }
 
   isAssigned() {
@@ -54,31 +44,15 @@ export class MemberSlot extends React.Component {
 
   render() {
     return (
-      <Box
-        ref={(el) => {
-          if (!el) return;
-          this.ref = el;
-        }}
-        sx={{
-          width: 3 / 4,
-        }}
-        style={{
-          position: "absolute",
-          height: this.calcHeight(),
-          top: this.calcTop(),
-          background: this.state.assigned ? "red" : "gray",
-          opacity: 0.5,
-        }}
-        onClick={(ev) => this.onClick(ev)}
+      <Slot
+        sx={this.props.sx}
+        style={{ background: this.state.assigned ? "red" : null }}
+        timeFrom={this.timeFrom}
+        timeTo={this.timeTo}
+        onClick={(ev) => this.handleClick(ev)}
       >
-        <div>required people:{this.state.requirement}</div>
-        <div>
-          assigned people:
-          {this.slot.schedules.map((schedule) => (
-            <div>{schedule.special}</div>
-          ))}
-        </div>
-      </Box>
+        <div>req: {this.props.requirement}</div>
+      </Slot>
     );
   }
 }

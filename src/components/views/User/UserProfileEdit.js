@@ -22,11 +22,9 @@ const UserProfileEdit = () => {
   // more information can be found under https://reactjs.org/docs/hooks-state.html
 
   const doSaveEditProfile = async () => {
-    const userId = localStorage.getItem("userId");
     const requestBody = JSON.stringify({ username, email });
-    console.log(requestBody);
-
-    await api.put(`/users/${userId}`, requestBody, {
+    const id = sessionStorage.getItem("id")
+    await api.put(`/users/${id}`, requestBody, {
       headers: { token: sessionStorage.getItem("token") },
     });
 
@@ -47,7 +45,7 @@ const UserProfileEdit = () => {
         <FormField label="Email" value={email} onChange={(u) => setEmail(u)} />
 
         <div className="button-container">
-          <Button disabled={!username} onClick={() => doSaveEditProfile()}>
+          <Button disabled={!username || !email} onClick={() => doSaveEditProfile()}>
             Save
           </Button>
         </div>

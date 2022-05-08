@@ -79,7 +79,7 @@ export class AdminDay extends React.Component {
         this.appendSlot(from, to);
       }
 
-      this.setState({ isDrawn: false, newSlot: {} });
+      this.setState({ isSlotDrawn: false, newSlot: {} });
     }
   }
 

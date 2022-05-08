@@ -59,11 +59,11 @@ export class AdminCalendar extends React.Component {
       <Calendar>
         {this.state.days.map((day) => (
           <AdminDay
+            key={day.id}
+            id={day.id}
             day={day}
             weekday={day.weekday}
             slots={day.slots}
-            id={day.id}
-            key={day.id}
           />
         ))}
       </Calendar>

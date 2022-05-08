@@ -1,12 +1,12 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import {  PIXEL_TO_HOUR } from "./config";
+import { PIXEL_TO_HOUR } from "./config";
 import { AdminSlot } from "./AdminSlot";
 import { randomId } from "../../../helpers/validations";
 import calendarGlobal from "./calendarGlobal";
 import CalendarEventDispatcher from "./calendarEventDispatcher";
 import { Slot } from "./Slot";
-import {Day, handleOverlap} from "./Day";
+import { Day, handleOverlap } from "./Day";
 
 export class AdminDay extends React.Component {
   constructor(props) {
@@ -155,5 +155,7 @@ export class AdminDay extends React.Component {
 }
 
 AdminDay.propTypes = {
-    slots: PropTypes.array,
+  id: PropTypes.number.isRequired,
+  day: PropTypes.object.isRequired,
+  slots: PropTypes.array,
 };

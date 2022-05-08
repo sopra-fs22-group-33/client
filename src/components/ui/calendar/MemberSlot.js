@@ -1,19 +1,15 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { PIXEL_TO_HOUR } from "./config";
-import Box from "@mui/material/Box";
 import { Slot } from "./Slot";
 
 export class MemberSlot extends React.Component {
   constructor(props) {
     super(props);
     this.ref = undefined;
-    this.id = props.slot.id;
+    this.id = props.id;
 
     // reference to object in parent
     this.slot = props.slot;
-    this.timeFrom = props.timeFrom;
-    this.timeTo = props.timeTo;
 
     this.state = {
       assigned: this.isAssigned(),
@@ -47,8 +43,8 @@ export class MemberSlot extends React.Component {
       <Slot
         sx={this.props.sx}
         style={{ background: this.state.assigned ? "red" : null }}
-        timeFrom={this.timeFrom}
-        timeTo={this.timeTo}
+        timeFrom={this.props.timeFrom}
+        timeTo={this.props.timeTo}
         onClick={(ev) => this.handleClick(ev)}
       >
         <div>req: {this.props.requirement}</div>
@@ -58,6 +54,11 @@ export class MemberSlot extends React.Component {
 }
 
 MemberSlot.propTypes = {
-  timeFrom: PropTypes.number,
-  timeTo: PropTypes.number,
+  id: PropTypes.number.isRequired,
+  slot: PropTypes.object.isRequired,
+  timeFrom: PropTypes.number.isRequired,
+  timeTo: PropTypes.number.isRequired,
+  requirement: PropTypes.number,
+
+  sx: PropTypes.object,
 };

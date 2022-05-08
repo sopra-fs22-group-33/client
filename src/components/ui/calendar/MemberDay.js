@@ -1,9 +1,6 @@
 import * as React from "react";
-import { Grid } from "@mui/material";
 import PropTypes from "prop-types";
-import { DAY_HEIGHT } from "./config";
 import { MemberSlot } from "./MemberSlot";
-import Box from "@mui/material/Box";
 import { Day, handleOverlap } from "./Day";
 
 export class MemberDay extends React.Component {
@@ -13,8 +10,6 @@ export class MemberDay extends React.Component {
     // reference to object in parent
     this.day = props.day;
     this.day.slots = handleOverlap(this.day.slots);
-
-    this.ref = undefined;
 
     this.state = {
       slots: this.day.slots,
@@ -42,5 +37,7 @@ export class MemberDay extends React.Component {
 }
 
 MemberDay.propTypes = {
+  id: PropTypes.number.isRequired,
+  day: PropTypes.object.isRequired,
   slots: PropTypes.array,
 };

@@ -10,9 +10,13 @@ import { withRouter } from "react-router-dom";
 class Header extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isAuthenticated: !!sessionStorage.getItem("token") && !!sessionStorage.getItem("id"),
+    };
     globalEventDispatcher.createTopic("onTeamIdChanged");
     globalEventDispatcher.subscribe("onTeamIdChanged", this, this.render);
   }
+
 
   render() {
     return (
@@ -29,9 +33,10 @@ class Header extends React.Component {
             Current Team: {sessionStorage.getItem("teamId")}
           </Button>
           <div className="header button">
+            {isAuthenticated ?
             <Button onClick={() => doLogout().then(() => this.props.history.push("/"))}>
               Log out
-            </Button>
+            </Button> : <div />}
           </div>
         </div>
       </div>

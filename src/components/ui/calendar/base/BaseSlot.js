@@ -55,13 +55,13 @@ export class BaseSlot extends React.Component {
   getColor() {
     const base = this.state.mySchedule.base;
     if (base > 0) {
-      return "rgba(196, 128, 18,".concat(
+      return "rgba(50, 0, 255,".concat(
         ((0.5 * base) / MAX_BASE).toString(),
         ")"
       );
     }
     if (base < 0) {
-      return "rgba(50, 0, 255,".concat(
+      return "rgba(196, 128, 18,".concat(
         ((0.5 * base) / MIN_BASE).toString(),
         ")"
       );

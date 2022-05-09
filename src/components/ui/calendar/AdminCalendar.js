@@ -9,7 +9,7 @@ export class AdminCalendar extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleGlobalKeyDown = this.handleGlobalKeyDown.bind(this);
 
     this.state = {
       days: props.days,
@@ -28,14 +28,15 @@ export class AdminCalendar extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener("keydown", this.handleKeyDown);
+    window.addEventListener("keydown", this.handleGlobalKeyDown);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keydown", this.handleKeyDown);
+    calendarGlobal.setSelectedSlot(null);
+    window.removeEventListener("keydown", this.handleGlobalKeyDown);
   }
 
-  handleKeyDown(ev) {
+  handleGlobalKeyDown(ev) {
     if (this.state.selectedSlot) {
       // deselect slot
       if (ev.code === "Escape") {

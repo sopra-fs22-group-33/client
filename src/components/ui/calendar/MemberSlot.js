@@ -5,6 +5,8 @@ import { MAX_SPECIAL, MIN_SPECIAL } from "./config";
 import { SlotSlider } from "./SlotSlider";
 import Box from "@mui/material/Box";
 import { SlotPopper } from "./SlotPopper";
+import calendarGlobal from "./calendarGlobal";
+import calendarEventDispatcher from "./calendarEventDispatcher";
 
 /**
  * Convert frontend to backend representation
@@ -50,15 +52,15 @@ export class MemberSlot extends React.Component {
     this.slot = props.slot;
 
     this.state = {
-      isSelected: false,
       anchorEl: null,
       mySchedule: this.getSchedule(),
     };
   }
 
   handleClick(ev) {
+    calendarGlobal.setSelectedSlot(this.id);
+    calendarEventDispatcher.dispatch("onSlotSelected");
     this.setState({
-      isSelected: true,
       anchorEl: ev.currentTarget,
     });
   }
@@ -107,7 +109,7 @@ export class MemberSlot extends React.Component {
         timeTo={this.props.timeTo}
         onClick={(ev) => this.handleClick(ev)}
       >
-        {this.state.isSelected ? (
+        {calendarGlobal.getSelectedSlot() === this.id ? (
           <SlotPopper anchorEl={this.state.anchorEl}>
             <SlotSlider
               onChange={(ev, value) => this.handleSliderChange(ev, value)}

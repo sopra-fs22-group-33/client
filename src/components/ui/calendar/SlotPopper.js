@@ -11,5 +11,5 @@ export const SlotPopper = (props) => {
 };
 
 SlotPopper.propTypes = {
-  anchorEl: PropTypes.element,
+  anchorEl: PropTypes.object,
 };

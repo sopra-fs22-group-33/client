@@ -7,7 +7,6 @@ import calendarGlobal from "./calendarGlobal";
 import calendarEventDispatcher from "./calendarEventDispatcher";
 import { SlotHandle } from "./SlotHandle";
 import {SlotPopper} from "./SlotPopper";
-import Box from "@mui/material/Box";
 
 export class AdminSlot extends React.Component {
   constructor(props) {

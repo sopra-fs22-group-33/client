@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { SpecialCalendar } from "../../ui/calendar/special/SpecialCalendar";
 import { Button } from "../../ui/Button";
 import BaseContainer from "../../ui/BaseContainer";
+import { BaseCalendar } from "../../ui/calendar/base/BaseCalendar";
 
 export const TeamCalendar = () => {
   const history = useHistory();
@@ -74,7 +75,13 @@ export const TeamCalendar = () => {
             </Button>
           </div>
         </div>
+        <div>Special Preferences</div>
         <SpecialCalendar
+          startingDate={calendar.startingDate}
+          days={calendar.days}
+        />
+        <div>Base Preferences</div>
+        <BaseCalendar
           startingDate={calendar.startingDate}
           days={calendar.days}
         />

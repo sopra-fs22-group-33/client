@@ -1,47 +1,13 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { Slot } from "../Slot";
-import { MAX_SPECIAL, MIN_SPECIAL } from "../config";
+import { MAX_BASE, MIN_BASE } from "../config";
 import { SlotSlider } from "../SlotSlider";
 import { SlotPopper } from "../SlotPopper";
 import calendarGlobal from "../calendarGlobal";
 import calendarEventDispatcher from "../calendarEventDispatcher";
 
-/**
- * Convert frontend to backend representation
- */
-function frontToBackSpecial(value) {
-  switch (value) {
-    case -1:
-      return 0;
-    case 0:
-      return -1;
-    case 1:
-      return 1;
-    default:
-      console.log("unhandled value", value);
-      return value;
-  }
-}
-
-/**
- * Convert backend to frontend representation
- */
-function backToFrontSpecial(value) {
-  switch (value) {
-    case 0:
-      return -1;
-    case -1:
-      return 0;
-    case 1:
-      return 1;
-    default:
-      console.log("unhandled value", value);
-      return value;
-  }
-}
-
-export class SpecialSlot extends React.Component {
+export class BaseSlot extends React.Component {
   constructor(props) {
     super(props);
     this.ref = undefined;
@@ -66,7 +32,7 @@ export class SpecialSlot extends React.Component {
 
   handleSliderChange(ev, value) {
     const schedule = this.state.mySchedule;
-    schedule.special = frontToBackSpecial(value);
+    schedule.base = value;
     this.setState({ mySchedule: schedule });
   }
 
@@ -79,7 +45,6 @@ export class SpecialSlot extends React.Component {
     }
     // no schedule found
     const newSchedule = {
-      special: frontToBackSpecial(0),
       base: 0,
       user: { id: userId },
     };
@@ -88,16 +53,20 @@ export class SpecialSlot extends React.Component {
   }
 
   getColor() {
-    const special = backToFrontSpecial(this.state.mySchedule.special);
-    switch (special) {
-      // disliked
-      case -1:
-        return "rgba(196, 128, 18, 0.5)";
-      case 0:
-        return null;
-      case 1:
-        return "rgba(50, 0, 255, 0.5)";
+    const base = this.state.mySchedule.base;
+    if (base > 0) {
+      return "rgba(196, 128, 18,".concat(
+        ((0.5 * base) / MAX_BASE).toString(),
+        ")"
+      );
     }
+    if (base < 0) {
+      return "rgba(50, 0, 255,".concat(
+        ((0.5 * base) / MIN_BASE).toString(),
+        ")"
+      );
+    }
+    return null;
   }
 
   render() {
@@ -113,16 +82,16 @@ export class SpecialSlot extends React.Component {
           <SlotPopper anchorEl={this.state.anchorEl}>
             <SlotSlider
               onChange={(ev, value) => this.handleSliderChange(ev, value)}
-              value={backToFrontSpecial(this.state.mySchedule.special)}
+              value={this.state.mySchedule.base}
               valueLabelDisplay={"auto"}
               step={1}
               marks
-              min={MIN_SPECIAL}
-              max={MAX_SPECIAL}
+              min={MIN_BASE}
+              max={MAX_BASE}
             />
             <div>requirement: {this.props.requirement}</div>
             <div>
-              my special: {backToFrontSpecial(this.state.mySchedule.special)}
+              my base: {this.state.mySchedule.base}
             </div>
           </SlotPopper>
         ) : null}
@@ -131,7 +100,7 @@ export class SpecialSlot extends React.Component {
   }
 }
 
-SpecialSlot.propTypes = {
+BaseSlot.propTypes = {
   id: PropTypes.number.isRequired,
   slot: PropTypes.object.isRequired,
   timeFrom: PropTypes.number.isRequired,

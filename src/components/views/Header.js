@@ -8,6 +8,7 @@ import globalEventDispatcher from "../../helpers/globalEventDispatcher";
 import { withRouter } from "react-router-dom";
 
 class Header extends React.Component {
+  isAuthenticated;
   constructor(props) {
     super(props);
     this.state = {
@@ -33,7 +34,7 @@ class Header extends React.Component {
             Current Team: {sessionStorage.getItem("teamId")}
           </Button>
           <div className="header button">
-            {isAuthenticated ?
+            {this.isAuthenticated ?
             <Button onClick={() => doLogout().then(() => this.props.history.push("/"))}>
               Log out
             </Button> : <div />}

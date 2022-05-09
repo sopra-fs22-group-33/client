@@ -1,11 +1,11 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { MemberDay } from "./MemberDay";
-import { Calendar } from "./Calendar";
-import calendarEventDispatcher from "./calendarEventDispatcher";
-import calendarGlobal from "./calendarGlobal";
+import { SpecialDay } from "./SpecialDay";
+import { Calendar } from "../Calendar";
+import calendarEventDispatcher from "../calendarEventDispatcher";
+import calendarGlobal from "../calendarGlobal";
 
-export class MemberCalendar extends React.Component {
+export class SpecialCalendar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -50,7 +50,7 @@ export class MemberCalendar extends React.Component {
     return (
       <Calendar>
         {this.state.days.map((day) => (
-          <MemberDay
+          <SpecialDay
             key={day.id}
             id={day.id}
             day={day}
@@ -63,7 +63,7 @@ export class MemberCalendar extends React.Component {
   }
 }
 
-MemberCalendar.propTypes = {
+SpecialCalendar.propTypes = {
   startingDate: PropTypes.string,
   days: PropTypes.array,
 };

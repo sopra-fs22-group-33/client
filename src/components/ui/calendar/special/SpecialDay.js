@@ -1,9 +1,9 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { MemberSlot } from "./MemberSlot";
-import { Day, handleOverlap } from "./Day";
+import { SpecialSlot } from "./SpecialSlot";
+import { Day, handleOverlap } from "../Day";
 
-export class MemberDay extends React.Component {
+export class SpecialDay extends React.Component {
   constructor(props) {
     super(props);
     this.id = props.id;
@@ -20,7 +20,7 @@ export class MemberDay extends React.Component {
     return (
       <Day>
         {this.state.slots.map((slot) => (
-          <MemberSlot
+          <SpecialSlot
             key={slot.id}
             sx={{ width: slot.width, left: slot.left }}
             id={slot.id}
@@ -36,7 +36,7 @@ export class MemberDay extends React.Component {
   }
 }
 
-MemberDay.propTypes = {
+SpecialDay.propTypes = {
   id: PropTypes.number.isRequired,
   day: PropTypes.object.isRequired,
   slots: PropTypes.array,

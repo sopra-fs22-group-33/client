@@ -1,9 +1,9 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { AdminDay } from "./AdminDay";
-import calendarEventDispatcher from "./calendarEventDispatcher";
-import calendarGlobal from "./calendarGlobal";
-import { Calendar } from "./Calendar";
+import calendarEventDispatcher from "../calendarEventDispatcher";
+import calendarGlobal from "../calendarGlobal";
+import { Calendar } from "../Calendar";
 
 export class AdminCalendar extends React.Component {
   constructor(props) {

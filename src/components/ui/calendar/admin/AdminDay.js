@@ -1,12 +1,12 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { HOUR_HEIGHT } from "./config";
+import { HOUR_HEIGHT } from "../config";
 import { AdminSlot } from "./AdminSlot";
-import { randomId } from "../../../helpers/validations";
-import calendarGlobal from "./calendarGlobal";
-import CalendarEventDispatcher from "./calendarEventDispatcher";
-import { Slot } from "./Slot";
-import { Day, handleOverlap } from "./Day";
+import { randomId } from "../../../../helpers/validations";
+import calendarGlobal from "../calendarGlobal";
+import CalendarEventDispatcher from "../calendarEventDispatcher";
+import { Slot } from "../Slot";
+import { Day, handleOverlap } from "../Day";
 
 export class AdminDay extends React.Component {
   constructor(props) {
@@ -121,8 +121,6 @@ export class AdminDay extends React.Component {
       this.state.slots[this.state.slots.length - 1]
     );
     this.setState({ slots: this.day.slots });
-    calendarGlobal.setSelectedSlot(newId);
-    CalendarEventDispatcher.dispatch("onSlotSelected");
   }
 
   render() {

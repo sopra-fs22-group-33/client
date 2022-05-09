@@ -2,7 +2,7 @@ import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { api, handleError } from "../../../helpers/api";
-import { AdminCalendar } from "../../ui/calendar/AdminCalendar";
+import { AdminCalendar } from "../../ui/calendar/admin/AdminCalendar";
 import { validateCalendar } from "../../../helpers/validations";
 import { Button } from "../../ui/Button";
 import BaseContainer from "../../ui/BaseContainer";

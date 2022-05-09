@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Slot } from "./Slot";
-import { SlotSlider } from "./SlotSlider";
-import { MAX_REQUIREMENT, MIN_REQUIREMENT, HOUR_HEIGHT } from "./config";
-import calendarGlobal from "./calendarGlobal";
-import calendarEventDispatcher from "./calendarEventDispatcher";
-import { SlotHandle } from "./SlotHandle";
-import {SlotPopper} from "./SlotPopper";
+import { Slot } from "../Slot";
+import { SlotSlider } from "../SlotSlider";
+import { MAX_REQUIREMENT, MIN_REQUIREMENT, HOUR_HEIGHT } from "../config";
+import calendarGlobal from "../calendarGlobal";
+import calendarEventDispatcher from "../calendarEventDispatcher";
+import { SlotHandle } from "../SlotHandle";
+import {SlotPopper} from "../SlotPopper";
 
 export class AdminSlot extends React.Component {
   constructor(props) {

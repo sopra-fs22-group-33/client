@@ -3,7 +3,7 @@ import {api, doLogout, handleError} from "helpers/api";
 import * as React from "react";
 import {validateCalendar} from "helpers/validations";
 import {useEffect, useState} from "react";
-import {MemberCalendar} from "../../ui/calendar/MemberCalendar";
+import {SpecialCalendar} from "../../ui/calendar/special/SpecialCalendar";
 import {Button} from "../../ui/Button";
 import BaseContainer from "../../ui/BaseContainer";
 
@@ -71,7 +71,7 @@ export const TeamCalendar = () => {
                         <Button onClick={() => history.push("/team/profile")}>Team Profile</Button>
                     </div>
                 </div>
-                <MemberCalendar
+                <SpecialCalendar
                     startingDate={calendar.startingDate}
                     days={calendar.days}
                 />

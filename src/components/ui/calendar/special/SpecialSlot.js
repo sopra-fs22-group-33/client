@@ -1,12 +1,12 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { Slot } from "./Slot";
-import { MAX_SPECIAL, MIN_SPECIAL } from "./config";
-import { SlotSlider } from "./SlotSlider";
+import { Slot } from "../Slot";
+import { MAX_SPECIAL, MIN_SPECIAL } from "../config";
+import { SlotSlider } from "../SlotSlider";
 import Box from "@mui/material/Box";
-import { SlotPopper } from "./SlotPopper";
-import calendarGlobal from "./calendarGlobal";
-import calendarEventDispatcher from "./calendarEventDispatcher";
+import { SlotPopper } from "../SlotPopper";
+import calendarGlobal from "../calendarGlobal";
+import calendarEventDispatcher from "../calendarEventDispatcher";
 
 /**
  * Convert frontend to backend representation
@@ -42,7 +42,7 @@ function backToFrontSpecial(value) {
   }
 }
 
-export class MemberSlot extends React.Component {
+export class SpecialSlot extends React.Component {
   constructor(props) {
     super(props);
     this.ref = undefined;
@@ -131,7 +131,7 @@ export class MemberSlot extends React.Component {
   }
 }
 
-MemberSlot.propTypes = {
+SpecialSlot.propTypes = {
   id: PropTypes.number.isRequired,
   slot: PropTypes.object.isRequired,
   timeFrom: PropTypes.number.isRequired,

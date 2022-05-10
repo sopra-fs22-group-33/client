@@ -59,5 +59,17 @@ export const getToken = (response) => {
   if (!response.headers.hasOwnProperty("token")) {
     throw Error(`token is not in response headers or cannot be read:\n${response.headers}`)
   }
-  return response.headers.token
-}
+  return response.headers.token;
+};
+
+export const getTeamIsAdmin = (memberships) => {
+    const membership = memberships.filter(
+      (   membership) =>
+        membership.user &&
+        membership.user.id &&
+        membership.user.id.toString() === sessionStorage.getItem("id") &&
+          membership.isAdmin
+    )[0];
+    return membership ? membership.isAdmin : null;
+
+};

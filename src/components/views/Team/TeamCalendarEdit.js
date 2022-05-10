@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { api, handleError } from "../../../helpers/api";
+import {api, fetchTeamCalendar, handleError} from "../../../helpers/api";
 import { AdminCalendar } from "../../ui/calendar/admin/AdminCalendar";
 import { validateCalendar } from "../../../helpers/validations";
 import { Button } from "../../ui/Button";
@@ -37,22 +37,9 @@ export const TeamCalendarEdit = () => {
     }
   }
 
-  async function fetchCalendar() {
-    try {
-      const response = await api.get(
-        `/teams/${sessionStorage.getItem("teamId")}/calendars`
-      );
-      return response.data;
-    } catch (e) {
-      alert(
-        `Something went wrong during fetching the calendar: \n${handleError(e)}`
-      );
-    }
-  }
-
   useEffect(() => {
     setCalendar(null); /* force reset calendar to newly fetched, otherwise incorrect calendar is edited */
-    fetchCalendar().then((data) => setCalendar(validateCalendar(data)));
+    fetchTeamCalendar().then((data) => setCalendar(validateCalendar(data)));
   }, [editing]);
 
   if (!calendar) {

@@ -1,58 +1,21 @@
 import { useHistory } from "react-router-dom";
-import { api, handleError } from "helpers/api";
+import { fetchTeamCalendar } from "helpers/api";
 import * as React from "react";
-import { validateCalendar } from "helpers/validations";
 import { useEffect, useState } from "react";
-import { SpecialCalendar } from "../../ui/calendar/special/SpecialCalendar";
 import BaseContainer from "../../ui/BaseContainer";
-import { BaseCalendar } from "../../ui/calendar/base/BaseCalendar";
 import { EditChoiceButton } from "../../ui/calendar/EditChoiceButton";
-import {Button} from "../../ui/Button";
+import { Button } from "../../ui/Button";
+import { Calendar } from "../../ui/calendar/Calendar";
+import { Day } from "../../ui/calendar/Day";
+import { Slot } from "../../ui/calendar/Slot";
 
 export const TeamCalendar = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await api.get(
-          `/teams/${sessionStorage.getItem("teamId")}/calendars`
-        );
-
-        setCalendar(validateCalendar(response.data));
-      } catch (e) {
-        alert(
-          `Something went wrong during fetching the calendar: \n${handleError(
-            e
-          )}`
-        );
-      }
-    }
-
-    fetchData();
+    fetchTeamCalendar().then((calendar) => setCalendar(calendar));
   }, []);
-
-  async function doSave() {
-    try {
-      const requestBody = JSON.stringify({
-        days: calendar.days,
-        startingDate: calendar.startingDate,
-      });
-      await api.put(
-        `/teams/${sessionStorage.getItem("teamId")}/calendars`,
-        requestBody
-      );
-
-      alert("Saved successfully");
-    } catch (error) {
-      alert(
-        `Something went wrong during saving the calendar: \n${handleError(
-          error
-        )}`
-      );
-    }
-  }
 
   if (!calendar) {
     return <div>fetching calendar</div>;
@@ -72,6 +35,15 @@ export const TeamCalendar = () => {
             </Button>
           </div>
         </div>
+        <Calendar>
+          {calendar.days.map((day) => (
+            <Day>
+              {day.slots.map((slot) => (
+                <Slot timeFrom={slot.timeFrom} timeTo={slot.timeTo} />
+              ))}
+            </Day>
+          ))}
+        </Calendar>
       </BaseContainer>
     </div>
   );

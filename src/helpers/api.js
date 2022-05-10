@@ -55,6 +55,19 @@ export const handleError = (error) => {
   }
 };
 
+export async function fetchTeamCalendar() {
+    try {
+      const response = await api.get(
+        `/teams/${sessionStorage.getItem("teamId")}/calendars`
+      );
+      return response.data;
+    } catch (e) {
+      alert(
+        `Something went wrong during fetching the calendar: \n${handleError(e)}`
+      );
+    }
+  }
+
 export const getToken = (response) => {
   if (!response.headers.hasOwnProperty("token")) {
     throw Error(`token is not in response headers or cannot be read:\n${response.headers}`)

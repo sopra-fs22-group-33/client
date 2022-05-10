@@ -4,8 +4,8 @@ import React, {useEffect, useState} from "react";
 import {Spinner} from "../../ui/Spinner";
 import BaseContainer from "../../ui/BaseContainer";
 import {Button} from "../../ui/Button";
-import "styles/views/ProfileInfo.scss";
 import avatar from "../../../images/avatar1.png";
+import "styles/views/TeamProfil.scss";
 
 //component for a TEAM MEMBER
 export const TeamMember = ({ teamMember }) => (
@@ -15,7 +15,9 @@ export const TeamMember = ({ teamMember }) => (
         </div>
         <div className="team member username">{teamMember.username}</div>
         <div className="team member email">{teamMember.email}</div>
-
+        {teamMember.memberships.isAdmin
+            ? <div className="team member admin">Admin</div> :''
+        }
     </div>
 );
 
@@ -54,8 +56,8 @@ export const TeamProfile = () => {
     if (users) {
         // console.log(users);
         content = (
-            <div className="team container">
-                <ul className="team member-list">
+            <div className="team container2">
+                <ul className="team member-list2">
                     {users.map((teamMember) => (
                         <TeamMember
                             teamMember={teamMember}

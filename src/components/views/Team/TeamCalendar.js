@@ -1,12 +1,13 @@
 import { useHistory } from "react-router-dom";
-import { api, doLogout, handleError } from "helpers/api";
+import { api, handleError } from "helpers/api";
 import * as React from "react";
 import { validateCalendar } from "helpers/validations";
 import { useEffect, useState } from "react";
 import { SpecialCalendar } from "../../ui/calendar/special/SpecialCalendar";
-import { Button } from "../../ui/Button";
 import BaseContainer from "../../ui/BaseContainer";
 import { BaseCalendar } from "../../ui/calendar/base/BaseCalendar";
+import { EditChoiceButton } from "../../ui/calendar/EditChoiceButton";
+import {Button} from "../../ui/Button";
 
 export const TeamCalendar = () => {
   const history = useHistory();
@@ -18,7 +19,6 @@ export const TeamCalendar = () => {
         const response = await api.get(
           `/teams/${sessionStorage.getItem("teamId")}/calendars`
         );
-        console.log(response.data);
 
         setCalendar(validateCalendar(response.data));
       } catch (e) {
@@ -66,25 +66,12 @@ export const TeamCalendar = () => {
             <h1>Team Calendar</h1>
           </div>
           <div className="navigation-button-container button">
-            <Button onClick={() => history.push("/team/calendar/edit")}>
-              Edit
-            </Button>
-            <Button onClick={() => doSave()}>Save</Button>
+            <EditChoiceButton />
             <Button onClick={() => history.push("/team/profile")}>
               Team Profile
             </Button>
           </div>
         </div>
-        <div>Special Preferences</div>
-        <SpecialCalendar
-          startingDate={calendar.startingDate}
-          days={calendar.days}
-        />
-        <div>Base Preferences</div>
-        <BaseCalendar
-          startingDate={calendar.startingDate}
-          days={calendar.days}
-        />
       </BaseContainer>
     </div>
   );

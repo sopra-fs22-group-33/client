@@ -8,10 +8,12 @@ import { Button } from "../../ui/Button";
 import { Calendar } from "../../ui/calendar/Calendar";
 import { Day, handleOverlap } from "../../ui/calendar/Day";
 import { Slot } from "../../ui/calendar/Slot";
+import { SlotPopper } from "../../ui/calendar/SlotPopper";
 
 export const TeamCalendar = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(undefined);
 
   useEffect(() => {
     fetchTeamCalendar().then((calendar) => setCalendar(calendar));
@@ -39,9 +41,41 @@ export const TeamCalendar = () => {
           {calendar.days.map((day) => {
             day.slots = handleOverlap(day.slots);
             return (
-              <Day >
+              <Day>
                 {day.slots.map((slot) => (
-                  <Slot sx={{left: slot.left, width: slot.width}} timeFrom={slot.timeFrom} timeTo={slot.timeTo} />
+                  <Slot
+                    sx={{ left: slot.left, width: slot.width }}
+                    onMouseEnter={(ev) => setAnchorEl(ev.currentTarget)}
+                    onMouseLeave={(ev) => setAnchorEl(undefined)}
+                    timeFrom={slot.timeFrom}
+                    timeTo={slot.timeTo}
+                  >
+                    {anchorEl ? (
+                      <SlotPopper anchorEl={anchorEl}>
+                        {
+                          <div>
+                            <div>requirement: {slot.requirement}</div>
+                            <div>
+                              timeFrom:{" "}
+                              {slot.timeFrom /*temporary, for easier styling */}
+                            </div>
+                            <div>
+                              timeTo:{" "}
+                              {slot.timeTo /*temporary, for easier styling */}
+                            </div>
+                            {slot.schedules.map((schedule) => (
+                              <ul>
+                                <div>email: {schedule.user.email}</div>
+                                <div>base: {schedule.base}</div>
+                                <div>special: {schedule.special}</div>
+                                <div>assigned: {schedule.assigned}</div>
+                              </ul>
+                            ))}
+                          </div>
+                        }
+                      </SlotPopper>
+                    ) : null}
+                  </Slot>
                 ))}
               </Day>
             );

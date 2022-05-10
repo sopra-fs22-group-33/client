@@ -36,6 +36,8 @@ export class Slot extends React.Component {
         onClick={this.props.onClick}
         onMouseUp={this.props.onMouseUp}
         onKeyPress={this.props.onKeyPress}
+        onMouseEnter={this.props.onMouseEnter}
+        onMouseLeave={this.props.onMouseLeave}
       >
         {this.props.children}
       </Box>
@@ -54,4 +56,6 @@ Slot.propTypes = {
   onClick: PropTypes.func,
   onMouseUp: PropTypes.func,
   onKeyPress: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
 };

@@ -1,18 +1,23 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { api, handleError } from "../../../helpers/api";
-import { AdminCalendar } from "../../ui/calendar/AdminCalendar";
+import {api, fetchTeamCalendar, handleError} from "../../../helpers/api";
+import { AdminCalendar } from "../../ui/calendar/admin/AdminCalendar";
 import { validateCalendar } from "../../../helpers/validations";
 import { Button } from "../../ui/Button";
 import BaseContainer from "../../ui/BaseContainer";
+import { SpecialCalendar } from "../../ui/calendar/special/SpecialCalendar";
+import { BaseCalendar } from "../../ui/calendar/base/BaseCalendar";
+import { EditChoiceButton } from "../../ui/calendar/EditChoiceButton";
 
 export const TeamCalendarEdit = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
+  const [editing, setEditing] = useState(history.location.state.editing);
 
   async function doSave() {
     try {
+      console.log(calendar);
       const requestBody = JSON.stringify({
         days: calendar.days,
         startingDate: calendar.startingDate,
@@ -33,28 +38,47 @@ export const TeamCalendarEdit = () => {
   }
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await api.get(
-          `/teams/${sessionStorage.getItem("teamId")}/calendars`
-        );
-        console.log(response.data);
-
-        setCalendar(validateCalendar(response.data));
-      } catch (e) {
-        alert(
-          `Something went wrong during fetching the calendar: \n${handleError(
-            e
-          )}`
-        );
-      }
-    }
-
-    fetchData();
-  }, []);
+    setCalendar(null); /* force reset calendar to newly fetched, otherwise incorrect calendar is edited */
+    fetchTeamCalendar().then((data) => setCalendar(validateCalendar(data)));
+  }, [editing]);
 
   if (!calendar) {
     return <div>fetching calendar</div>;
+  }
+
+  let headerText = {};
+  let content = {};
+  switch (editing) {
+    case "calendar":
+      headerText = "Edit Team Calendar";
+      content = (
+        <AdminCalendar
+          startingDate={calendar.startingDate}
+          days={calendar.days}
+        />
+      );
+      break;
+    case "special":
+      headerText = "Edit Special Preferences";
+      content = (
+        <SpecialCalendar
+          startingDate={calendar.startingDate}
+          days={calendar.days}
+        />
+      );
+      break;
+    case "base":
+      headerText = "Edit Base Preferences";
+      content = (
+        <BaseCalendar
+          startingDate={calendar.startingDate}
+          days={calendar.days}
+        />
+      );
+      break;
+    default:
+      headerText = editing.toString();
+      content = <div> Something went wrong </div>;
   }
 
   return (
@@ -62,19 +86,17 @@ export const TeamCalendarEdit = () => {
       <BaseContainer>
         <div className="navigation-button-container container">
           <div className="navigation-button-container title">
-            <h1>Edit Team Calendar</h1>
+            <h1>{headerText}</h1>
           </div>
           <div className="navigation-button-container button">
+            <EditChoiceButton setEditing={(value) => setEditing(value)} />
             <Button onClick={() => doSave()}>Save</Button>
             <Button onClick={() => history.push("/team/calendar")}>
               Cancel
             </Button>
           </div>
         </div>
-        <AdminCalendar
-          startingDate={calendar.startingDate}
-          days={calendar.days}
-        />
+        {content}
       </BaseContainer>
     </div>
   );

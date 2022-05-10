@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Slot } from "./Slot";
-import { SlotSlider } from "./SlotSlider";
-import { MAX_REQUIREMENT, MIN_REQUIREMENT, SLOT_SCALING } from "./config";
-import calendarGlobal from "./calendarGlobal";
-import calendarEventDispatcher from "./calendarEventDispatcher";
-import { SlotHandle } from "./SlotHandle";
+import { Slot } from "../Slot";
+import { SlotSlider } from "../SlotSlider";
+import { MAX_REQUIREMENT, MIN_REQUIREMENT, HOUR_HEIGHT } from "../config";
+import calendarGlobal from "../calendarGlobal";
+import calendarEventDispatcher from "../calendarEventDispatcher";
+import { SlotHandle } from "../SlotHandle";
+import {SlotPopper} from "../SlotPopper";
 
 export class AdminSlot extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export class AdminSlot extends React.Component {
       requirement: props.requirement ? props.requirement : 1,
 
       isDragged: false,
+      anchorEl: null,
     };
   }
 
@@ -41,22 +43,27 @@ export class AdminSlot extends React.Component {
     calendarEventDispatcher.dispatch("onSlotSelected");
     window.addEventListener("mouseup", this.handleGlobalMouseUp);
     window.addEventListener("mousemove", this.handleGlobalMouseMove);
-    this.setState({ isDragged: true });
+    this.setState({ isDragged: true, anchorEl: ev.currentTarget});
   }
 
   handleGlobalMouseMove(ev) {
     if (this.state.isDragged) {
-      this.setState({
-        timeFrom: this.state.timeFrom + ev.movementY / SLOT_SCALING,
-        timeTo: this.state.timeTo + ev.movementY / SLOT_SCALING,
-      });
-    }
-    if (this.state.isResized) {
-      let to = this.state.timeTo + ev.movementY / SLOT_SCALING;
-      to = (to > this.state.timeFrom) ? to : this.state.timeFrom + 1;
-      this.setState({
+      const from = this.state.timeFrom + ev.movementY / HOUR_HEIGHT;
+      const to = this.state.timeTo + ev.movementY / HOUR_HEIGHT;
+      if (from >= 0 && to <= 24) {
+        this.setState({
+        timeFrom: from,
         timeTo: to,
       });
+      }
+    }
+    if (this.state.isResized) {
+      const to = this.state.timeTo + ev.movementY / HOUR_HEIGHT;
+      if (to - this.state.timeFrom >= 1) {
+        this.setState({
+        timeTo: to,
+      });
+      }
     }
   }
 
@@ -64,7 +71,7 @@ export class AdminSlot extends React.Component {
     // global, make sure this is being changed
     if (this.state.isDragged || this.state.isResized) {
       window.removeEventListener("mouseup", this.handleGlobalMouseUp);
-      window.removeEventListener("mousemove", this.handleGlobalMouseUp);
+      window.removeEventListener("mousemove", this.handleGlobalMouseMove);
       this.setState({ isDragged: false, isResized: false });
 
       let from = Math.round(this.state.timeFrom);
@@ -117,11 +124,8 @@ export class AdminSlot extends React.Component {
         {!this.state.isDragged &&
         this.id === calendarGlobal.getSelectedSlot() ? (
           <div>
-            <SlotSlider
-              style={{
-                position: "relative",
-                top: -20 /* easier than trying to find height of slot */,
-              }}
+            <SlotPopper anchorEl={this.state.anchorEl} >
+              <SlotSlider
               onClick={(ev) => this.handleSliderClick(ev)}
               onChange={(ev, value) => this.handleSliderChange(ev, value)}
               onMouseDown={(ev) => this.handleSliderMouseDown(ev)}
@@ -132,6 +136,8 @@ export class AdminSlot extends React.Component {
               min={MIN_REQUIREMENT}
               max={MAX_REQUIREMENT}
             />
+              <div>requirement: {this.state.requirement}</div>
+            </SlotPopper>
             <SlotHandle
               onMouseDown={(ev) => this.handleHandleMouseDown(ev)}
               timeFrom={this.state.timeFrom}
@@ -146,8 +152,10 @@ export class AdminSlot extends React.Component {
 
 AdminSlot.propTypes = {
   id: PropTypes.number.isRequired,
-  slot: PropTypes.object,
+  slot: PropTypes.object.isRequired,
   timeFrom: PropTypes.number.isRequired,
   timeTo: PropTypes.number.isRequired,
   requirement: PropTypes.number,
+
+  sx: PropTypes.object,
 };

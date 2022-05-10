@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import { api, doLogout, handleError } from "../../../helpers/api";
+import {api, doLogout, getTeamIsAdmin, handleError} from "../../../helpers/api";
 import { useEffect, useState } from "react";
 import { Spinner } from "../../ui/Spinner";
 import "styles/views/Team.scss";
@@ -15,6 +15,7 @@ export const Team = ({ team, getTeam }) => (
     className="team container"
     onClick={() => {
       sessionStorage.setItem("teamId", team.id);
+      sessionStorage.setItem("isAdmin", getTeamIsAdmin(team.memberships))
       globalEventDispatcher.dispatch("onTeamIdChanged");
       getTeam();
     }}

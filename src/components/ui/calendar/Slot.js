@@ -1,7 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
-import {SLOT_REL_WIDTH, SLOT_SCALING} from "./config";
+import { SLOT_REL_WIDTH, HOUR_HEIGHT } from "./config";
 import "styles/ui/Calendar.scss";
 
 /**
@@ -9,11 +9,11 @@ import "styles/ui/Calendar.scss";
  */
 export class Slot extends React.Component {
   calcTop() {
-    return SLOT_SCALING * this.props.timeFrom;
+    return HOUR_HEIGHT * this.props.timeFrom;
   }
 
   calcHeight() {
-    return SLOT_SCALING * (this.props.timeTo - this.props.timeFrom);
+    return HOUR_HEIGHT * (this.props.timeTo - this.props.timeFrom);
   }
 
   render() {
@@ -24,15 +24,20 @@ export class Slot extends React.Component {
           position: "absolute",
           height: this.calcHeight(),
           top: this.calcTop(),
-          width: this.props.sx.width ? this.props.sx.width : SLOT_REL_WIDTH,
-          left: this.props.sx.left,
+          width:
+            this.props.sx && this.props.sx.width
+              ? this.props.sx.width
+              : SLOT_REL_WIDTH,
+          left: this.props.sx && this.props.sx.left ? this.props.sx.left : null,
         }}
-        style={this.props.style} /* overrides */
+        style={this.props.style} /* background */
         onMouseDown={this.props.onMouseDown}
         onMouseMove={this.props.onMouseMove}
         onClick={this.props.onClick}
         onMouseUp={this.props.onMouseUp}
         onKeyPress={this.props.onKeyPress}
+        onMouseEnter={this.props.onMouseEnter}
+        onMouseLeave={this.props.onMouseLeave}
       >
         {this.props.children}
       </Box>
@@ -43,10 +48,14 @@ export class Slot extends React.Component {
 Slot.propTypes = {
   timeFrom: PropTypes.number.isRequired,
   timeTo: PropTypes.number.isRequired,
+
+  sx: PropTypes.object,
   style: PropTypes.object,
   onMouseDown: PropTypes.func,
   onMouseMove: PropTypes.func,
   onClick: PropTypes.func,
   onMouseUp: PropTypes.func,
   onKeyPress: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
 };

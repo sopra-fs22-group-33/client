@@ -8,6 +8,7 @@ export class Schedule {
     // the default value for backend logic
     this.special = -1;
     this.base = null;
+    this.assigned = null;
     Object.assign(this, data);
   }
 }

@@ -6,7 +6,7 @@ import BaseContainer from "../../ui/BaseContainer";
 import { EditChoiceButton } from "../../ui/calendar/EditChoiceButton";
 import { Button } from "../../ui/Button";
 import { Calendar } from "../../ui/calendar/Calendar";
-import { Day } from "../../ui/calendar/Day";
+import { Day, handleOverlap } from "../../ui/calendar/Day";
 import { Slot } from "../../ui/calendar/Slot";
 
 export const TeamCalendar = () => {
@@ -36,13 +36,16 @@ export const TeamCalendar = () => {
           </div>
         </div>
         <Calendar>
-          {calendar.days.map((day) => (
-            <Day>
-              {day.slots.map((slot) => (
-                <Slot timeFrom={slot.timeFrom} timeTo={slot.timeTo} />
-              ))}
-            </Day>
-          ))}
+          {calendar.days.map((day) => {
+            day.slots = handleOverlap(day.slots);
+            return (
+              <Day >
+                {day.slots.map((slot) => (
+                  <Slot sx={{left: slot.left, width: slot.width}} timeFrom={slot.timeFrom} timeTo={slot.timeTo} />
+                ))}
+              </Day>
+            );
+          })}
         </Calendar>
       </BaseContainer>
     </div>

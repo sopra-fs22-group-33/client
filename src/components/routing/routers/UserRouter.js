@@ -5,6 +5,7 @@ import { UserProfile } from "components/views/User/UserProfile";
 import { AllTeams } from "../../views/User/AllTeams";
 import {CreateTeam} from "../../views/User/CreateTeam";
 import {UserInvitations} from "../../views/User/UserInvitations";
+import UserProfileEdit from "../../views/User/UserProfileEdit";
 
 export const UserRouter = (props) => {
   return (
@@ -15,6 +16,9 @@ export const UserRouter = (props) => {
         </Route>
         <Route exact path={`${props.base}/profile`}>
           <UserProfile />
+        </Route>
+        <Route exact path={`${props.base}/profile/edit`}>
+          <UserProfileEdit />
         </Route>
         <Route exact path={`${props.base}/profile/invitations`} >
           <UserInvitations />

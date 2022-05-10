@@ -1,16 +1,10 @@
 @import "styles/theme";
 
 .team {
-  &.container {
-    &:hover {
-      transform: translateY(-3px);
-      opacity: 0.4;
-    }
-    //min-height: 150px;
+  &.container2 {
+       //min-height: 150px;
     margin-bottom: 1.5%;
-    background-color: #F5F5F5 ;
     padding-top: 1.5%;
-    border-radius: 20px;
   }
   &.name {
     font-size: 24px;
@@ -18,7 +12,7 @@
     margin-bottom: 24px;
   }
 
-  &.member-list {
+  &.member-list2 {
     flex-direction: row;
     display: flex;
   }

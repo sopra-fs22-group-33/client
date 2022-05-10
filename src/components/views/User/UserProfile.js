@@ -7,6 +7,7 @@ import {api, handleError} from 'helpers/api';
 import {Button} from "components/ui/Button";
 import BaseContainer from "components/ui/BaseContainer";
 import avatar from "../../../images/avatar1.png";
+import "styles/views/ProfileInfo.scss";
 
 
 
@@ -102,6 +103,8 @@ export const UserProfile = () => {
                     <h1>User Profile</h1>
                 </div>
                 <div className="navigation-button-container button">
+                    <Button onClick={() => history.push("/user/profile/edit")}>Edit</Button>
+
                     <Button onClick={() => history.push("/user/teams")}>See Teams</Button>
 
                     <Button onClick={() => history.push("/user/profile/invitations")}>

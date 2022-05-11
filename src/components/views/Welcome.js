@@ -35,8 +35,7 @@ export const Welcome = () => {
                 <h1>Welcome!</h1>
             </div>
             <div className="navigation-button-container button">
-                <Button onClick={() => history.push("/login")}>sign in</Button>
-                <Button onClick={() => history.push("/register")}>sign up</Button>
+
             </div>
         </div>
             Maybe we can just get rid of this view and forward to log in if not authenticated/forward to user calendar if authenticated

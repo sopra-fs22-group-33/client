@@ -20,18 +20,33 @@ class Header extends React.Component {
         <BurgerMenu />
 
         <div className="header container" style={{ height: this.props.height }}>
-
           <h1 className="header title">Shift Planner</h1>
-          <Button
-            className="header team"
-            onClick={() => this.props.history.push("/user/teams")}
-          >
-            Current Team: {sessionStorage.getItem("teamId")}
-          </Button>
+
           <div className="header button">
-            <Button onClick={() => doLogout().then(() => this.props.history.push("/"))}>
-              Log out
-            </Button>
+            {sessionStorage.getItem("token") != null ? (
+              <div>
+                <Button
+                  className="header team"
+                  onClick={() => this.props.history.push("/user/teams")}
+                >
+                  Current Team: {sessionStorage.getItem("teamId")}
+                </Button>
+                <Button
+                  onClick={() =>
+                    doLogout().then(() => this.props.history.push("/"))
+                  }
+                >
+                  Log out
+                </Button>
+              </div>
+            ) : (
+              <div>
+                <Button onClick={() => this.props.history.push("/login")}>Log in</Button>
+                <Button onClick={() => this.props.history.push("/register")}>
+                  Register
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>

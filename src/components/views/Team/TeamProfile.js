@@ -26,6 +26,7 @@ export const TeamProfile = () => {
 
     //hooks
     const [users, setUsers] = useState(null);
+    const [team, setTeam] = useState(null);
 
     //fetch all users in team only once
     useEffect(() => {
@@ -38,6 +39,14 @@ export const TeamProfile = () => {
                     }
                 );
                 setUsers(response.data);
+
+                const responseTeams = await api.get(
+                    `/teams/${sessionStorage.getItem("teamId")}`,
+                    {
+                        headers: {token: sessionStorage.getItem("token")},
+                    }
+                );
+                setTeam(responseTeams.data);
             } catch (error) {
                 alert(
                     `Something went wrong with fetching the details of the team: \n${handleError(
@@ -52,6 +61,12 @@ export const TeamProfile = () => {
     }, []);
 
     let content = <Spinner/>;
+    let teamName = <Spinner/>;
+
+
+    if(team) {
+        teamName = team.name;
+    }
 
     if (users) {
         // console.log(users);
@@ -73,7 +88,7 @@ export const TeamProfile = () => {
         <BaseContainer>
             <div className="navigation-button-container container">
                 <div className="navigation-button-container title">
-                    <h1>Team Profile</h1>
+                    <h1>{teamName}</h1>
                 </div>
                 <div className="navigation-button-container button">
                     <Button onClick={() => history.push("/team/profile/invite")}>Invite User</Button>

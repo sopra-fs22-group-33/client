@@ -17,7 +17,9 @@ class Header extends React.Component {
   render() {
     return (
       <div>
-        <BurgerMenu />
+        {sessionStorage.getItem("token") != null
+            ? (<BurgerMenu />)
+            : ""}
 
         <div className="header container" style={{ height: this.props.height }}>
           <h1 className="header title">Shift Planner</h1>

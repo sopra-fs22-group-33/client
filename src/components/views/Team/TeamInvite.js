@@ -46,7 +46,7 @@ export const TeamInvite = () => {
                 />
                 <div className="button-container">
                     <Button onClick={doInvite}>Invite</Button>
-                    <Button onClick={() => history.push("/team/profile/edit")}>
+                    <Button onClick={() => history.goBack()}>
                         Cancel
                     </Button>
                 </div>

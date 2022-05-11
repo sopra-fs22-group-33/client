@@ -28,7 +28,6 @@ class Header extends React.Component {
             {sessionStorage.getItem("token") != null ? (
               <div>
                 <Button
-                  className="header team"
                   onClick={() => this.props.history.push("/user/teams")}
                 >
                   Current Team: {sessionStorage.getItem("teamId")}

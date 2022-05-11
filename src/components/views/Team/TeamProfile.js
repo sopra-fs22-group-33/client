@@ -13,9 +13,9 @@ export const TeamMember = ({ teamMember }) => (
         <div className="team member icon">
             <img src={avatar} />
         </div>
-        <div className="team member username">{teamMember.username}</div>
-        <div className="team member email">{teamMember.email}</div>
-        {teamMember.memberships.isAdmin
+        <div className="team member username">{teamMember.user.username}</div>
+        <div className="team member email">{teamMember.user.email}</div>
+        {teamMember.isAdmin
             ? <div className="team member admin">Admin</div> :''
         }
     </div>
@@ -32,13 +32,6 @@ export const TeamProfile = () => {
     useEffect(() => {
         const fetchData = async (props) => {
             try {
-                const response = await api.get(
-                    `/teams/${sessionStorage.getItem("teamId")}/users`,
-                    {
-                        headers: {token: sessionStorage.getItem("token")},
-                    }
-                );
-                setUsers(response.data);
 
                 const responseTeams = await api.get(
                     `/teams/${sessionStorage.getItem("teamId")}`,
@@ -64,16 +57,13 @@ export const TeamProfile = () => {
     let teamName = <Spinner/>;
 
 
-    if(team) {
-        teamName = team.name;
-    }
-
-    if (users) {
+    if (team) {
         // console.log(users);
+        teamName = team.name;
         content = (
             <div className="team container2">
                 <ul className="team member-list2">
-                    {users.map((teamMember) => (
+                    {team.memberships.map((teamMember) => (
                         <TeamMember
                             teamMember={teamMember}
                             onClick={() => history.push(`/user/${teamMember.id}`)}

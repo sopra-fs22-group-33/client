@@ -20,7 +20,7 @@ export const TeamInvite = () => {
                 }
             );
 
-            history.push("/team/profile/edit");
+            history.goBack();
         } catch (e) {
             alert(
                 `Something went wrong while sending the invite:\n${handleError(e)}`

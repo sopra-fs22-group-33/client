@@ -1,6 +1,5 @@
 import * as React from "react";
 import { api } from "helpers/api";
-import { Button } from "components/ui/Button";
 import "styles/views/Auth.scss";
 import PropTypes from "prop-types";
 import { Chunk } from "../ui/game/Chunk";
@@ -15,8 +14,8 @@ const GameBoard = (props) => {
         position: "absolute",
         top: 150,
         left: 400,
-        height: props.kek,
-        width: props.kek,
+        height: props.length,
+        width: props.length,
         background: "black",
       }}
     >
@@ -36,9 +35,42 @@ const GameBoard = (props) => {
 };
 
 GameBoard.propTypes = {
-  player: PropTypes.objectOf(Player),
-  playerFoes: PropTypes.arrayOf(Player),
-  apples: PropTypes.arrayOf(Chunk),
+  length: PropTypes.number,
+  player: PropTypes.objectOf(Player).isRequired,
+  playerFoes: PropTypes.arrayOf(Player).isRequired,
+  apples: PropTypes.arrayOf(Chunk).isRequired,
+};
+
+const StatBoard = (props) => {
+  return (
+    <div>
+      <PlayerStats player={props.player} />
+      <ul>
+        {props.playerFoes.map((player) => <PlayerStats player={player} />)}
+      </ul>
+    </div>
+  );
+};
+
+StatBoard.propTypes = {
+  player: PropTypes.objectOf(Player).isRequired,
+  playerFoes: PropTypes.arrayOf(Player).isRequired,
+};
+
+const PlayerStats = (props) => {
+  return (
+    <div>
+      <div>player id: {props.player.id}</div>
+      {props.player.user ? <div>user id: {props.player.user.id}</div> : null}
+      {props.player.user ? <div>email: {props.player.user.email}</div> : null}
+      <div>rank: {props.player.rank}</div>
+      <div>status: {props.player.status}</div>
+    </div>
+  );
+};
+
+PlayerStats.propTypes = {
+  player: PropTypes.objectOf(Player).isRequired,
 };
 
 export class Game extends React.Component {
@@ -166,18 +198,20 @@ export class Game extends React.Component {
 
     if (this.state.apples) {
       content = (
-        <GameBoard
-          kek={Math.round(this.boardLength * CHUNK_LENGTH)}
-          player={this.player}
-          playerFoes={this.playerFoes}
-          apples={this.state.apples}
-        />
+        <div>
+          <GameBoard
+            length={Math.round(this.boardLength * CHUNK_LENGTH)}
+            player={this.player}
+            playerFoes={this.playerFoes}
+            apples={this.state.apples}
+          />
+          <StatBoard player={this.player} playerFoes={this.playerFoes}/>
+        </div>
       );
     }
     return (
       <BaseContainer>
         <h1>Game</h1>
-        <Button onClick={() => this.doStartGame()}>Restart Game</Button>
         {content}
       </BaseContainer>
     );

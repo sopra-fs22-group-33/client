@@ -67,13 +67,8 @@ export function validateCalendar(calendar) {
         if (!schedule.hasOwnProperty("special")) {
           schedule.special = -1;
         }
-        /*
-                if (!schedule.hasOwnProperty("base")) {
-        
-                }
-                */
-        if (!schedule.hasOwnProperty("id")) {
-          wrappedError("invalid 'id'", schedule);
+        if (!schedule.hasOwnProperty("base")) {
+          schedule.base = 0;
         }
       }
 

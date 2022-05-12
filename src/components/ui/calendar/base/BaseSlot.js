@@ -46,6 +46,7 @@ export class BaseSlot extends React.Component {
     // no schedule found
     const newSchedule = {
       base: 0,
+      special: -1,
       user: { id: userId },
     };
     this.slot.schedules.push(newSchedule);

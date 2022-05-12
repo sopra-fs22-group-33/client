@@ -70,11 +70,24 @@ export async function fetchTeamCalendar() {
 
 export async function fetchFixedUserCalendar(userId) {
   try {
-    const response = await api.get(`/user/${userId}/calendars`); /* todo: update with server */
+    const response = await api.get(
+      `/user/${userId}/calendars`
+    ); /* todo: update with server */
     return response.data;
   } catch (e) {
     alert(
       `Something went wrong during fetching the calendar: \n${handleError(e)}`
+    );
+  }
+}
+
+export async function fetchEditableUserCalendar(userId) {
+  try {
+    const response = await api.get(`/user/${userId}/calendars`);
+    return response.data;
+  } catch (e) {
+    alert(
+      `Something went wrong while fetching the calendar: \n${handleError(e)}`
     );
   }
 }

@@ -6,8 +6,11 @@ import { Calendar } from "../../ui/calendar/Calendar";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { fetchFixedUserCalendar } from "../../../helpers/api";
+import {useHistory} from "react-router-dom";
+import {Button} from "../../ui/Button";
 
 export const UserCalendar = () => {
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(undefined);
   const [calendar, setCalendar] = useState(null);
 
@@ -69,7 +72,9 @@ export const UserCalendar = () => {
         <div className="navigation-button-container title">
           <h1>User Calendar</h1>
         </div>
-        <div className="navigation-button-container button"></div>
+        <div className="navigation-button-container button">
+          <Button onClick={() => history.push("/user/calendar/edit")}>Edit Preferences</Button>
+        </div>
       </div>
       {content}
     </BaseContainer>

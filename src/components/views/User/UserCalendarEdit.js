@@ -23,7 +23,7 @@ export const UserCalendarEdit = () => {
         startingDate: calendar.startingDate,
       });
       await api.put(
-        `/users/${sessionStorage.getItem("id")}/calendars`,
+        `/users/${sessionStorage.getItem("id")}/preferences`,
         requestBody
       );
     } catch (e) {

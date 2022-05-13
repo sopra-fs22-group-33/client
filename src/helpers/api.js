@@ -83,7 +83,7 @@ export async function fetchFixedUserCalendar(userId) {
 
 export async function fetchEditableUserCalendar(userId) {
   try {
-    const response = await api.get(`/user/${userId}/calendars`);
+    const response = await api.get(`/user/${userId}/preferences`);
     return response.data;
   } catch (e) {
     alert(

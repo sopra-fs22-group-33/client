@@ -22,10 +22,11 @@ export const CreateTeam = () => {
             });
 
             // create new calendar for the team
+            var startingDate = new Date().toISOString().split("T")[0];
             const calendarRequestBody = JSON.stringify({
                 // todo: let user choose staring date
                 // startingDate: the date where optimized calendar starts
-              startingDate: Date.now().toString(),
+              startingDate,
               days: TEMPLATE_DAYS,
             });
             await api.post(

@@ -71,7 +71,7 @@ export async function fetchTeamCalendar() {
 export async function fetchFixedUserCalendar(userId) {
   try {
     const response = await api.get(
-      `/user/${userId}/calendars`
+      `/users/${userId}/calendars`
     ); /* todo: update with server */
     return response.data;
   } catch (e) {
@@ -83,7 +83,7 @@ export async function fetchFixedUserCalendar(userId) {
 
 export async function fetchEditableUserCalendar(userId) {
   try {
-    const response = await api.get(`/user/${userId}/preferences`);
+    const response = await api.get(`/users/${userId}/preferences`);
     return response.data;
   } catch (e) {
     alert(

@@ -25,9 +25,7 @@ export function validateCalendar(calendar) {
     wrappedError("invalid 'days'", calendar);
   }
   if (
-    !calendar.hasOwnProperty("startingDate") ||
-    typeof calendar.startingDate !== "string" ||
-    calendar.startingDate.length === 0
+    !calendar.hasOwnProperty("startingDate")
   ) {
     wrappedError("invalid 'startingDate'", calendar);
   }

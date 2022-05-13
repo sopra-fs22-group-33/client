@@ -1,5 +1,5 @@
 export const TEMPLATE_USER_CALENDAR = {
-  startingDate: "1652058720000" /* some monday */,
+  startingDate: new Date(1652058720000).toISOString().split("T")[0], /* some monday */
   days: [
     {
       weekday: 0,

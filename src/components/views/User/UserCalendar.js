@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { fetchFixedUserCalendar } from "../../../helpers/api";
 import {useHistory} from "react-router-dom";
 import {Button} from "../../ui/Button";
+import {validateUserCalendar} from "../../../helpers/validations";
 
 export const UserCalendar = () => {
   const history = useHistory();
@@ -16,12 +17,13 @@ export const UserCalendar = () => {
 
   useEffect(() => {
     fetchFixedUserCalendar(sessionStorage.getItem("id")).then((calendar) =>
-      setCalendar(calendar)
+      setCalendar(validateUserCalendar(calendar))
     );
   }, []);
 
   let content = <div> fetching user calendar </div>;
   if (calendar) {
+    console.log(calendar);
     content = (
       <Calendar>
         {calendar.days.map((day) => {
@@ -40,19 +42,8 @@ export const UserCalendar = () => {
                     <SlotPopper anchorEl={anchorEl}>
                       {
                         <div>
-                          <div>requirement: {slot.requirement}</div>
                           <div>timeFrom: {slot.timeFrom}</div>
                           <div>timeTo: {slot.timeTo}</div>
-                          {slot.schedules
-                            ? slot.schedules.map((schedule) => (
-                                <ul>
-                                  <div>email: {schedule.user.email}</div>
-                                  <div>base: {schedule.base}</div>
-                                  <div>special: {schedule.special}</div>
-                                  <div>assigned: {schedule.assigned}</div>
-                                </ul>
-                              ))
-                            : null}
                         </div>
                       }
                     </SlotPopper>

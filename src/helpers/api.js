@@ -72,7 +72,7 @@ export async function fetchFixedUserCalendar(userId) {
   try {
     const response = await api.get(
       `/users/${userId}/calendars`
-    ); /* todo: update with server */
+    );
     return response.data;
   } catch (e) {
     alert(

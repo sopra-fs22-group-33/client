@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {api, fetchTeamCalendar, handleError} from "../../../helpers/api";
 import { AdminCalendar } from "../../ui/calendar/admin/AdminCalendar";
-import { validateCalendar } from "../../../helpers/validations";
+import { validateTeamCalendar } from "../../../helpers/validations";
 import { Button } from "../../ui/Button";
 import BaseContainer from "../../ui/BaseContainer";
 import { SpecialCalendar } from "../../ui/calendar/special/SpecialCalendar";
@@ -39,7 +39,7 @@ export const TeamCalendarEdit = () => {
 
   useEffect(() => {
     setCalendar(null); /* force reset calendar to newly fetched, otherwise incorrect calendar is edited */
-    fetchTeamCalendar().then((data) => setCalendar(validateCalendar(data)));
+    fetchTeamCalendar().then((data) => setCalendar(validateTeamCalendar(data)));
   }, [editing]);
 
   if (!calendar) {

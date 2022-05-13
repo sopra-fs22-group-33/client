@@ -10,7 +10,7 @@ import { Button } from "../../ui/Button";
 import BaseContainer from "../../ui/BaseContainer";
 import * as React from "react";
 import { TEMPLATE_USER_CALENDAR } from "../../../fixtures/templateUserCalendar";
-import { validateCalendar } from "../../../helpers/validations";
+import { validateTeamCalendar } from "../../../helpers/validations";
 
 export const UserCalendarEdit = () => {
   const history = useHistory();
@@ -55,7 +55,7 @@ export const UserCalendarEdit = () => {
         <div className="navigation-button-container button">
           <Button
             onClick={() =>
-              setCalendar(validateCalendar(TEMPLATE_USER_CALENDAR))
+              setCalendar(validateTeamCalendar(TEMPLATE_USER_CALENDAR))
             }
           >
             Load Template

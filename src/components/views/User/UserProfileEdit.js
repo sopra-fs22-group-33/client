@@ -21,6 +21,30 @@ const UserProfileEdit = () => {
   // a component can have as many state variables as you like.
   // more information can be found under https://reactjs.org/docs/hooks-state.html
 
+  useEffect(() => {
+    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
+    async function fetchData() {
+      try {
+        const token = sessionStorage.getItem("token");
+        const id = sessionStorage.getItem("id")
+        const response = await api.get(`/users/${id}`, {
+          headers: {token}
+        })
+
+        // Get the returned profile
+        setUsername(response.data.username);
+        setEmail(response.data.email);
+        console.log("User has been set");
+
+      } catch (error) {
+        console.error("Details:", error);
+        alert("Something went wrong while fetching the users! See the console for details.");
+      }
+    }
+
+    fetchData();
+  }, []);
+
   const doSaveEditProfile = async () => {
     const requestBody = JSON.stringify({ username, email });
     const id = sessionStorage.getItem("id")
@@ -48,7 +72,7 @@ const UserProfileEdit = () => {
           <Button disabled={!username || !email} onClick={() => doSaveEditProfile()}>
             Save
           </Button>
-          <Button onClick={() => history.push("/team/profile")}>Cancel</Button>
+          <Button onClick={() => history.goBack()}>Cancel</Button>
 
         </div>
       </div>

@@ -20,7 +20,7 @@ export const TeamInvite = () => {
                 }
             );
 
-            history.push("/team/profile/edit");
+            history.goBack();
         } catch (e) {
             alert(
                 `Something went wrong while sending the invite:\n${handleError(e)}`
@@ -46,7 +46,7 @@ export const TeamInvite = () => {
                 />
                 <div className="button-container">
                     <Button onClick={doInvite}>Invite</Button>
-                    <Button onClick={() => history.push("/team/profile/edit")}>
+                    <Button onClick={() => history.goBack()}>
                         Cancel
                     </Button>
                 </div>

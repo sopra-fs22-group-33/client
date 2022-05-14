@@ -24,7 +24,8 @@ export const UserCalendarEdit = () => {
       });
       await api.put(
         `/users/${sessionStorage.getItem("id")}/preferences`,
-        requestBody
+        requestBody,
+        { headers: { token: sessionStorage.getItem("token") } }
       );
     } catch (e) {
       alert(

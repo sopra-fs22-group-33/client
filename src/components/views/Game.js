@@ -1,6 +1,5 @@
 import * as React from "react";
 import { api } from "helpers/api";
-import { Button } from "components/ui/Button";
 import "styles/views/Auth.scss";
 import PropTypes from "prop-types";
 import { Chunk } from "../ui/game/Chunk";
@@ -15,11 +14,12 @@ const GameBoard = (props) => {
         position: "absolute",
         top: 150,
         left: 400,
-        height: props.kek,
-        width: props.kek,
+        height: props.length,
+        width: props.length,
         background: "black",
       }}
     >
+      {props.isDead ? <DeathDisplay length={props.length} /> : null}
       {props.player.chunks.map((chunk) => (
         <Chunk x={chunk.x} y={chunk.y} background={"green"} />
       ))}
@@ -36,9 +36,57 @@ const GameBoard = (props) => {
 };
 
 GameBoard.propTypes = {
-  player: PropTypes.objectOf(Player),
-  playerFoes: PropTypes.arrayOf(Player),
-  apples: PropTypes.arrayOf(Chunk),
+  length: PropTypes.number.isRequired,
+  player: PropTypes.objectOf(Player).isRequired,
+  playerFoes: PropTypes.arrayOf(Player).isRequired,
+  apples: PropTypes.arrayOf(Chunk).isRequired,
+  isDead: PropTypes.bool.isRequired,
+};
+
+const DeathDisplay = (props) => (
+  <div
+    style={{ position: "relative", top: props.length / 2, background: "white" }}
+  >
+    YOU DIED
+  </div>
+);
+
+DeathDisplay.propTypes = {
+  length: PropTypes.number.isRequired,
+};
+
+const StatBoard = (props) => {
+  return (
+    <div>
+      <PlayerStats player={props.player} />
+      <ul>
+        {props.playerFoes.map((player) => (
+          <PlayerStats player={player} />
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+StatBoard.propTypes = {
+  player: PropTypes.objectOf(Player).isRequired,
+  playerFoes: PropTypes.arrayOf(Player).isRequired,
+};
+
+const PlayerStats = (props) => {
+  return (
+    <div>
+      <div>player id: {props.player.id}</div>
+      {props.player.user ? <div>user id: {props.player.user.id}</div> : null}
+      {props.player.user ? <div>email: {props.player.user.email}</div> : null}
+      <div>rank: {props.player.rank}</div>
+      <div>status: {props.player.status}</div>
+    </div>
+  );
+};
+
+PlayerStats.propTypes = {
+  player: PropTypes.objectOf(Player).isRequired,
 };
 
 export class Game extends React.Component {
@@ -46,12 +94,13 @@ export class Game extends React.Component {
     super(props);
     this.state = {
       apples: null,
+      isDead: undefined,
     };
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.player = null;
     this.playerFoes = [];
-    this.doStartGame();
+    this.doStartGame().then(() => this.tick());
   }
 
   componentDidMount() {
@@ -63,6 +112,10 @@ export class Game extends React.Component {
   }
 
   handleKeyDown(ev) {
+    if (this.state.isDead) {
+      window.removeEventListener("keydown", this.handleKeyDown);
+    }
+    // todo: optimise for held key
     const [oldX, oldY] = this.player.getDir();
     let [newX, newY] = [0, 0];
     switch (ev.code) {
@@ -92,8 +145,49 @@ export class Game extends React.Component {
     ) {
       this.player.setDir(newX, newY);
     }
+  }
+
+  tick() {
+    console.log("tick");
     this.player.updatePos();
-    this.doUpdate();
+    console.log("updating")
+    if (!this.state.isDead) {
+      console.log("not dead")
+      this.sendData().then(() => this.fetchData());
+    } else {
+      console.log("dead");
+      this.fetchData();
+    }
+    console.log("update done\n")
+    setTimeout(() => {  this.tick(); }, 100);
+  }
+
+  async sendData() {
+    try {
+      const requestBody = JSON.stringify({
+        chunks: serialize(this.player.chunks),
+      });
+      await api.put(`/games/${this.gameId}/${this.player.id}`, requestBody);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async fetchData() {
+    try {
+      const response = await api.get(`/games/${this.gameId}/${this.player.id}`);
+
+      const game = response.data;
+
+      this.mapPlayers(game.players);
+
+      this.setState({
+        apples: deserialize(game.apples),
+        isDead: this.player.status === "dead",
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   mapPlayers(players) {
@@ -118,25 +212,6 @@ export class Game extends React.Component {
     }
   }
 
-  async doUpdate() {
-    try {
-      const requestBody = JSON.stringify({
-        chunks: serialize(this.player.chunks),
-      });
-      await api.put(`/games/${this.gameId}/${this.player.id}`, requestBody);
-
-      const response = await api.get(`/games/${this.gameId}/${this.player.id}`);
-
-      const game = response.data;
-
-      this.mapPlayers(game.players);
-
-      this.setState({ apples: deserialize(response.data.apples) });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   doStartGame = async () => {
     const response = await api.get(
       `/users/${sessionStorage.getItem("id")}/games`
@@ -158,7 +233,10 @@ export class Game extends React.Component {
       }
     }
 
-    this.setState({ apples: deserialize(game.apples) });
+    this.setState({
+      apples: deserialize(game.apples),
+      isDead: this.player.status === "dead",
+    });
   };
 
   render() {
@@ -166,18 +244,21 @@ export class Game extends React.Component {
 
     if (this.state.apples) {
       content = (
-        <GameBoard
-          kek={Math.round(this.boardLength * CHUNK_LENGTH)}
-          player={this.player}
-          playerFoes={this.playerFoes}
-          apples={this.state.apples}
-        />
+        <div>
+          <GameBoard
+            length={Math.round(this.boardLength * CHUNK_LENGTH)}
+            player={this.player}
+            playerFoes={this.playerFoes}
+            apples={this.state.apples}
+            isDead={this.state.isDead}
+          />
+          <StatBoard player={this.player} playerFoes={this.playerFoes} />
+        </div>
       );
     }
     return (
       <BaseContainer>
         <h1>Game</h1>
-        <Button onClick={() => this.doStartGame()}>Restart Game</Button>
         {content}
       </BaseContainer>
     );

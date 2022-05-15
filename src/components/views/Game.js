@@ -148,18 +148,12 @@ export class Game extends React.Component {
   }
 
   tick() {
-    console.log("tick");
-    this.player.updatePos();
-    console.log("updating")
     if (!this.state.isDead) {
-      console.log("not dead")
-      this.sendData().then(() => this.fetchData());
+      this.player.updatePos();
+      this.sendData().then(() => this.fetchData().then(() => setTimeout(() => {  this.tick(); }, 100)));
     } else {
-      console.log("dead");
-      this.fetchData();
+      this.fetchData().then(() => setTimeout(() => {  this.tick(); }, 100));
     }
-    console.log("update done\n")
-    setTimeout(() => {  this.tick(); }, 100);
   }
 
   async sendData() {

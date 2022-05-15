@@ -9,10 +9,12 @@ import { Calendar } from "../../ui/calendar/Calendar";
 import { Day, handleOverlap } from "../../ui/calendar/Day";
 import { Slot } from "../../ui/calendar/Slot";
 import { SlotPopper } from "../../ui/calendar/SlotPopper";
+import { randomId } from "../../../helpers/validations";
 
 export const TeamCalendar = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
+  const [selectedSlot, setSelectedSlot] = useState(null);
   const [anchorEl, setAnchorEl] = useState(undefined);
 
   useEffect(() => {
@@ -23,6 +25,7 @@ export const TeamCalendar = () => {
     return <div>fetching calendar</div>;
   }
 
+  console.log("render");
   return (
     <div>
       <BaseContainer>
@@ -41,30 +44,31 @@ export const TeamCalendar = () => {
           {calendar.days.map((day) => {
             day.slots = handleOverlap(day.slots);
             return (
-              <Day>
+              <Day key={day.id}>
                 {day.slots.map((slot) => (
                   <Slot
+                    key={slot.id}
                     sx={{ left: slot.left, width: slot.width }}
-                    onMouseEnter={(ev) => setAnchorEl(ev.currentTarget)}
-                    onMouseLeave={(ev) => setAnchorEl(undefined)}
+                    onMouseEnter={(ev) => {
+                      setAnchorEl(ev.currentTarget);
+                      setSelectedSlot(slot.id);
+                    }}
+                    onMouseLeave={(ev) => {
+                      setAnchorEl(undefined);
+                      setSelectedSlot(null);
+                    }}
                     timeFrom={slot.timeFrom}
                     timeTo={slot.timeTo}
                   >
-                    {anchorEl ? (
+                    {anchorEl !== undefined && selectedSlot === slot.id ? (
                       <SlotPopper anchorEl={anchorEl}>
                         {
                           <div>
                             <div>requirement: {slot.requirement}</div>
-                            <div>
-                              timeFrom:{" "}
-                              {slot.timeFrom /*temporary, for easier styling */}
-                            </div>
-                            <div>
-                              timeTo:{" "}
-                              {slot.timeTo /*temporary, for easier styling */}
-                            </div>
+                            <div>timeFrom: {slot.timeFrom}</div>
+                            <div>timeTo: {slot.timeTo}</div>
                             {slot.schedules.map((schedule) => (
-                              <ul>
+                              <ul key={randomId()}>
                                 <div>email: {schedule.user.email}</div>
                                 <div>base: {schedule.base}</div>
                                 <div>special: {schedule.special}</div>

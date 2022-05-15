@@ -81,6 +81,18 @@ export function validateUserCalendar(calendar) {
     calendar.days = [];
   }
 
+  let d, day;
+  let s, slot;
+  // generate IDs if missing
+  for (d in calendar.days) {
+    day = calendar.days[d];
+    day.id = day.id ? day.id : randomId();
+      for (s in day.slots) {
+        slot = day.slots[s];
+        slot.id = slot.id ? slot.id : randomId();
+      }
+  }
+
   if (!calendar.hasOwnProperty("startingDate")) {
     wrappedCalendarError("invalid 'startingDate' in userCalendar:", calendar);
   }

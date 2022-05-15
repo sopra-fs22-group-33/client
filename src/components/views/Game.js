@@ -19,6 +19,7 @@ const GameBoard = (props) => {
         background: "black",
       }}
     >
+      {props.isDead ? <DeathDisplay length={props.length} /> : null}
       {props.player.chunks.map((chunk) => (
         <Chunk x={chunk.x} y={chunk.y} background={"green"} />
       ))}
@@ -35,10 +36,23 @@ const GameBoard = (props) => {
 };
 
 GameBoard.propTypes = {
-  length: PropTypes.number,
+  length: PropTypes.number.isRequired,
   player: PropTypes.objectOf(Player).isRequired,
   playerFoes: PropTypes.arrayOf(Player).isRequired,
   apples: PropTypes.arrayOf(Chunk).isRequired,
+  isDead: PropTypes.bool.isRequired,
+};
+
+const DeathDisplay = (props) => (
+  <div
+    style={{ position: "relative", top: props.length / 2, background: "white" }}
+  >
+    YOU DIED
+  </div>
+);
+
+DeathDisplay.propTypes = {
+  length: PropTypes.number.isRequired,
 };
 
 const StatBoard = (props) => {
@@ -46,7 +60,9 @@ const StatBoard = (props) => {
     <div>
       <PlayerStats player={props.player} />
       <ul>
-        {props.playerFoes.map((player) => <PlayerStats player={player} />)}
+        {props.playerFoes.map((player) => (
+          <PlayerStats player={player} />
+        ))}
       </ul>
     </div>
   );
@@ -78,12 +94,13 @@ export class Game extends React.Component {
     super(props);
     this.state = {
       apples: null,
+      isDead: undefined,
     };
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.player = null;
     this.playerFoes = [];
-    this.doStartGame();
+    this.doStartGame().then(() => this.tick());
   }
 
   componentDidMount() {
@@ -95,6 +112,10 @@ export class Game extends React.Component {
   }
 
   handleKeyDown(ev) {
+    if (this.state.isDead) {
+      window.removeEventListener("keydown", this.handleKeyDown);
+    }
+    // todo: optimise for held key
     const [oldX, oldY] = this.player.getDir();
     let [newX, newY] = [0, 0];
     switch (ev.code) {
@@ -124,8 +145,49 @@ export class Game extends React.Component {
     ) {
       this.player.setDir(newX, newY);
     }
+  }
+
+  tick() {
+    console.log("tick");
     this.player.updatePos();
-    this.doUpdate();
+    console.log("updating")
+    if (!this.state.isDead) {
+      console.log("not dead")
+      this.sendData().then(() => this.fetchData());
+    } else {
+      console.log("dead");
+      this.fetchData();
+    }
+    console.log("update done\n")
+    setTimeout(() => {  this.tick(); }, 100);
+  }
+
+  async sendData() {
+    try {
+      const requestBody = JSON.stringify({
+        chunks: serialize(this.player.chunks),
+      });
+      await api.put(`/games/${this.gameId}/${this.player.id}`, requestBody);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async fetchData() {
+    try {
+      const response = await api.get(`/games/${this.gameId}/${this.player.id}`);
+
+      const game = response.data;
+
+      this.mapPlayers(game.players);
+
+      this.setState({
+        apples: deserialize(game.apples),
+        isDead: this.player.status === "dead",
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   mapPlayers(players) {
@@ -150,25 +212,6 @@ export class Game extends React.Component {
     }
   }
 
-  async doUpdate() {
-    try {
-      const requestBody = JSON.stringify({
-        chunks: serialize(this.player.chunks),
-      });
-      await api.put(`/games/${this.gameId}/${this.player.id}`, requestBody);
-
-      const response = await api.get(`/games/${this.gameId}/${this.player.id}`);
-
-      const game = response.data;
-
-      this.mapPlayers(game.players);
-
-      this.setState({ apples: deserialize(response.data.apples) });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   doStartGame = async () => {
     const response = await api.get(
       `/users/${sessionStorage.getItem("id")}/games`
@@ -190,7 +233,10 @@ export class Game extends React.Component {
       }
     }
 
-    this.setState({ apples: deserialize(game.apples) });
+    this.setState({
+      apples: deserialize(game.apples),
+      isDead: this.player.status === "dead",
+    });
   };
 
   render() {
@@ -204,8 +250,9 @@ export class Game extends React.Component {
             player={this.player}
             playerFoes={this.playerFoes}
             apples={this.state.apples}
+            isDead={this.state.isDead}
           />
-          <StatBoard player={this.player} playerFoes={this.playerFoes}/>
+          <StatBoard player={this.player} playerFoes={this.playerFoes} />
         </div>
       );
     }

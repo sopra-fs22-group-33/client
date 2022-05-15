@@ -6,13 +6,14 @@ import { Calendar } from "../../ui/calendar/Calendar";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { fetchFixedUserCalendar } from "../../../helpers/api";
-import {useHistory} from "react-router-dom";
-import {Button} from "../../ui/Button";
-import {validateUserCalendar} from "../../../helpers/validations";
+import { useHistory } from "react-router-dom";
+import { Button } from "../../ui/Button";
+import { validateUserCalendar } from "../../../helpers/validations";
 
 export const UserCalendar = () => {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(undefined);
+  const [selectedSlot, setSelectedSlot] = useState(null);
   const [calendar, setCalendar] = useState(null);
 
   useEffect(() => {
@@ -33,12 +34,18 @@ export const UserCalendar = () => {
               {day.slots.map((slot) => (
                 <Slot
                   sx={{ left: slot.left, width: slot.width }}
-                  onMouseEnter={(ev) => setAnchorEl(ev.currentTarget)}
-                  onMouseLeave={(ev) => setAnchorEl(undefined)}
+                  onMouseEnter={(ev) => {
+                    setAnchorEl(ev.currentTarget);
+                    setSelectedSlot(slot.id);
+                  }}
+                  onMouseLeave={(ev) => {
+                    setAnchorEl(undefined);
+                    setSelectedSlot(null);
+                  }}
                   timeFrom={slot.timeFrom}
                   timeTo={slot.timeTo}
                 >
-                  {anchorEl ? (
+                  {anchorEl && selectedSlot === slot.id ? (
                     <SlotPopper anchorEl={anchorEl}>
                       {
                         <div>
@@ -64,7 +71,9 @@ export const UserCalendar = () => {
           <h1>User Calendar</h1>
         </div>
         <div className="navigation-button-container button">
-          <Button onClick={() => history.push("/user/calendar/edit")}>Edit Preferences</Button>
+          <Button onClick={() => history.push("/user/calendar/edit")}>
+            Edit Preferences
+          </Button>
         </div>
       </div>
       {content}

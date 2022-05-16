@@ -113,15 +113,18 @@ export class Day extends React.Component {
   render() {
     return (
       <Grid item xs={12 / 7}>
-        <Box sx={{ width: 1 }} style={{ background: "gray" }}>
-          weekday: {this.props.weekday}
+        <Box sx={{ width: 1, pb: "12px" }} style={{}}>
+          Monday 5th {this.props.weekday}
         </Box>
         <Box
           sx={{
             position: "absolute",
             width: 1 / 10,
             height: DAY_HEIGHT,
-            background: "lightgray",
+            //background: "lightgray",
+            border: 1,
+            borderColor: "gray",
+            borderRadius: "10px",
           }}
           onMouseDown={this.props.onMouseDown}
         >

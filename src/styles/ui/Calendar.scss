@@ -3,10 +3,40 @@
 .calendar {
   &.slot {
     user-select: none;
-    background: rgba(100, 100, 100, 0.3); /* alpha to show hour-lines behind without affecting children */
+    background: $gradient; /* alpha to show hour-lines behind without affecting children */
+    border-radius: 10px;
   }
+
   &.slot-slider {
     user-select: none;
     background: white;
   }
+
+}
+
+.time-line2 {
+  border:none;
+  border-top:2px dashed grey;
+  position: absolute;
+  margin-top: 165px;
+  display: block;
+  width: 82%;
+}
+
+.time-line3 {
+  border:none;
+  border-top:2px dashed grey;
+  position: absolute;
+  margin-top: 285px;
+  display: block;
+  width: 82%;
+}
+
+.time-line4 {
+  border:none;
+  border-top:2px dashed grey;
+  position: absolute;
+  margin-top: 405px;
+  display: block;
+  width: 82%;
 }

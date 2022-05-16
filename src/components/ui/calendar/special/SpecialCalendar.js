@@ -1,49 +1,35 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { SpecialDay } from "./SpecialDay";
-import { Calendar } from "../Calendar";
-import calendarEventDispatcher from "../calendarEventDispatcher";
-import calendarGlobal from "../calendarGlobal";
+import { Calendar, countJokers } from "../Calendar";
+import {MAX_JOKERS} from "../config";
 
 export class SpecialCalendar extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleGlobalKeyDown = this.handleGlobalKeyDown.bind(this);
+    this.handleGlobalClick = this.handleGlobalClick.bind(this);
 
     this.state = {
       days: props.days,
 
       selectedSlot: null,
     };
-
-    calendarEventDispatcher.createTopic("onSlotSelected");
-
-    calendarEventDispatcher.subscribe(
-      "onSlotSelected",
-      this,
-      this.handleSlotSelected
-    );
   }
 
   componentDidMount() {
-    window.addEventListener("keydown", this.handleGlobalKeyDown);
+    window.addEventListener("click", this.handleGlobalClick);
   }
 
   componentWillUnmount() {
-    calendarGlobal.setSelectedSlot(null);
-    window.removeEventListener("keydown", this.handleGlobalKeyDown);
+    window.removeEventListener("click", this.handleGlobalClick);
   }
 
-  handleGlobalKeyDown(ev) {
-    if (this.state.selectedSlot && ev.code === "Escape") {
-      calendarGlobal.setSelectedSlot(null);
-      this.setState({ selectedSlot: null });
+  handleGlobalClick(ev) {
+    // click could mean slider drag
+    if (countJokers(this.state.days, parseInt(sessionStorage.getItem("id"))) > MAX_JOKERS) {
+      alert("too many jokers");
     }
-  }
-
-  handleSlotSelected() {
-    this.setState({ selectedSlot: calendarGlobal.getSelectedSlot() });
   }
 
   render() {

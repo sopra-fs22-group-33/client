@@ -14,3 +14,6 @@ export const MAX_SPECIAL = 1;
 // min and max general preference
 export const MIN_BASE = -2;
 export const MAX_BASE = 2;
+
+// maximum number of jokers allowed per user per team
+export const MAX_JOKERS = 2;

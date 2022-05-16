@@ -4,8 +4,6 @@ import { Slot } from "../Slot";
 import { MAX_SPECIAL, MIN_SPECIAL } from "../config";
 import { SlotSlider } from "../SlotSlider";
 import { SlotPopper } from "../SlotPopper";
-import calendarGlobal from "../calendarGlobal";
-import calendarEventDispatcher from "../calendarEventDispatcher";
 
 /**
  * Convert frontend to backend representation
@@ -52,16 +50,17 @@ export class SpecialSlot extends React.Component {
 
     this.state = {
       anchorEl: null,
+      isHoveredOver: false,
       mySchedule: this.getSchedule(),
     };
   }
 
-  handleClick(ev) {
-    calendarGlobal.setSelectedSlot(this.id);
-    calendarEventDispatcher.dispatch("onSlotSelected");
-    this.setState({
-      anchorEl: ev.currentTarget,
-    });
+  handleSlotMouseEnter(ev){
+    this.setState({isHoveredOver: true, anchorEl: ev.currentTarget});
+  }
+
+  handleSlotMouseLeave(ev) {
+    this.setState({isHoveredOver: false, anchorEl: undefined});
   }
 
   handleSliderChange(ev, value) {
@@ -107,9 +106,10 @@ export class SpecialSlot extends React.Component {
         style={{ background: this.state.mySchedule ? this.getColor() : null }}
         timeFrom={this.props.timeFrom}
         timeTo={this.props.timeTo}
-        onClick={(ev) => this.handleClick(ev)}
+        onMouseEnter={(ev) => this.handleSlotMouseEnter(ev)}
+        onMouseLeave={(ev) => this.handleSlotMouseLeave(ev)}
       >
-        {calendarGlobal.getSelectedSlot() === this.id ? (
+        {this.state.isHoveredOver ? (
           <SlotPopper anchorEl={this.state.anchorEl}>
             <SlotSlider
               onChange={(ev, value) => this.handleSliderChange(ev, value)}

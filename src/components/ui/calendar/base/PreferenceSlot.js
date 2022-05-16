@@ -1,7 +1,5 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import calendarGlobal from "../calendarGlobal";
-import calendarEventDispatcher from "../calendarEventDispatcher";
 import { MAX_BASE, MIN_BASE } from "../config";
 import { Slot } from "../Slot";
 import { SlotPopper } from "../SlotPopper";
@@ -17,16 +15,17 @@ export class PreferenceSlot extends React.Component {
 
     this.state = {
       anchorEl: null,
+      isHoveredOver: false,
       base: props.base ? props.base : 0 /* else sliders are 'controlled' */,
     };
   }
 
-  handleClick(ev) {
-    calendarGlobal.setSelectedSlot(this.id);
-    calendarEventDispatcher.dispatch("onSlotSelected");
-    this.setState({
-      anchorEl: ev.currentTarget,
-    });
+  handleSlotMouseEnter(ev){
+    this.setState({isHoveredOver: true, anchorEl: ev.currentTarget});
+  }
+
+  handleSlotMouseLeave(ev) {
+    this.setState({isHoveredOver: false, anchorEl: undefined});
   }
 
   handleSliderChange(ev, value) {
@@ -58,9 +57,10 @@ export class PreferenceSlot extends React.Component {
         style={{ background: this.state.base ? this.getColor() : null }}
         timeFrom={this.props.timeFrom}
         timeTo={this.props.timeTo}
-        onClick={(ev) => this.handleClick(ev)}
+        onMouseEnter={(ev) => this.handleSlotMouseEnter(ev)}
+        onMouseLeave={(ev) => this.handleSlotMouseLeave(ev)}
       >
-        {calendarGlobal.getSelectedSlot() === this.id ? (
+        {this.state.isHoveredOver ? (
           <SlotPopper anchorEl={this.state.anchorEl}>
             <SlotSlider
               onChange={(ev, value) => this.handleSliderChange(ev, value)}

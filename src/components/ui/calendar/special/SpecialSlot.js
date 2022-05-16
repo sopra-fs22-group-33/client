@@ -4,8 +4,6 @@ import { Slot } from "../Slot";
 import { MAX_SPECIAL, MIN_SPECIAL } from "../config";
 import { SlotSlider } from "../SlotSlider";
 import { SlotPopper } from "../SlotPopper";
-import calendarGlobal from "../calendarGlobal";
-import calendarEventDispatcher from "../calendarEventDispatcher";
 
 /**
  * Convert frontend to backend representation

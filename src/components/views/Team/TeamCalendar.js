@@ -25,7 +25,6 @@ export const TeamCalendar = () => {
     return <div>fetching calendar</div>;
   }
 
-  console.log("render");
   return (
     <div>
       <BaseContainer>

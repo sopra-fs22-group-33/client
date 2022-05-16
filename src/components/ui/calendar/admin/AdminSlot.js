@@ -6,7 +6,7 @@ import { MAX_REQUIREMENT, MIN_REQUIREMENT, HOUR_HEIGHT } from "../config";
 import calendarGlobal from "../calendarGlobal";
 import calendarEventDispatcher from "../calendarEventDispatcher";
 import { SlotHandle } from "../SlotHandle";
-import {SlotPopper} from "../SlotPopper";
+import { SlotPopper } from "../SlotPopper";
 
 export class AdminSlot extends React.Component {
   constructor(props) {
@@ -24,8 +24,23 @@ export class AdminSlot extends React.Component {
       requirement: props.requirement ? props.requirement : 1,
 
       isDragged: false,
+      isResized: false,
+      isHoveredOver: false,
       anchorEl: null,
     };
+  }
+
+  handleSlotMouseEnter(ev) {
+    calendarGlobal.setSelectedSlot(this.id);
+    calendarEventDispatcher.dispatch(
+      "onSlotSelected"
+    ); /* necessary for deletion to work */
+    this.setState({ isHoveredOver: true, anchorEl: ev.currentTarget });
+  }
+
+  handleSlotMouseLeave(ev) {
+    calendarGlobal.setSelectedSlot(null);
+    this.setState({ isHoveredOver: false, anchorEl: undefined });
   }
 
   handleHandleMouseDown(ev) {
@@ -39,11 +54,9 @@ export class AdminSlot extends React.Component {
   handleSlotMouseDown(ev) {
     // prevent creation of new slot
     ev.stopPropagation();
-    calendarGlobal.setSelectedSlot(this.id);
-    calendarEventDispatcher.dispatch("onSlotSelected");
     window.addEventListener("mouseup", this.handleGlobalMouseUp);
     window.addEventListener("mousemove", this.handleGlobalMouseMove);
-    this.setState({ isDragged: true, anchorEl: ev.currentTarget});
+    this.setState({ isDragged: true });
   }
 
   handleGlobalMouseMove(ev) {
@@ -52,17 +65,17 @@ export class AdminSlot extends React.Component {
       const to = this.state.timeTo + ev.movementY / HOUR_HEIGHT;
       if (from >= 0 && to <= 24) {
         this.setState({
-        timeFrom: from,
-        timeTo: to,
-      });
+          timeFrom: from,
+          timeTo: to,
+        });
       }
     }
     if (this.state.isResized) {
       const to = this.state.timeTo + ev.movementY / HOUR_HEIGHT;
       if (to - this.state.timeFrom >= 1) {
         this.setState({
-        timeTo: to,
-      });
+          timeTo: to,
+        });
       }
     }
   }
@@ -76,8 +89,8 @@ export class AdminSlot extends React.Component {
 
       let from = Math.round(this.state.timeFrom);
       let to = Math.round(this.state.timeTo);
-      from = (from > 0) ? from : 0;
-      to = (to - from >= 1) ? to : from + 1;
+      from = from > 0 ? from : 0;
+      to = to - from >= 1 ? to : from + 1;
       this.slot.timeFrom = from;
       this.slot.timeTo = to;
       this.setState({ timeFrom: from, timeTo: to });
@@ -120,22 +133,23 @@ export class AdminSlot extends React.Component {
         timeTo={this.state.timeTo}
         onClick={(ev) => this.handleSlotClick(ev)}
         onMouseDown={(ev) => this.handleSlotMouseDown(ev)}
+        onMouseEnter={(ev) => this.handleSlotMouseEnter(ev)}
+        onMouseLeave={(ev) => this.handleSlotMouseLeave(ev)}
       >
-        {!this.state.isDragged &&
-        this.id === calendarGlobal.getSelectedSlot() ? (
+        {!this.state.isDragged && this.state.isHoveredOver ? (
           <div>
-            <SlotPopper anchorEl={this.state.anchorEl} >
+            <SlotPopper anchorEl={this.state.anchorEl}>
               <SlotSlider
-              onClick={(ev) => this.handleSliderClick(ev)}
-              onChange={(ev, value) => this.handleSliderChange(ev, value)}
-              onMouseDown={(ev) => this.handleSliderMouseDown(ev)}
-              value={this.state.requirement}
-              valueLabelDisplay={"auto"}
-              step={1}
-              marks
-              min={MIN_REQUIREMENT}
-              max={MAX_REQUIREMENT}
-            />
+                onClick={(ev) => this.handleSliderClick(ev)}
+                onChange={(ev, value) => this.handleSliderChange(ev, value)}
+                onMouseDown={(ev) => this.handleSliderMouseDown(ev)}
+                value={this.state.requirement}
+                valueLabelDisplay={"auto"}
+                step={1}
+                marks
+                min={MIN_REQUIREMENT}
+                max={MAX_REQUIREMENT}
+              />
               <div>requirement: {this.state.requirement}</div>
             </SlotPopper>
             <SlotHandle

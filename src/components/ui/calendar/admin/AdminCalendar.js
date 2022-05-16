@@ -37,16 +37,11 @@ export class AdminCalendar extends React.Component {
   }
 
   handleGlobalKeyDown(ev) {
-    if (this.state.selectedSlot) {
-      // deselect slot
-      if (ev.code === "Escape") {
-        calendarGlobal.setSelectedSlot(null);
-        this.setState({ selectedSlot: null });
-      }
-      // delete slot
-      else if (ev.code === "Backspace" || ev.code === "Delete") {
-        calendarEventDispatcher.dispatch("onSlotDeleted");
-      }
+    if (
+      this.state.selectedSlot &&
+      (ev.code === "Backspace" || ev.code === "Delete")
+    ) {
+      calendarEventDispatcher.dispatch("onSlotDeleted");
     }
   }
 

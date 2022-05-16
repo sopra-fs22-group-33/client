@@ -56,17 +56,41 @@ export const handleError = (error) => {
 };
 
 export async function fetchTeamCalendar() {
-    try {
-      const response = await api.get(
-        `/teams/${sessionStorage.getItem("teamId")}/calendars`
-      );
-      return response.data;
-    } catch (e) {
-      alert(
-        `Something went wrong during fetching the calendar: \n${handleError(e)}`
-      );
-    }
+  try {
+    const response = await api.get(
+      `/teams/${sessionStorage.getItem("teamId")}/calendars`
+    );
+    return response.data;
+  } catch (e) {
+    alert(
+      `Something went wrong during fetching the calendar: \n${handleError(e)}`
+    );
   }
+}
+
+export async function fetchFixedUserCalendar(userId) {
+  try {
+    const response = await api.get(
+      `/users/${userId}/calendars`
+    );
+    return response.data;
+  } catch (e) {
+    alert(
+      `Something went wrong during fetching the calendar: \n${handleError(e)}`
+    );
+  }
+}
+
+export async function fetchEditableUserCalendar(userId) {
+  try {
+    const response = await api.get(`/users/${userId}/preferences`);
+    return response.data;
+  } catch (e) {
+    alert(
+      `Something went wrong while fetching the calendar: \n${handleError(e)}`
+    );
+  }
+}
 
 export const getToken = (response) => {
   if (!response.headers.hasOwnProperty("token")) {

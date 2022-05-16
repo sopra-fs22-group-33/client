@@ -1,5 +1,5 @@
 export const VALID_TEAM_CALENDAR = {
-  startingDate: "someDateFormat",
+  startingDate: new Date().toISOString().split("T")[0],
   days: [
     {
       weekday: 0,

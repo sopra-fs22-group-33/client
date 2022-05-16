@@ -1,6 +1,10 @@
 export function randomId() {
-  const uint32 = window.crypto.getRandomValues(new Uint32Array(1))[0];
-  return uint32;
+  return window.crypto.getRandomValues(new Uint32Array(1))[0];
+}
+
+function wrappedCalendarError(message, o) {
+  alert(`Invalid calendar ${message}\n ${JSON.stringify(o)}`);
+  throw Error(`Invalid calendar ${message}\n ${JSON.stringify(o)}`);
 }
 
 /**
@@ -10,32 +14,22 @@ export function randomId() {
  * @throws Error
  * @returns {{startingDate: string, days: array}}
  */
-export function validateCalendar(calendar) {
-  const baseErrorMessage = "Invalid calendar:";
-
-  function wrappedError(message, o) {
-    throw Error(`${baseErrorMessage} ${message}\n ${JSON.stringify(o)}`);
-  }
-
+export function validateTeamCalendar(calendar) {
   if (
     !calendar.hasOwnProperty("days") ||
     !Array.isArray(calendar.days) ||
     calendar.days.length === 0
   ) {
-    wrappedError("invalid 'days'", calendar);
+    wrappedCalendarError("invalid 'days' in teamCalendar:", calendar);
   }
-  if (
-    !calendar.hasOwnProperty("startingDate") ||
-    typeof calendar.startingDate !== "string" ||
-    calendar.startingDate.length === 0
-  ) {
-    wrappedError("invalid 'startingDate'", calendar);
+  if (!calendar.hasOwnProperty("startingDate")) {
+    wrappedCalendarError("invalid 'startingDate' in teamCalendar:", calendar);
   }
 
   for (let i in calendar.days) {
     let day = calendar.days[i];
     if (!day.hasOwnProperty("weekday")) {
-      wrappedError("missing 'weekday'", day);
+      wrappedCalendarError("missing 'weekday' in teamCalendar:", day);
     }
     if (!day.hasOwnProperty("slots") || !Array.isArray(day.slots)) {
       day.slots = [];
@@ -49,10 +43,10 @@ export function validateCalendar(calendar) {
         !slot.hasOwnProperty("timeFrom") ||
         typeof slot.timeFrom !== "number"
       ) {
-        wrappedError("invalid 'timeFrom'", slot);
+        wrappedCalendarError("invalid 'timeFrom' in teamCalendar:", slot);
       }
       if (!slot.hasOwnProperty("timeTo") || typeof slot.timeTo !== "number") {
-        wrappedError("invalid 'timeFrom'", slot);
+        wrappedCalendarError("invalid 'timeFrom' in teamCalendar:", slot);
       }
       if (!slot.hasOwnProperty("requirement")) {
         slot.requirement = 1;
@@ -67,13 +61,8 @@ export function validateCalendar(calendar) {
         if (!schedule.hasOwnProperty("special")) {
           schedule.special = -1;
         }
-        /*
-                if (!schedule.hasOwnProperty("base")) {
-        
-                }
-                */
-        if (!schedule.hasOwnProperty("id")) {
-          wrappedError("invalid 'id'", schedule);
+        if (!schedule.hasOwnProperty("base")) {
+          schedule.base = 0;
         }
       }
 
@@ -81,5 +70,31 @@ export function validateCalendar(calendar) {
     }
   }
 
+  return calendar;
+}
+
+export function validateUserCalendar(calendar) {
+  if (!calendar.hasOwnProperty("days")) {
+    wrappedCalendarError("invalid 'days' in userCalendar:", calendar);
+  }
+  if (calendar.days === null) {
+    calendar.days = [];
+  }
+
+  let d, day;
+  let s, slot;
+  // generate IDs if missing
+  for (d in calendar.days) {
+    day = calendar.days[d];
+    day.id = day.id ? day.id : randomId();
+      for (s in day.slots) {
+        slot = day.slots[s];
+        slot.id = slot.id ? slot.id : randomId();
+      }
+  }
+
+  if (!calendar.hasOwnProperty("startingDate")) {
+    wrappedCalendarError("invalid 'startingDate' in userCalendar:", calendar);
+  }
   return calendar;
 }

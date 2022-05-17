@@ -108,6 +108,7 @@ export class Game extends React.Component {
   }
 
   componentWillUnmount() {
+    sessionStorage.removeItem("gameId");
     window.removeEventListener("keydown", this.handleKeyDown);
   }
 
@@ -150,9 +151,19 @@ export class Game extends React.Component {
   tick() {
     if (!this.state.isDead) {
       this.player.updatePos();
-      this.sendData().then(() => this.fetchData().then(() => setTimeout(() => {  this.tick(); }, 100)));
+      this.sendData().then(() =>
+        this.fetchData().then(() =>
+          setTimeout(() => {
+            this.tick();
+          }, 100)
+        )
+      );
     } else {
-      this.fetchData().then(() => setTimeout(() => {  this.tick(); }, 100));
+      this.fetchData().then(() =>
+        setTimeout(() => {
+          this.tick();
+        }, 100)
+      );
     }
   }
 

@@ -2,8 +2,8 @@ import { Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import { UserRouter } from "./UserRouter";
 import { Game } from "../../views/Game";
-import { GameLobby } from "../../views/GameLobby";
 import { GameGuard } from "../routeProtectors/GameGuard";
+import GameLobby from "../../views/GameLobby";
 
 export const GameRouter = (props) => (
   <div>

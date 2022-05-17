@@ -1,5 +1,3 @@
-import { CHUNK_LENGTH } from "../components/ui/game/helpers";
-
 /**
  * Snake/Player model
  */
@@ -35,8 +33,8 @@ export class Player {
     const oldHead = this.chunks[0];
     const newHead = [
       {
-        x: oldHead.x + CHUNK_LENGTH * this.xDir,
-        y: oldHead.y + CHUNK_LENGTH * this.yDir,
+        x: oldHead.x + this.xDir,
+        y: oldHead.y + this.yDir,
       },
     ];
     if (this.status !== "ate") {

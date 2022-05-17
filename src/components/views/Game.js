@@ -10,6 +10,9 @@ import {StatBoard} from "../ui/game/StatBoard";
 export class Game extends React.Component {
   constructor(props) {
     super(props);
+
+    this.isGameDone = false;
+
     this.state = {
       apples: null,
       isDead: undefined,
@@ -30,6 +33,7 @@ export class Game extends React.Component {
   }
 
   componentWillUnmount() {
+    this.isGameDone = true;
     sessionStorage.removeItem("gameId");
     window.removeEventListener("keydown", this.handleKeyDown);
   }
@@ -71,6 +75,10 @@ export class Game extends React.Component {
   }
 
   tick() {
+    if (this.isGameDone) {
+      // workaround to stop recursion on leaving page
+      return
+    }
     if (!this.state.isDead) {
       this.player.updatePos();
       this.sendData().then(() =>

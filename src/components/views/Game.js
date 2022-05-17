@@ -11,7 +11,7 @@ export class Game extends React.Component {
   constructor(props) {
     super(props);
 
-    this.isGameDone = false;
+    this.isLeaving = false;
 
     this.state = {
       apples: null,
@@ -33,7 +33,7 @@ export class Game extends React.Component {
   }
 
   componentWillUnmount() {
-    this.isGameDone = true;
+    this.isLeaving = true;
     sessionStorage.removeItem("gameId");
     window.removeEventListener("keydown", this.handleKeyDown);
   }
@@ -75,7 +75,7 @@ export class Game extends React.Component {
   }
 
   tick() {
-    if (this.isGameDone) {
+    if (this.isLeaving) {
       // workaround to stop recursion on leaving page
       return
     }

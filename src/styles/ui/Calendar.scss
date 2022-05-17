@@ -11,32 +11,58 @@
     user-select: none;
     background: white;
   }
-
 }
 
 .time-line2 {
-  border:none;
-  border-top:2px dashed grey;
+  border: none;
+  border-top: 2px dashed grey;
   position: absolute;
+  left: 10%;
   margin-top: 165px;
   display: block;
-  width: 82%;
+  width: 79.5vw;
 }
 
 .time-line3 {
-  border:none;
-  border-top:2px dashed grey;
+  border: none;
+  border-top: 2px dashed grey;
   position: absolute;
+  left: 10%;
   margin-top: 285px;
   display: block;
-  width: 82%;
+  width: 79.5vw;
 }
 
 .time-line4 {
-  border:none;
-  border-top:2px dashed grey;
+  border: none;
+  border-top: 2px dashed grey;
   position: absolute;
+  left: 10%;
   margin-top: 405px;
   display: block;
-  width: 82%;
+  width: 79.5vw;
+}
+
+.time-label1 {
+  font-weight: bold;
+  position: absolute;
+  display: block;
+  margin-top: 158px;
+  left: 6.5%;
+}
+
+.time-label2 {
+  font-weight: bold;
+  position: absolute;
+  display: block;
+  margin-top: 278px;
+  left: 6.5%;
+}
+
+.time-label3 {
+  font-weight: bold;
+  position: absolute;
+  display: block;
+  margin-top: 398px;
+  left: 6.5%;
 }

@@ -7,6 +7,7 @@ export class Player {
     this.chunks = [];
     // isDead or ate something
     this.status = null;
+    this.statusOnline = null;
     // rank is used to display winner
     this.rank = null;
     this.user = null;

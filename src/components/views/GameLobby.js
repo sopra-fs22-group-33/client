@@ -30,11 +30,12 @@ class GameLobby extends React.Component {
     let p, player;
     for (p = 0; p < players.length; p++) {
       player = players[p];
-      if (parseInt(sessionStorage.getItem("id")) === player.user.id) {
-        break;
+      console.log(`id ${userId}, player userId: ${player.user.id}`)
+      if (userId === player.user.id) {
+        return player;
       }
     }
-    return player;
+    return null
   }
 
   render() {
@@ -42,7 +43,7 @@ class GameLobby extends React.Component {
       <div>
         {this.state.games.map((game) => {
           const player = this.getPlayerForUser(
-            sessionStorage.getItem("id"),
+            parseInt(sessionStorage.getItem("id")),
             game.players
           );
           return (
@@ -51,6 +52,7 @@ class GameLobby extends React.Component {
               onClick={(ev) => this.handleGameClick(ev, game, player)}
             >
               <div>game id: {game.id}</div>
+              <div>my email: {player.user.email}</div>
               <div>my player id:{player.id}</div>
               <div>my status: {player.status}</div>
               <div>number of players: {game.players.length}</div>

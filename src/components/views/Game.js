@@ -102,7 +102,6 @@ export class Game extends React.Component {
       const requestBody = JSON.stringify({
         chunks: serialize(this.player.chunks),
       });
-      console.log(requestBody);
       await api.put(`/games/${this.gameId}/${this.player.id}`, requestBody);
     } catch (e) {
       console.log(e);
@@ -161,7 +160,7 @@ export class Game extends React.Component {
     for (let p = 0; p < game.players.length; p++) {
       const player = new Player(game.players[p]);
       // all players, including user
-      if (player.user.id.toString() === sessionStorage.getItem("id")) {
+      if (player.user.id === parseInt(sessionStorage.getItem("id"))) {
         this.player = player;
       } else {
         this.playerFoes.push(player);

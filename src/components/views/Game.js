@@ -6,6 +6,7 @@ import {CHUNK_LENGTH, serialize} from "../ui/game/helpers";
 import BaseContainer from "../ui/BaseContainer";
 import {GameBoard} from "../ui/game/GameBoard";
 import {StatBoard} from "../ui/game/StatBoard";
+import {setOffline} from "./GameLobby";
 
 export class Game extends React.Component {
   constructor(props) {
@@ -32,17 +33,20 @@ export class Game extends React.Component {
     window.addEventListener("keydown", this.handleKeyDown);
   }
 
+  // is not called on going back and forth through history
   componentWillUnmount() {
     this.isLeaving = true;
     sessionStorage.removeItem("gameId");
+    sessionStorage.removeItem("playerId");
     window.removeEventListener("keydown", this.handleKeyDown);
+    setOffline(this.gameId, this.player);
+    // todo: make the player automatically loose the game
   }
 
   handleKeyDown(ev) {
     if (this.state.isDead) {
       window.removeEventListener("keydown", this.handleKeyDown);
     }
-    // todo: optimise for held key
     const [oldX, oldY] = this.player.getDir();
     let [newX, newY] = [0, 0];
     switch (ev.code) {

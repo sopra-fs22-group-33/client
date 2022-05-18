@@ -2,6 +2,12 @@ import * as React from "react";
 import { api, fetchGames, handleError } from "../../helpers/api";
 import { withRouter } from "react-router-dom";
 import Box from "@mui/material/Box";
+import BaseContainer from "../ui/BaseContainer";
+
+export async function setOffline(gameId, player) {
+  player.statusOnline = "OFFLINE";
+  await api.put(`games/${gameId}/${player.id}`, player);
+}
 
 class GameLobby extends React.Component {
   constructor(props) {
@@ -12,6 +18,7 @@ class GameLobby extends React.Component {
     this.state = {
       games: [],
       selectedGame: null,
+      selectedPlayer: null,
     };
   }
 
@@ -21,6 +28,11 @@ class GameLobby extends React.Component {
 
   componentWillUnmount() {
     this.isLeaving = true;
+    if (this.state.selectedGame && this.state.selectedPlayer) {
+      this.setOffline(this.state.selectedGame, this.state.selectedPlayer);
+    }
+    sessionStorage.removeItem("gameId");
+    sessionStorage.removeItem("playerId");
   }
 
   async update() {
@@ -45,15 +57,19 @@ class GameLobby extends React.Component {
   handleGameBoardClick(ev, game, player) {
     async function setOnline() {
       player.statusOnline = "ONLINE";
-      return await api.put(`games/${game.id}/${player.id}`, player);
+      await api.put(`games/${game.id}/${player.id}`, player);
     }
 
     try {
-      setOnline().then((response) => {
+      if (this.state.selectedGame && this.state.selectedPlayer) {
+        this.setOffline(this.state.selectedGame.id, this.state.selectedPlayer);
+      }
+
+      setOnline().then(() => {
         sessionStorage.setItem("gameId", game.id);
         sessionStorage.setItem("playerId", player.id);
         game.isActive = true;
-        this.setState({ selectedGame: game });
+        this.setState({ selectedGame: game, selectedPlayer: player });
       });
     } catch (e) {
       alert(
@@ -78,42 +94,47 @@ class GameLobby extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        {this.state.games
-          .sort((a, b) => (a.id > b.id ? 1 : -1))
-          .map((game) => {
-            const player = this.getPlayerForUser(
-              parseInt(sessionStorage.getItem("id")),
-              game.players
-            );
-            return (
-              <Box
-                style={{
-                  padding: 20,
-                  background:
-                    this.state.selectedGame &&
-                    this.state.selectedGame.id === game.id
-                      ? "lightcoral"
-                      : "lightgray",
-                }}
-                key={game.id}
-                onClick={(ev) => this.handleGameBoardClick(ev, game, player)}
-              >
-                <div>game id: {game.id}</div>
-                <div>my email: {player.user.email}</div>
-                <div>my player id:{player.id}</div>
-                <div>my status: {player.statusOnline}</div>
-                <div>number of players: {game.players.length}</div>
-                <div>
-                  number of players online:{" "}
-                  {this.calcPlayersOnline(game.players)} / {game.players.length}
-                </div>
-              </Box>
-            );
-          })}
-      </div>
-    );
+    let content = <div>no games</div>;
+    if (this.state.games.length > 0) {
+      content = (
+        <div>
+          {this.state.games
+            .sort((a, b) => (a.id > b.id ? 1 : -1))
+            .map((game) => {
+              const player = this.getPlayerForUser(
+                parseInt(sessionStorage.getItem("id")),
+                game.players
+              );
+              return (
+                <Box
+                  style={{
+                    padding: 20,
+                    background:
+                      this.state.selectedGame &&
+                      this.state.selectedGame.id === game.id
+                        ? "lightcoral"
+                        : "lightgray",
+                  }}
+                  key={game.id}
+                  onClick={(ev) => this.handleGameBoardClick(ev, game, player)}
+                >
+                  <div>game id: {game.id}</div>
+                  <div>my email: {player.user.email}</div>
+                  <div>my player id:{player.id}</div>
+                  <div>my status: {player.statusOnline}</div>
+                  <div>number of players: {game.players.length}</div>
+                  <div>
+                    number of players online:{" "}
+                    {this.calcPlayersOnline(game.players)} /{" "}
+                    {game.players.length}
+                  </div>
+                </Box>
+              );
+            })}
+        </div>
+      );
+    }
+    return <BaseContainer>{content}</BaseContainer>;
   }
 }
 

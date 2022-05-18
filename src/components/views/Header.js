@@ -22,6 +22,8 @@ class Header extends React.Component {
             : ""}
 
         <div className="header container" style={{ height: this.props.height }}>
+          <div className="header placeholder"></div>
+
           <h1 className="header title">Shift Planner</h1>
 
           <div className="header button">
@@ -30,7 +32,7 @@ class Header extends React.Component {
                 <Button
                   onClick={() => this.props.history.push("/user/teams")}
                 >
-                  Current Team: {sessionStorage.getItem("teamId")}
+                  Current Team: {sessionStorage.getItem("teamName")}
                 </Button>
                 <Button
                   onClick={() =>

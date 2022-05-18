@@ -4,13 +4,17 @@
   &.slot {
     user-select: none;
     background: $gradient; /* alpha to show hour-lines behind without affecting children */
-    border-radius: 10px;
+    border-radius: 5px;
   }
 
   &.slot-slider {
     user-select: none;
     background: white;
   }
+}
+
+.day-title{
+  font-weight: bold;
 }
 
 .time-line2 {

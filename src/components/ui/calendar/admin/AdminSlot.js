@@ -72,7 +72,7 @@ export class AdminSlot extends React.Component {
     }
     if (this.state.isResized) {
       const to = this.state.timeTo + ev.movementY / HOUR_HEIGHT;
-      if (to - this.state.timeFrom >= 1 && to <= 24) {
+      if (to - this.state.timeFrom >= 1) {
         this.setState({
           timeTo: to,
         });

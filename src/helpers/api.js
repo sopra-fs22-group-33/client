@@ -21,7 +21,7 @@ export async function doLogout() {
 }
 
 export async function doChangeTeam() {
-  window.history.push("/users/teams");
+  window.history.push("/users/teams")
 }
 
 export const handleError = (error) => {
@@ -63,22 +63,20 @@ export async function fetchTeamCalendar() {
     return response.data;
   } catch (e) {
     alert(
-      `Something went wrong during fetching the team calendar:\n${handleError(
-        e
-      )}`
+      `Something went wrong during fetching the calendar: \n${handleError(e)}`
     );
   }
 }
 
 export async function fetchFixedUserCalendar(userId) {
   try {
-    const response = await api.get(`/users/${userId}/calendars`);
+    const response = await api.get(
+      `/users/${userId}/calendars`
+    );
     return response.data;
   } catch (e) {
     alert(
-      `Something went wrong during fetching the user calendar:\n${handleError(
-        e
-      )}`
+      `Something went wrong during fetching the calendar: \n${handleError(e)}`
     );
   }
 }
@@ -89,38 +87,26 @@ export async function fetchEditableUserCalendar(userId) {
     return response.data;
   } catch (e) {
     alert(
-      `Something went wrong while fetching the user preferences:\n${handleError(
-        e
-      )}`
+      `Something went wrong while fetching the calendar: \n${handleError(e)}`
     );
-  }
-}
-
-export async function fetchGames(userId) {
-  try {
-    const response = await api.get(`/users/${userId}/games`);
-    return response.data;
-  } catch (e) {
-    alert(`Something went wrong while fetching the games:\n${handleError(e)}`);
   }
 }
 
 export const getToken = (response) => {
   if (!response.headers.hasOwnProperty("token")) {
-    throw Error(
-      `token is not in response headers or cannot be read:\n${response.headers}`
-    );
+    throw Error(`token is not in response headers or cannot be read:\n${response.headers}`)
   }
   return response.headers.token;
 };
 
 export const getTeamIsAdmin = (memberships) => {
-  const membership = memberships.filter(
-    (membership) =>
-      membership.user &&
-      membership.user.id &&
-      membership.user.id.toString() === sessionStorage.getItem("id") &&
-      membership.isAdmin
-  )[0];
-  return membership ? membership.isAdmin : null;
+    const membership = memberships.filter(
+      (   membership) =>
+        membership.user &&
+        membership.user.id &&
+        membership.user.id.toString() === sessionStorage.getItem("id") &&
+          membership.isAdmin
+    )[0];
+    return membership ? membership.isAdmin : null;
+
 };

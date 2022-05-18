@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import { api, fetchTeamCalendar, handleError } from "helpers/api";
+import { fetchTeamCalendar } from "helpers/api";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import BaseContainer from "../../ui/BaseContainer";
@@ -17,19 +17,6 @@ export const TeamCalendar = () => {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [anchorEl, setAnchorEl] = useState(undefined);
 
-  async function handleFinalize() {
-    try {
-      const response = await api.get(
-        `/teams/${sessionStorage.getItem("teamId")}/calendars/finalize`
-      );
-      alert(response.data);
-    } catch (e) {
-      alert(
-        `Something went wrong while finalizing the calendar:\n${handleError(e)}`
-      );
-    }
-  }
-
   useEffect(() => {
     fetchTeamCalendar().then((calendar) => setCalendar(calendar));
   }, []);
@@ -46,9 +33,6 @@ export const TeamCalendar = () => {
             <h1>Team Calendar</h1>
           </div>
           <div className="navigation-button-container button">
-            {sessionStorage.getItem("isAdmin") === "true" ? (
-              <Button onClick={() => handleFinalize()}>Finalize</Button>
-            ) : null}
             <EditChoiceButton />
             <Button onClick={() => history.push("/team/profile")}>
               Team Profile

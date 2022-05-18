@@ -1,105 +1,31 @@
 import * as React from "react";
 import { api } from "helpers/api";
 import "styles/views/Auth.scss";
-import PropTypes from "prop-types";
-import { Chunk } from "../ui/game/Chunk";
 import { Player } from "../../models/Player";
-import { CHUNK_LENGTH, deserialize, serialize } from "../ui/game/helpers";
+import {CHUNK_LENGTH, serialize} from "../ui/game/helpers";
 import BaseContainer from "../ui/BaseContainer";
-
-const GameBoard = (props) => {
-  return (
-    <div
-      style={{
-        position: "absolute",
-        top: 150,
-        left: 400,
-        height: props.length,
-        width: props.length,
-        background: "black",
-      }}
-    >
-      {props.isDead ? <DeathDisplay length={props.length} /> : null}
-      {props.player.chunks.map((chunk) => (
-        <Chunk x={chunk.x} y={chunk.y} background={"green"} />
-      ))}
-      {props.playerFoes.map((player) =>
-        player.chunks.map((chunk) => (
-          <Chunk x={chunk.x} y={chunk.y} background={"orange"} />
-        ))
-      )}
-      {props.apples.map((apple) => (
-        <Chunk x={apple.x} y={apple.y} background={"red"} />
-      ))}
-    </div>
-  );
-};
-
-GameBoard.propTypes = {
-  length: PropTypes.number.isRequired,
-  player: PropTypes.objectOf(Player).isRequired,
-  playerFoes: PropTypes.arrayOf(Player).isRequired,
-  apples: PropTypes.arrayOf(Chunk).isRequired,
-  isDead: PropTypes.bool.isRequired,
-};
-
-const DeathDisplay = (props) => (
-  <div
-    style={{ position: "relative", top: props.length / 2, background: "white" }}
-  >
-    YOU DIED
-  </div>
-);
-
-DeathDisplay.propTypes = {
-  length: PropTypes.number.isRequired,
-};
-
-const StatBoard = (props) => {
-  return (
-    <div>
-      <PlayerStats player={props.player} />
-      <ul>
-        {props.playerFoes.map((player) => (
-          <PlayerStats player={player} />
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-StatBoard.propTypes = {
-  player: PropTypes.objectOf(Player).isRequired,
-  playerFoes: PropTypes.arrayOf(Player).isRequired,
-};
-
-const PlayerStats = (props) => {
-  return (
-    <div>
-      <div>player id: {props.player.id}</div>
-      {props.player.user ? <div>user id: {props.player.user.id}</div> : null}
-      {props.player.user ? <div>email: {props.player.user.email}</div> : null}
-      <div>rank: {props.player.rank}</div>
-      <div>status: {props.player.status}</div>
-    </div>
-  );
-};
-
-PlayerStats.propTypes = {
-  player: PropTypes.objectOf(Player).isRequired,
-};
+import {GameBoard} from "../ui/game/GameBoard";
+import {StatBoard} from "../ui/game/StatBoard";
+import {setOffline} from "./GameLobby";
 
 export class Game extends React.Component {
   constructor(props) {
     super(props);
+
+    this.isLeaving = false;
+
     this.state = {
       apples: null,
       isDead: undefined,
     };
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
+
+    this.gameId = sessionStorage.getItem("gameId");
+    this.playerId = sessionStorage.getItem("playerId");
     this.player = null;
     this.playerFoes = [];
+
     this.doStartGame().then(() => this.tick());
   }
 
@@ -107,15 +33,20 @@ export class Game extends React.Component {
     window.addEventListener("keydown", this.handleKeyDown);
   }
 
+  // is not called on going back and forth through history
   componentWillUnmount() {
+    this.isLeaving = true;
+    sessionStorage.removeItem("gameId");
+    sessionStorage.removeItem("playerId");
     window.removeEventListener("keydown", this.handleKeyDown);
+    setOffline(this.gameId, this.player);
+    // todo: make the player automatically loose the game
   }
 
   handleKeyDown(ev) {
     if (this.state.isDead) {
       window.removeEventListener("keydown", this.handleKeyDown);
     }
-    // todo: optimise for held key
     const [oldX, oldY] = this.player.getDir();
     let [newX, newY] = [0, 0];
     switch (ev.code) {
@@ -148,11 +79,25 @@ export class Game extends React.Component {
   }
 
   tick() {
+    if (this.isLeaving) {
+      // workaround to stop recursion on leaving page
+      return
+    }
     if (!this.state.isDead) {
       this.player.updatePos();
-      this.sendData().then(() => this.fetchData().then(() => setTimeout(() => {  this.tick(); }, 100)));
+      this.sendData().then(() =>
+        this.fetchData().then(() =>
+          setTimeout(() => {
+            this.tick();
+          }, 100)
+        )
+      );
     } else {
-      this.fetchData().then(() => setTimeout(() => {  this.tick(); }, 100));
+      this.fetchData().then(() =>
+        setTimeout(() => {
+          this.tick();
+        }, 100)
+      );
     }
   }
 
@@ -176,7 +121,7 @@ export class Game extends React.Component {
       this.mapPlayers(game.players);
 
       this.setState({
-        apples: deserialize(game.apples),
+        apples: game.apples,
         isDead: this.player.status === "dead",
       });
     } catch (e) {
@@ -190,14 +135,14 @@ export class Game extends React.Component {
     for (e = 0; e < players.length; e++) {
       evaluated = players[e];
       if (this.player.id === evaluated.id) {
-        this.player.chunks = deserialize(evaluated.chunks);
+        this.player.chunks = evaluated.chunks;
         this.player.rank = evaluated.rank;
         this.player.status = evaluated.status;
       } else {
         for (p = 0; p < this.playerFoes.length; p++) {
           player = this.playerFoes[p];
           if (player.id === evaluated.id) {
-            player.chunks = deserialize(evaluated.chunks);
+            player.chunks = evaluated.chunks;
             player.rank = evaluated.rank;
             player.status = evaluated.status;
           }
@@ -208,19 +153,18 @@ export class Game extends React.Component {
 
   doStartGame = async () => {
     const response = await api.get(
-      `/users/${sessionStorage.getItem("id")}/games`
+      `/games/${this.gameId}/${this.playerId}`
     );
 
     // todo: let choose
-    const game = response.data[0];
+    const game = response.data;
     this.gameId = game.id;
     this.boardLength = game.boardLength;
 
     for (let p = 0; p < game.players.length; p++) {
       const player = new Player(game.players[p]);
-      player.chunks = deserialize(player.chunks);
       // all players, including user
-      if (player.user.id.toString() === sessionStorage.getItem("id")) {
+      if (player.user.id === parseInt(sessionStorage.getItem("id"))) {
         this.player = player;
       } else {
         this.playerFoes.push(player);
@@ -228,7 +172,7 @@ export class Game extends React.Component {
     }
 
     this.setState({
-      apples: deserialize(game.apples),
+      apples: game.apples,
       isDead: this.player.status === "dead",
     });
   };

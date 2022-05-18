@@ -3,17 +3,17 @@ import { Welcome } from "components/views/Welcome";
 import { AuthGuard } from "components/routing/routeProtectors/AuthGuard";
 import { Login } from "components/views/Login";
 import { Register } from "components/views/Register";
-import { Game } from "components/views/Game";
 import { AppGuard } from "components/routing/routeProtectors/AppGuard";
 import { UserRouter } from "components/routing/routers/UserRouter";
 import { TeamRouter } from "./TeamRouter";
 import { TeamGuard } from "../routeProtectors/TeamGuard";
 import Header from "../../views/Header";
+import { GameRouter } from "./GameRouter";
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
-      <Header height={"100"}/>
+      <Header height={"100"} />
       <Switch>
         <Route exact path="/welcome">
           <Welcome />
@@ -40,8 +40,10 @@ const AppRouter = () => {
             </TeamGuard>
           </AppGuard>
         </Route>
-        <Route exact path="/game">
-          <Game />
+        <Route path="/game">
+          <AppGuard>
+            <GameRouter base="/game" />
+          </AppGuard>
         </Route>
         <Route exact path="/">
           <Redirect to="/welcome" />

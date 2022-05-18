@@ -1,3 +1,5 @@
+import { CHUNK_LENGTH } from "../components/ui/game/helpers";
+
 /**
  * Snake/Player model
  */
@@ -7,7 +9,6 @@ export class Player {
     this.chunks = [];
     // isDead or ate something
     this.status = null;
-    this.statusOnline = null;
     // rank is used to display winner
     this.rank = null;
     this.user = null;
@@ -34,8 +35,8 @@ export class Player {
     const oldHead = this.chunks[0];
     const newHead = [
       {
-        x: oldHead.x + this.xDir,
-        y: oldHead.y + this.yDir,
+        x: oldHead.x + CHUNK_LENGTH * this.xDir,
+        y: oldHead.y + CHUNK_LENGTH * this.yDir,
       },
     ];
     if (this.status !== "ate") {

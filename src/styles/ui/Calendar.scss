@@ -3,10 +3,95 @@
 .calendar {
   &.slot {
     user-select: none;
-    background: rgba(100, 100, 100, 0.3); /* alpha to show hour-lines behind without affecting children */
+    background: $gradient; /* alpha to show hour-lines behind without affecting children */
+    border-radius: 5px;
   }
+
   &.slot-slider {
     user-select: none;
     background: white;
   }
+}
+
+.day-title {
+  font-weight: bold;
+}
+
+.time-line1, .time-line2, .time-line3, .time-line4, .time-line5, .time-line6, .time-line7, .time-line8, .time-line9, .time-line10, .time-line11 {
+  border: none;
+  border-top: 1px dashed grey;
+  position: absolute;
+  left: 10%;
+  margin-top: 166.5px;
+  display: block;
+  width: 79.5vw;
+}
+
+.time-line1 {
+  margin-top: 86.5px;
+}
+
+.time-line2 {
+  margin-top: 126.5px;
+}
+
+.time-line3 {
+  margin-top: 166.5px;
+}
+
+.time-line4 {
+  margin-top: 206.5px;
+}
+
+.time-line5 {
+  margin-top: 246.5px;
+}
+
+.time-line6 {
+  margin-top: 286.5px;
+}
+
+.time-line7 {
+  margin-top: 326.5px;
+}
+
+.time-line8 {
+  margin-top: 366.5px;
+}
+
+.time-line9 {
+  margin-top: 406.5px;
+}
+
+.time-line10 {
+  margin-top: 446.5px;
+}
+
+.time-line11 {
+  margin-top: 486.5px;
+}
+
+
+.time-label1 {
+  font-weight: bold;
+  position: absolute;
+  display: block;
+  margin-top: 158px;
+  left: 6.5%;
+}
+
+.time-label2 {
+  font-weight: bold;
+  position: absolute;
+  display: block;
+  margin-top: 278px;
+  left: 6.5%;
+}
+
+.time-label3 {
+  font-weight: bold;
+  position: absolute;
+  display: block;
+  margin-top: 398px;
+  left: 6.5%;
 }

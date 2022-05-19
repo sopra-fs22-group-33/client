@@ -6,7 +6,7 @@
   width: 2%;
   height: 3%;
   left: 8%;
-  top: 7%;
+  top: 5.7%;
 }
 
 /* Color/shape of burger icon bars */
@@ -54,13 +54,17 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* Wrapper for item list */
 .bm-item-list {
   color: green;
-  padding: 2em;
+  padding: 1em;
 }
 
 /* Individual item */
 .bm-item {
   display: inline-block;
   padding-bottom: 2em;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+
 }
 
 /* Styling of overlay */

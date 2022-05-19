@@ -5,7 +5,16 @@ import Box from "@mui/material/Box";
 export const SlotPopper = (props) => {
   return (
     <Popper open={true} anchorEl={props.anchorEl} placement={"left-start"}>
-      <Box style={{ background: "white" }}>{props.children}</Box>
+      <Box
+        sx={{
+          padding: 2,
+          borderRadius: 5,
+          boxShadow: 2,
+        }}
+        style={{ background: "white" }}
+      >
+        {props.children}
+      </Box>
     </Popper>
   );
 };

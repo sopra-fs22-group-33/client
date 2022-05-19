@@ -3,6 +3,8 @@ import { Grid } from "@mui/material";
 import PropTypes from "prop-types";
 import { DAY_HEIGHT, SLOT_REL_WIDTH } from "./config";
 import Box from "@mui/material/Box";
+import "styles/ui/Calendar.scss";
+
 
 /**
  * Takes slots and assigns left and width style properties to overlapping slots
@@ -113,15 +115,18 @@ export class Day extends React.Component {
   render() {
     return (
       <Grid item xs={12 / 7}>
-        <Box sx={{ width: 1 }} style={{ background: "gray" }}>
-          weekday: {this.props.weekday}
+        <Box sx={{ width: 1, pb: "12px" }} style={{}}>
+          <div className={"day-title"}>Monday{this.props.weekday}</div>
         </Box>
         <Box
           sx={{
             position: "absolute",
             width: 1 / 10,
             height: DAY_HEIGHT,
-            background: "lightgray",
+            //background: "lightgray",
+            border: 1,
+            borderColor: "gray",
+            borderRadius: "5px",
           }}
           onMouseDown={this.props.onMouseDown}
         >

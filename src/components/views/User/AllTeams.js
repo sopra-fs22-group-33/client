@@ -15,12 +15,13 @@ export const Team = ({ team, getTeam }) => (
     className="team container"
     onClick={() => {
       sessionStorage.setItem("teamId", team.id);
+      sessionStorage.setItem("teamName", team.name);
       sessionStorage.setItem("isAdmin", getTeamIsAdmin(team.memberships))
       globalEventDispatcher.dispatch("onTeamIdChanged");
       getTeam();
     }}
   >
-    <div className="team name">{team.name} </div>
+    <div className="team name2">{team.name} </div>
     <ul className="team member-list">
       {team.memberships.map((teamMember) => (
         <TeamMember teamMember={teamMember} />

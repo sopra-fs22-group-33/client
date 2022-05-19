@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {api, getToken, handleError} from "helpers/api";
 import User from "models/User";
 import {useHistory} from "react-router-dom";
-import {Button} from "components/ui/Button";
+import { Button, Button2 } from "components/ui/Button";
 import "styles/views/Auth.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import {FormField} from "components/ui/FormField";
@@ -51,9 +51,9 @@ export const Login = (props) => {
                         </Button>
                     </div>
                     <div className="auth button-container">
-                        <Button onClick={() => history.push("/register")}>
+                        <Button2 onClick={() => history.push("/register")}>
                             Create new account instead?
-                        </Button>
+                        </Button2>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 export const DAY_SPACING = 2;
-export const DAY_HEIGHT = 300;
+export const DAY_HEIGHT = 480;
 export const HOUR_HEIGHT = DAY_HEIGHT / 24;
 export const SLOT_REL_WIDTH = 3/4;
 

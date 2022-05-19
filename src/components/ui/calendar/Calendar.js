@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import { Grid } from "@mui/material";
 import { DAY_HEIGHT, DAY_SPACING } from "./config";
 import * as React from "react";
+import "styles/ui/Calendar.scss";
 
 /**
  * Count set jokers/special preferences in a calendar for a user
@@ -41,6 +42,21 @@ export class Calendar extends React.Component {
           style={{ height: DAY_HEIGHT * 1.2 }}
         >
           {this.props.children}
+          <div className={"time-label1"}>06:00</div>
+          <div className={"time-label2"}>12:00</div>
+          <div className={"time-label3"}>18:00</div>
+
+          <div className={"time-line1"}></div>
+          <div className={"time-line2"}></div>
+          <div className={"time-line3"}></div>
+          <div className={"time-line4"}></div>
+          <div className={"time-line5"}></div>
+          <div className={"time-line6"}></div>
+          <div className={"time-line7"}></div>
+          <div className={"time-line8"}></div>
+          <div className={"time-line9"}></div>
+          <div className={"time-line10"}></div>
+          <div className={"time-line11"}></div>
         </Grid>
       </Box>
     );

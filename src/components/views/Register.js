@@ -55,6 +55,7 @@ export const Register = (props) => {
             label="Password"
             value={password}
             onChange={(un) => setPassword(un)}
+          type={"password"}
           />
           <div className="auth button-container">
             <Button

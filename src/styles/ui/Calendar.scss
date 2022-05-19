@@ -13,39 +13,64 @@
   }
 }
 
-.day-title{
+.day-title {
   font-weight: bold;
 }
 
-.time-line2 {
+.time-line1, .time-line2, .time-line3, .time-line4, .time-line5, .time-line6, .time-line7, .time-line8, .time-line9, .time-line10, .time-line11 {
   border: none;
-  border-top: 2px dashed grey;
+  border-top: 1px dashed grey;
   position: absolute;
   left: 10%;
-  margin-top: 165px;
+  margin-top: 166.5px;
   display: block;
   width: 79.5vw;
+}
+
+.time-line1 {
+  margin-top: 86.5px;
+}
+
+.time-line2 {
+  margin-top: 126.5px;
 }
 
 .time-line3 {
-  border: none;
-  border-top: 2px dashed grey;
-  position: absolute;
-  left: 10%;
-  margin-top: 285px;
-  display: block;
-  width: 79.5vw;
+  margin-top: 166.5px;
 }
 
 .time-line4 {
-  border: none;
-  border-top: 2px dashed grey;
-  position: absolute;
-  left: 10%;
-  margin-top: 405px;
-  display: block;
-  width: 79.5vw;
+  margin-top: 206.5px;
 }
+
+.time-line5 {
+  margin-top: 246.5px;
+}
+
+.time-line6 {
+  margin-top: 286.5px;
+}
+
+.time-line7 {
+  margin-top: 326.5px;
+}
+
+.time-line8 {
+  margin-top: 366.5px;
+}
+
+.time-line9 {
+  margin-top: 406.5px;
+}
+
+.time-line10 {
+  margin-top: 446.5px;
+}
+
+.time-line11 {
+  margin-top: 486.5px;
+}
+
 
 .time-label1 {
   font-weight: bold;

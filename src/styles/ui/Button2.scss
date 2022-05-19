@@ -1,6 +1,6 @@
 @import 'styles/theme';
 
-.primary-button {
+.secondary-button {
   &:hover {
     transform: translateY(-2px);
   }
@@ -20,10 +20,15 @@
   text-align: center;
   height: 4vh;
   border-radius: 2vh;
-  border: none;
+  color: $gradient;
+
+
+  border: solid 3px transparent;
+  background-image: $gradient;
+  background-origin: border-box;
+  box-shadow: 2px 1000px 1px #fff inset;
+
   cursor: pointer;
-  color: white;
-  background-image:$gradient;
   opacity: 1;
   transition: all 0.3s ease;
 }

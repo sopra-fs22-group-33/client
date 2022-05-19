@@ -10,12 +10,27 @@ import { Day, handleOverlap } from "../../ui/calendar/Day";
 import { Slot } from "../../ui/calendar/Slot";
 import { SlotPopper } from "../../ui/calendar/SlotPopper";
 import { randomId } from "../../../helpers/validations";
+import { CalendarNavigationButtons } from "../../ui/calendar/CalendarNavigationButtons";
 
 export const TeamCalendar = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [anchorEl, setAnchorEl] = useState(undefined);
+
+  const handleChangeDayType = () => {
+    // change days from editable to fixed and back
+  };
+  const handleBack = () => {
+    // go back one week
+    // chane day type if necessary
+    // stop when there are no days left
+  };
+  const handleForwards = () => {
+    // go forwards one week
+    // chane day type if necessary
+    // stop when there are no days left
+  };
 
   async function handleFinalize() {
     try {
@@ -45,6 +60,12 @@ export const TeamCalendar = () => {
           <div className="navigation-button-container title">
             <h1>Team Calendar</h1>
           </div>
+          <CalendarNavigationButtons
+            onBigBack={() => handleChangeDayType()}
+            onBack={() => handleBack()}
+            onForwards={() => handleForwards()}
+            onBigForwards={() => handleChangeDayType()}
+          />
           <div className="navigation-button-container button">
             {sessionStorage.getItem("isAdmin") === "true" ? (
               <Button onClick={() => handleFinalize()}>Finalize</Button>

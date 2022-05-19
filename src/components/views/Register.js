@@ -4,7 +4,7 @@ import { useState } from "react";
 import User from "models/User";
 import BaseContainer from "components/ui/BaseContainer";
 import { FormField } from "components/ui/FormField";
-import { Button } from "components/ui/Button";
+import { Button, Button2 } from "components/ui/Button";
 import { TEMPLATE_USER_CALENDAR } from "../../fixtures/templateUserCalendar";
 
 export const Register = (props) => {
@@ -65,9 +65,9 @@ export const Register = (props) => {
             </Button>
           </div>
           <div className="auth button-container">
-            <Button onClick={() => history.push("/login")}>
+            <Button2 onClick={() => history.push("/login")}>
               Sign in instead?
-            </Button>
+            </Button2>
           </div>
         </div>
       </div>

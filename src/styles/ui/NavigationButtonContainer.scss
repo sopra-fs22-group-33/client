@@ -7,11 +7,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 2vh;
   }
 
   &.title {
     font-weight: bolder;
+    font-size: 1.9vh;
   }
 
 }

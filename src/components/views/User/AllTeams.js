@@ -21,7 +21,7 @@ export const Team = ({ team, getTeam }) => (
       getTeam();
     }}
   >
-    <div className="team name">{team.name} </div>
+    <div className="team name2">{team.name} </div>
     <ul className="team member-list">
       {team.memberships.map((teamMember) => (
         <TeamMember teamMember={teamMember} />

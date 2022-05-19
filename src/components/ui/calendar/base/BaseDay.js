@@ -18,7 +18,10 @@ export class BaseDay extends React.Component {
 
   render() {
     return (
-      <Day>
+      <Day
+        startingDate={this.props.startingDate}
+        weekday={this.props.day.weekday}
+      >
         {this.state.slots.map((slot) => (
           <BaseSlot
             key={slot.id}
@@ -40,4 +43,5 @@ BaseDay.propTypes = {
   id: PropTypes.number.isRequired,
   day: PropTypes.object.isRequired,
   slots: PropTypes.array,
+  startingDate: PropTypes.string.isRequired,
 };

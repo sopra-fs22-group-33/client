@@ -2,11 +2,12 @@ import { BaseDay } from "./BaseDay";
 import { Day } from "../Day";
 import * as React from "react";
 import {PreferenceSlot} from "./PreferenceSlot";
+import PropTypes from "prop-types";
 
 export class PreferenceDay extends BaseDay {
   render() {
     return (
-      <Day>
+      <Day startingDate={this.props.startingDate} weekday={this.props.day.weekday}>
         {this.props.slots.map((slot) => (
           <PreferenceSlot
             key={slot.id}
@@ -22,3 +23,10 @@ export class PreferenceDay extends BaseDay {
     );
   }
 }
+
+PreferenceDay.propTypes = {
+  id: PropTypes.number.isRequired,
+  day: PropTypes.object.isRequired,
+  slots: PropTypes.array,
+  startingDate: PropTypes.string.isRequired,
+};

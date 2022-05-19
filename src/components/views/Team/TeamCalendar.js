@@ -77,7 +77,7 @@ export const TeamCalendar = () => {
           {calendar.days.map((day) => {
             day.slots = handleOverlap(day.slots);
             return (
-              <Day key={day.id}>
+              <Day key={day.id} weekday={day.weekday} startingDate={calendar.startingDate}>
                 {day.slots.map((slot) => (
                   <Slot
                     key={slot.id}

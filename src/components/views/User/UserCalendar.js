@@ -36,15 +36,19 @@ export const UserCalendar = () => {
 
   let content = <div> fetching user calendar </div>;
   if (calendar) {
-    console.log(calendar);
     content = (
       <Calendar>
         {calendar.days.map((day) => {
           day.slots = handleOverlap(day.slots);
           return (
-            <Day>
+            <Day
+              key={day.id}
+              startingDate={calendar.startingDate}
+              weekday={day.weekday}
+            >
               {day.slots.map((slot) => (
                 <Slot
+                  key={slot.id}
                   sx={{ left: slot.left, width: slot.width }}
                   onMouseEnter={(ev) => {
                     setAnchorEl(ev.currentTarget);

@@ -60,6 +60,7 @@ export class AdminCalendar extends React.Component {
             day={day}
             weekday={day.weekday}
             slots={day.slots}
+            startingDate={this.props.startingDate}
           />
         ))}
       </Calendar>
@@ -68,6 +69,6 @@ export class AdminCalendar extends React.Component {
 }
 
 AdminCalendar.propTypes = {
-  startingDate: PropTypes.string,
+  startingDate: PropTypes.string.isRequired,
   days: PropTypes.array,
 };

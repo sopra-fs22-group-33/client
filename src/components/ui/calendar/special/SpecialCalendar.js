@@ -40,8 +40,8 @@ export class SpecialCalendar extends React.Component {
             key={day.id}
             id={day.id}
             day={day}
-            weekday={day.weekday}
             slots={day.slots}
+            startingDate={this.props.startingDate}
           />
         ))}
       </Calendar>
@@ -50,6 +50,6 @@ export class SpecialCalendar extends React.Component {
 }
 
 SpecialCalendar.propTypes = {
-  startingDate: PropTypes.string,
+  startingDate: PropTypes.string.isRequired,
   days: PropTypes.array,
 };

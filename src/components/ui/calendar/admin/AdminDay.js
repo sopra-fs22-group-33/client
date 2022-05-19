@@ -45,8 +45,7 @@ export class AdminDay extends React.Component {
     window.addEventListener("mousemove", this.handleGlobalMouseMove);
     window.addEventListener("mouseup", this.handleGlobalMouseUP);
 
-    let time =
-      (ev.clientY - this.ref.getBoundingClientRect().y) / HOUR_HEIGHT;
+    let time = (ev.clientY - this.ref.getBoundingClientRect().y) / HOUR_HEIGHT;
     this.setState({
       isSlotDrawn: true,
       newSlot: { timeFrom: time, timeTo: time },
@@ -125,7 +124,11 @@ export class AdminDay extends React.Component {
 
   render() {
     return (
-      <Day onMouseDown={(ev) => this.handleMouseDown(ev)}>
+      <Day
+        onMouseDown={(ev) => this.handleMouseDown(ev)}
+        startingDate={this.props.startingDate}
+        weekday={this.props.day.weekday}
+      >
         <div
           ref={(el) => {
             if (!el) return;
@@ -156,7 +159,8 @@ export class AdminDay extends React.Component {
 }
 
 AdminDay.propTypes = {
-    id: PropTypes.number.isRequired,
-    day: PropTypes.object.isRequired,
-    slots: PropTypes.array,
+  id: PropTypes.number.isRequired,
+  day: PropTypes.object.isRequired,
+  slots: PropTypes.array,
+  startingDate: PropTypes.string.isRequired,
 };

@@ -9,8 +9,8 @@ import { Button } from "../../ui/Button";
 import BaseContainer from "../../ui/BaseContainer";
 import * as React from "react";
 import { TEMPLATE_USER_CALENDAR } from "../../../fixtures/templateUserCalendar";
-import {validateUserCalendar} from "../../../helpers/validations";
-import {PreferenceCalendar} from "../../ui/calendar/base/PreferenceCalendar";
+import { validateUserCalendar } from "../../../helpers/validations";
+import { PreferenceCalendar } from "../../ui/calendar/base/PreferenceCalendar";
 
 export const UserCalendarEdit = () => {
   const history = useHistory();
@@ -35,7 +35,9 @@ export const UserCalendarEdit = () => {
   }
 
   function handleClick(ev) {
-    setCalendar(validateUserCalendar(JSON.parse(JSON.stringify(TEMPLATE_USER_CALENDAR))));
+    setCalendar(
+      validateUserCalendar(JSON.parse(JSON.stringify(TEMPLATE_USER_CALENDAR)))
+    );
   }
 
   useEffect(() => {
@@ -51,11 +53,7 @@ export const UserCalendarEdit = () => {
           <h1>User Calendar</h1>
         </div>
         <div className="navigation-button-container button">
-          <Button
-            onClick={handleClick}
-          >
-            Load Template
-          </Button>
+          <Button onClick={handleClick}>Load Template</Button>
           <Button
             onClick={() => doSave().then(() => history.push("/user/calendar"))}
           >
@@ -64,7 +62,14 @@ export const UserCalendarEdit = () => {
           <Button onClick={() => history.push("/user/calendar")}>Cancel</Button>
         </div>
       </div>
-      {calendar? <PreferenceCalendar startingDate={calendar.startingDate} days={calendar.days} /> : <div> fetching editable calendar </div>}
+      {calendar ? (
+        <PreferenceCalendar
+          startingDate={TEMPLATE_USER_CALENDAR.startingDate}
+          days={calendar.days}
+        />
+      ) : (
+        <div> fetching editable calendar </div>
+      )}
     </BaseContainer>
   );
 };

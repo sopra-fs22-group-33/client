@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import { Button } from "../../ui/Button";
 import { validateUserCalendar } from "../../../helpers/validations";
 import { CalendarNavigationButtons } from "../../ui/calendar/CalendarNavigationButtons";
+import { FixedCalendar } from "../../ui/calendar/fixed/FixedCalendar";
 
 export const UserCalendar = () => {
   const history = useHistory();
@@ -34,50 +35,8 @@ export const UserCalendar = () => {
     );
   }, []);
 
-  let content = <div> fetching user calendar </div>;
-  if (calendar) {
-    content = (
-      <Calendar>
-        {calendar.days.map((day) => {
-          day.slots = handleOverlap(day.slots);
-          return (
-            <Day
-              key={day.id}
-              startingDate={calendar.startingDate}
-              weekday={day.weekday}
-            >
-              {day.slots.map((slot) => (
-                <Slot
-                  key={slot.id}
-                  sx={{ left: slot.left, width: slot.width }}
-                  onMouseEnter={(ev) => {
-                    setAnchorEl(ev.currentTarget);
-                    setSelectedSlot(slot.id);
-                  }}
-                  onMouseLeave={(ev) => {
-                    setAnchorEl(undefined);
-                    setSelectedSlot(null);
-                  }}
-                  timeFrom={slot.timeFrom}
-                  timeTo={slot.timeTo}
-                >
-                  {anchorEl && selectedSlot === slot.id ? (
-                    <SlotPopper anchorEl={anchorEl}>
-                      {
-                        <div>
-                          <div>timeFrom: {slot.timeFrom}</div>
-                          <div>timeTo: {slot.timeTo}</div>
-                        </div>
-                      }
-                    </SlotPopper>
-                  ) : null}
-                </Slot>
-              ))}
-            </Day>
-          );
-        })}
-      </Calendar>
-    );
+  if (!calendar) {
+    return <div>fetching calendar</div>;
   }
 
   return (
@@ -96,7 +55,11 @@ export const UserCalendar = () => {
           </Button>
         </div>
       </div>
-      {content}
+      <FixedCalendar
+        startingDate={calendar.startingDate}
+        type={"user"}
+        days={calendar.days}
+      />
     </BaseContainer>
   );
 };

@@ -45,7 +45,8 @@ export const Welcome = () => {
 
           </div>
         <div className={"welcome graphic container3"}>
-          <img src={blob1} />
+          <img src={blob1} style={{ width:"70vh",
+            height:"auto"}}/>
 
         </div>
         </div>

@@ -114,7 +114,7 @@ export const TeamProfile = () => {
             Invite User
           </Button>
           <Button onClick={() => history.push("/team/profile/edit")}>
-            Edit
+            Edit Name
           </Button>
         </div>
       </div>

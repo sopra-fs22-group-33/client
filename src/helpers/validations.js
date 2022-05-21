@@ -8,7 +8,7 @@ function wrappedCalendarError(message, o) {
 }
 
 /**
- * Validates a calendar and tries to get relevant data on assignedUsers if present
+ * Validates a team calendar
  *
  * @param {object} calendar
  * @throws Error
@@ -73,7 +73,18 @@ export function validateTeamCalendar(calendar) {
   return calendar;
 }
 
+/**
+ * Validates a user calendar
+ *
+ * @param {object} calendar
+ * @throws Error
+ * @returns {{startingDate: string, days: array}}
+ */
 export function validateUserCalendar(calendar) {
+  if (!calendar.hasOwnProperty("startingDate")) {
+    wrappedCalendarError("invalid 'startingDate' in userCalendar:", calendar);
+  }
+
   if (!calendar.hasOwnProperty("days")) {
     wrappedCalendarError("invalid 'days' in userCalendar:", calendar);
   }
@@ -87,14 +98,50 @@ export function validateUserCalendar(calendar) {
   for (d in calendar.days) {
     day = calendar.days[d];
     day.id = day.id ? day.id : randomId();
-      for (s in day.slots) {
-        slot = day.slots[s];
-        slot.id = slot.id ? slot.id : randomId();
-      }
-  }
-
-  if (!calendar.hasOwnProperty("startingDate")) {
-    wrappedCalendarError("invalid 'startingDate' in userCalendar:", calendar);
+    for (s in day.slots) {
+      slot = day.slots[s];
+      slot.id = slot.id ? slot.id : randomId();
+    }
   }
   return calendar;
+}
+
+export function insertFillerDays(days, startingDateString) {
+  if (days.length === 0) {
+    return;
+  }
+
+  const startFillerDays = [];
+  const localDate = new Date(Date.parse(startingDateString));
+  let dayDiff = 0;
+  while (localDate.getDay() !== 1 /* Monday */) {
+    dayDiff--;
+    localDate.setDate(localDate.getDate() - 1);
+    if (dayDiff < -10) {
+      // just in case something goes wrong
+      break;
+    }
+  }
+  for (let w = dayDiff; w < 0; w++) {
+    startFillerDays.push({ weekday: w, isFiller: true });
+  }
+
+  const endFillerDays = [];
+  const lastWeekday = days[days.length - 1].weekday;
+  localDate.setDate(localDate.getDate() - dayDiff + lastWeekday);
+  dayDiff = 0;
+  while (localDate.getDay() !== 0 /* Sunday */) {
+    dayDiff++;
+    localDate.setDate(localDate.getDate() + 1);
+    if (dayDiff > 10) {
+      // just in case something goes wrong
+      break;
+    }
+  }
+  for (let w = 0; w < dayDiff; w++) {
+    endFillerDays.push({ weekday: w + lastWeekday, isFiller: true });
+  }
+
+  //do not overwrite original days array
+  return startFillerDays.concat(days, endFillerDays);
 }

@@ -1,22 +1,17 @@
 import BaseContainer from "../../ui/BaseContainer";
-import { Day, handleOverlap } from "../../ui/calendar/Day";
-import { Slot } from "../../ui/calendar/Slot";
-import { SlotPopper } from "../../ui/calendar/SlotPopper";
-import { Calendar } from "../../ui/calendar/Calendar";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { fetchFixedUserCalendar } from "../../../helpers/api";
 import { useHistory } from "react-router-dom";
 import { Button } from "../../ui/Button";
-import { validateUserCalendar } from "../../../helpers/validations";
+import {insertFillerDays, validateUserCalendar} from "../../../helpers/validations";
 import { CalendarNavigationButtons } from "../../ui/calendar/CalendarNavigationButtons";
 import { FixedCalendar } from "../../ui/calendar/fixed/FixedCalendar";
 
 export const UserCalendar = () => {
   const history = useHistory();
-  const [anchorEl, setAnchorEl] = useState(undefined);
-  const [selectedSlot, setSelectedSlot] = useState(null);
   const [calendar, setCalendar] = useState(null);
+  const [localDays, setLocalDays] = useState([]);
 
   const handleBack = () => {
     // go back one week
@@ -30,9 +25,11 @@ export const UserCalendar = () => {
   };
 
   useEffect(() => {
-    fetchFixedUserCalendar(sessionStorage.getItem("id")).then((calendar) =>
-      setCalendar(validateUserCalendar(calendar))
-    );
+    fetchFixedUserCalendar(sessionStorage.getItem("id")).then((calendar) => {
+      calendar = validateUserCalendar(calendar);
+      setLocalDays(insertFillerDays(calendar.days, calendar.startingDate));
+      setCalendar(calendar);
+    });
   }, []);
 
   if (!calendar) {
@@ -58,7 +55,7 @@ export const UserCalendar = () => {
       <FixedCalendar
         startingDate={calendar.startingDate}
         type={"user"}
-        days={calendar.days}
+        days={localDays}
       />
     </BaseContainer>
   );

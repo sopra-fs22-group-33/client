@@ -4,6 +4,8 @@ import { AdminDay } from "./AdminDay";
 import calendarEventDispatcher from "../calendarEventDispatcher";
 import calendarGlobal from "../calendarGlobal";
 import { Calendar } from "../Calendar";
+import { FillerDay } from "../FillerDay";
+import { randomId } from "../../../../helpers/validations";
 
 export class AdminCalendar extends React.Component {
   constructor(props) {
@@ -53,16 +55,24 @@ export class AdminCalendar extends React.Component {
   render() {
     return (
       <Calendar>
-        {this.state.days.map((day) => (
-          <AdminDay
-            key={day.id}
-            id={day.id}
-            day={day}
-            weekday={day.weekday}
-            slots={day.slots}
-            startingDate={this.props.startingDate}
-          />
-        ))}
+        {this.state.days.map((day) => {
+          return day.isFiller ? (
+            <FillerDay
+              key={randomId()}
+              weekday={day.weekday}
+              startingDate={this.props.startingDate}
+            />
+          ) : (
+            <AdminDay
+              key={day.id}
+              id={day.id}
+              day={day}
+              weekday={day.weekday}
+              slots={day.slots}
+              startingDate={this.props.startingDate}
+            />
+          );
+        })}
       </Calendar>
     );
   }

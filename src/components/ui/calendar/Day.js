@@ -142,6 +142,7 @@ export class Day extends React.Component {
             borderColor: "gray",
             borderRadius: "5px",
           }}
+          style={this.props.style} /* overrides */
           onMouseDown={this.props.onMouseDown}
         >
           {this.props.children}
@@ -155,4 +156,6 @@ Day.propTypes = {
     onMouseDown: PropTypes.func,
     weekday: PropTypes.number.isRequired,
     startingDate: PropTypes.string.isRequired,
+
+    style: PropTypes.object
 };

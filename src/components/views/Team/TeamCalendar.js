@@ -5,19 +5,14 @@ import { useEffect, useState } from "react";
 import BaseContainer from "../../ui/BaseContainer";
 import { EditChoiceButton } from "../../ui/calendar/EditChoiceButton";
 import { Button } from "../../ui/Button";
-import { Calendar } from "../../ui/calendar/Calendar";
-import { Day, handleOverlap } from "../../ui/calendar/Day";
-import { Slot } from "../../ui/calendar/Slot";
-import { SlotPopper } from "../../ui/calendar/SlotPopper";
-import { randomId } from "../../../helpers/validations";
 import { CalendarNavigationButtons } from "../../ui/calendar/CalendarNavigationButtons";
 import { FixedCalendar } from "../../ui/calendar/fixed/FixedCalendar";
+import {insertFillerDays, validateTeamCalendar} from "../../../helpers/validations";
 
 export const TeamCalendar = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
-  const [selectedSlot, setSelectedSlot] = useState(null);
-  const [anchorEl, setAnchorEl] = useState(undefined);
+  const [localDays, setLocalDays] = useState([]);
 
   const handleChangeDayType = () => {
     // change days from editable to fixed and back
@@ -47,7 +42,11 @@ export const TeamCalendar = () => {
   }
 
   useEffect(() => {
-    fetchTeamCalendar().then((calendar) => setCalendar(calendar));
+    fetchTeamCalendar().then((calendar) => {
+      calendar = validateTeamCalendar(calendar);
+      setCalendar(calendar);
+      setLocalDays(insertFillerDays(calendar.days, calendar.startingDate));
+    });
   }, []);
 
   if (!calendar) {
@@ -77,83 +76,9 @@ export const TeamCalendar = () => {
         <FixedCalendar
           startingDate={calendar.startingDate}
           type={"team"}
-          days={calendar.days}
+          days={localDays}
         />
       </BaseContainer>
     </div>
   );
-
-  /*
-      return (
-        <div>
-          <BaseContainer>
-            <div className="navigation-button-container container">
-              <div className="navigation-button-container title">
-                <h1>Team Calendar</h1>
-              </div>
-              <CalendarNavigationButtons
-                onBigBack={() => handleChangeDayType()}
-                onBack={() => handleBack()}
-                onForwards={() => handleForwards()}
-                onBigForwards={() => handleChangeDayType()}
-              />
-              <div className="navigation-button-container button">
-                {sessionStorage.getItem("isAdmin") === "true" ? (
-                  <Button onClick={() => handleFinalize()}>Finalize</Button>
-                ) : null}
-                <EditChoiceButton />
-                <Button onClick={() => history.push("/team/profile")}>
-                  Team Profile
-                </Button>
-              </div>
-            </div>
-            <Calendar>
-              {calendar.days.map((day) => {
-                day.slots = handleOverlap(day.slots);
-                return (
-                  <Day key={day.id} weekday={day.weekday} startingDate={calendar.startingDate}>
-                    {day.slots.map((slot) => (
-                      <Slot
-                        key={slot.id}
-                        sx={{ left: slot.left, width: slot.width }}
-                        onMouseEnter={(ev) => {
-                          setAnchorEl(ev.currentTarget);
-                          setSelectedSlot(slot.id);
-                        }}
-                        onMouseLeave={(ev) => {
-                          setAnchorEl(undefined);
-                          setSelectedSlot(null);
-                        }}
-                        timeFrom={slot.timeFrom}
-                        timeTo={slot.timeTo}
-                      >
-                        {anchorEl !== undefined && selectedSlot === slot.id ? (
-                          <SlotPopper anchorEl={anchorEl}>
-                            {
-                              <div>
-                                <div>requirement: {slot.requirement}</div>
-                                <div>timeFrom: {slot.timeFrom}</div>
-                                <div>timeTo: {slot.timeTo}</div>
-                                {slot.schedules.map((schedule) => (
-                                  <ul key={randomId()}>
-                                    <div>email: {schedule.user.email}</div>
-                                    <div>base: {schedule.base}</div>
-                                    <div>special: {schedule.special}</div>
-                                    <div>assigned: {schedule.assigned}</div>
-                                  </ul>
-                                ))}
-                              </div>
-                            }
-                          </SlotPopper>
-                        ) : null}
-                      </Slot>
-                    ))}
-                  </Day>
-                );
-              })}
-            </Calendar>
-          </BaseContainer>
-        </div>
-      );
-      */
 };

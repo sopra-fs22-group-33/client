@@ -3,7 +3,7 @@ import {api, doLogout, getTeamIsAdmin, handleError} from "../../../helpers/api";
 import { useEffect, useState } from "react";
 import { Spinner } from "../../ui/Spinner";
 import "styles/views/Team.scss";
-import "styles/ui/NavigationButtonContainer.scss";
+import "styles/ui/TitleActions.scss";
 import BaseContainer from "../../ui/BaseContainer";
 import { Button } from "../../ui/Button";
 import avatar from "../../../images/avatar1.png";

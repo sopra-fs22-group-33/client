@@ -50,9 +50,6 @@ export const TeamCalendar = () => {
               <Button onClick={() => handleFinalize()}>Finalize</Button>
             ) : null}
             <EditChoiceButton />
-            <Button onClick={() => history.push("/team/profile")}>
-              Team Profile
-            </Button>
           </div>
         </div>
         <Calendar>

@@ -1,9 +1,12 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {api, fetchTeamCalendar, handleError} from "../../../helpers/api";
+import { api, fetchTeamCalendar, handleError } from "../../../helpers/api";
 import { AdminCalendar } from "../../ui/calendar/admin/AdminCalendar";
-import { validateTeamCalendar } from "../../../helpers/validations";
+import {
+  insertFillerDays,
+  validateTeamCalendar,
+} from "../../../helpers/validations";
 import { Button } from "../../ui/Button";
 import BaseContainer from "../../ui/BaseContainer";
 import { SpecialCalendar } from "../../ui/calendar/special/SpecialCalendar";
@@ -13,11 +16,11 @@ import { EditChoiceButton } from "../../ui/calendar/EditChoiceButton";
 export const TeamCalendarEdit = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
+  const [localDays, setLocalDays] = useState([]);
   const [editing, setEditing] = useState(history.location.state.editing);
 
   async function doSave() {
     try {
-      console.log(calendar);
       const requestBody = JSON.stringify({
         days: calendar.days,
         startingDate: calendar.startingDate,
@@ -38,8 +41,14 @@ export const TeamCalendarEdit = () => {
   }
 
   useEffect(() => {
-    setCalendar(null); /* force reset calendar to newly fetched, otherwise incorrect calendar is edited */
-    fetchTeamCalendar().then((data) => setCalendar(validateTeamCalendar(data)));
+    setCalendar(
+      null
+    ); /* force reset calendar to newly fetched, otherwise incorrect calendar is edited */
+    fetchTeamCalendar().then((calendar) => {
+      calendar = validateTeamCalendar(calendar);
+      setLocalDays(insertFillerDays(calendar.days, calendar.startingDate));
+      setCalendar(calendar);
+    });
   }, [editing]);
 
   if (!calendar) {
@@ -52,10 +61,7 @@ export const TeamCalendarEdit = () => {
     case "calendar":
       headerText = "Edit Team Calendar";
       content = (
-        <AdminCalendar
-          startingDate={calendar.startingDate}
-          days={calendar.days}
-        />
+        <AdminCalendar startingDate={calendar.startingDate} days={localDays} />
       );
       break;
     case "special":

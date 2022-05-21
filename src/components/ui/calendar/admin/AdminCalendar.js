@@ -59,17 +59,15 @@ export class AdminCalendar extends React.Component {
           return day.isFiller ? (
             <FillerDay
               key={randomId()}
-              weekday={day.weekday}
-              startingDate={this.props.startingDate}
+              date={day.date}
             />
           ) : (
             <AdminDay
               key={day.id}
               id={day.id}
               day={day}
-              weekday={day.weekday}
               slots={day.slots}
-              startingDate={this.props.startingDate}
+              date={day.date}
             />
           );
         })}

@@ -16,8 +16,7 @@ export class FixedCalendar extends React.Component {
           return day.isFiller ? (
             <FillerDay
               key={randomId()}
-              weekday={day.weekday}
-              startingDate={this.props.startingDate}
+              date={day.date}
             />
           ) : (
             <FixedDay
@@ -25,8 +24,8 @@ export class FixedCalendar extends React.Component {
               id={day.id}
               day={day}
               slots={day.slots}
-              startingDate={this.props.startingDate}
               type={this.props.type}
+              date={day.date}
             />
           );
         })}

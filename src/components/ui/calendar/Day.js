@@ -113,23 +113,17 @@ export function handleOverlap(slots, newSlot) {
  * Generic day component that defines day styling
  */
 export class Day extends React.Component {
-  getDate(monthday, startingDateString) {
-    const date = new Date(startingDateString);
-    date.setDate(date.getDate() + monthday);
-    return date;
-  }
 
   render() {
-    const date = this.getDate(this.props.weekday, this.props.startingDate);
     return (
       <Grid item xs={12 / 7}>
         <Box sx={{ width: 1, pb: "12px" }} style={{}}>
           <div className={"day-title"}>
-            {weekdays[date.getDay()]}
+            {weekdays[this.props.date.getDay()]}
             {" "}
-            {date
+            {this.props.date
               .toLocaleDateString()
-              .substring(0, date.toLocaleDateString().length - 5) /* todo: replace before year 10000 */}
+              .substring(0, this.props.date.toLocaleDateString().length - 5) /* todo: replace before year 10000 */}
           </div>
         </Box>
         <Box
@@ -154,8 +148,7 @@ export class Day extends React.Component {
 
 Day.propTypes = {
     onMouseDown: PropTypes.func,
-    weekday: PropTypes.number.isRequired,
-    startingDate: PropTypes.string.isRequired,
+    date: PropTypes.object.isRequired,
 
     style: PropTypes.object
 };

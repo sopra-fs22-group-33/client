@@ -12,8 +12,7 @@ export class FixedDay extends React.Component {
   render() {
     return (
       <Day
-        weekday={this.props.day.weekday}
-        startingDate={this.props.startingDate}
+        date={this.props.date}
       >
         {this.props.day.slots.map((slot) => (
           <FixedSlot
@@ -34,7 +33,7 @@ FixedDay.propTypes = {
   id: PropTypes.number.isRequired,
   day: PropTypes.object.isRequired,
   slots: PropTypes.array.isRequired,
-  startingDate: PropTypes.string.isRequired,
+  date: PropTypes.object.isRequired,
 
   type: PropTypes.string.isRequired /* type: "team" || "user" */,
 };

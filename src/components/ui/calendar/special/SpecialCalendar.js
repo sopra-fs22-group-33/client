@@ -41,7 +41,7 @@ export class SpecialCalendar extends React.Component {
             id={day.id}
             day={day}
             slots={day.slots}
-            startingDate={this.props.startingDate}
+            date={day.date}
           />
         ))}
       </Calendar>

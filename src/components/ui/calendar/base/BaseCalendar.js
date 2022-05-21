@@ -22,9 +22,8 @@ export class BaseCalendar extends React.Component {
             key={day.id}
             id={day.id}
             day={day}
-            weekday={day.weekday}
             slots={day.slots}
-            startingDate={this.props.startingDate}
+            date={day.date}
           />
         ))}
       </Calendar>

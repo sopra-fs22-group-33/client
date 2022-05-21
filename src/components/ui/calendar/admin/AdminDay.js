@@ -126,8 +126,7 @@ export class AdminDay extends React.Component {
     return (
       <Day
         onMouseDown={(ev) => this.handleMouseDown(ev)}
-        startingDate={this.props.startingDate}
-        weekday={this.props.day.weekday}
+        date={this.props.date}
       >
         <div
           ref={(el) => {
@@ -162,5 +161,5 @@ AdminDay.propTypes = {
   id: PropTypes.number.isRequired,
   day: PropTypes.object.isRequired,
   slots: PropTypes.array,
-  startingDate: PropTypes.string.isRequired,
+  date: PropTypes.object.isRequired,
 };

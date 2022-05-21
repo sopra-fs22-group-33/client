@@ -51,6 +51,7 @@ export const TeamCalendar = () => {
   useEffect(() => {
     fetchTeamCalendar().then((calendar) => {
       calendar = validateTeamCalendar(calendar);
+      console.log(calendar);
       setCalendar(calendar);
       setLocalDays(insertFillerDays(calendar.days, calendar.startingDate));
     });

@@ -41,9 +41,10 @@ export const UserPreferencesEdit = () => {
   }
 
   useEffect(() => {
-    fetchEditableUserCalendar(sessionStorage.getItem("id")).then((calendar) =>
-      setCalendar(calendar)
-    );
+    fetchEditableUserCalendar(sessionStorage.getItem("id")).then((calendar) => {
+      calendar.startingDate = new Date().toDateString()
+      setCalendar(validateUserCalendar(calendar));
+    });
   }, []);
 
   return (

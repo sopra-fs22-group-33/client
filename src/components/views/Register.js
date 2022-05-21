@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import User from "models/User";
 import BaseContainer from "components/ui/BaseContainer";
-import { FormField } from "components/ui/FormField";
+import {FormField, PasswordFormField} from "components/ui/FormField";
 import { Button, Button2 } from "components/ui/Button";
 import { TEMPLATE_USER_CALENDAR } from "../../fixtures/templateUserCalendar";
 
@@ -51,7 +51,7 @@ export const Register = (props) => {
             value={username}
             onChange={(uun) => setUsername(uun)}
           />
-          <FormField
+          <PasswordFormField
             label="Password"
             value={password}
             onChange={(un) => setPassword(un)}

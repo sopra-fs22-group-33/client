@@ -5,7 +5,7 @@ import {useHistory} from "react-router-dom";
 import { Button, Button2 } from "components/ui/Button";
 import "styles/views/Auth.scss";
 import BaseContainer from "components/ui/BaseContainer";
-import {FormField} from "components/ui/FormField";
+import {FormField, PasswordFormField} from "components/ui/FormField";
 
 export const Login = (props) => {
     const history = useHistory();
@@ -37,7 +37,7 @@ export const Login = (props) => {
                         value={email}
                         onChange={(n) => setEmail(n)}
                     />
-                    <FormField
+                    <PasswordFormField
                         label="Password"
                         value={password}
                         onChange={(un) => setPassword(un)}

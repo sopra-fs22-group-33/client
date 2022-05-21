@@ -1,0 +1,65 @@
+@import "styles/theme";
+
+.welcome {
+  &.container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .text {
+    &.container2 {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      //background-color: #3C4FFA;
+      height: 80vh;
+      justify-content: center
+    }
+
+    &.title {
+      font-weight: bolder;
+      font-size: 5vh;
+      margin-bottom: 3.5vh;
+      //background-color: pink;
+    }
+
+    &.line {
+      width: 13vw;
+      height: 0.25vh;
+      background-color: black;
+      margin-bottom: 3.5vh;
+    }
+
+    &.subtitle {
+      color: grey;
+      //background-color: blue;
+      font-size: 1.9vh;
+      margin-bottom: 3.5vh;
+
+    }
+
+    &.button {
+
+    }
+  }
+
+  .graphic {
+    &.container3 {
+      //background-color: green;
+      width: 50%;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+
+}
+
+
+img {
+  width:70vh; /* you can use % */
+  height: auto;
+
+}

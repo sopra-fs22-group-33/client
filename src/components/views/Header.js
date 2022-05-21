@@ -58,9 +58,9 @@ class Header extends React.Component {
                 <Button onClick={() => this.props.history.push("/login")}>
                   Log in
                 </Button>
-                <Button onClick={() => this.props.history.push("/register")}>
+                <Button2 onClick={() => this.props.history.push("/register")}>
                   Register
-                </Button>
+                </Button2>
                 </div>
 
             )}

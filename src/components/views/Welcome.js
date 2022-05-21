@@ -1,8 +1,11 @@
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { doLogout } from "helpers/api";
-import {Button} from "../ui/Button";
+import { Button } from "../ui/Button";
 import BaseContainer from "../ui/BaseContainer";
+import "styles/views/Welcome.scss";
+import blob1 from "../../images/blob1.png";
+
 
 export const Welcome = () => {
   const history = useHistory();
@@ -13,33 +16,41 @@ export const Welcome = () => {
   let content;
 
   if (isAuthenticated) {
-    content = (
-        <BaseContainer>
-        <div className="navigation-button-container container">
-            <div className="navigation-button-container title">
-                <h1>Welcome!</h1>
-            </div>
-            <div className="navigation-button-container button">
-                <Button onClick={() => history.push("/user")}>Me</Button>
-                <Button onClick={() => history.push("/team")}>Team</Button>
-                <Button onClick={() => history.push("/game")}>Game</Button>
-            </div>
-        </div>
-  </BaseContainer>
-    );
+    history.push(`/user/calendar`);
   } else {
     content = (
-        <BaseContainer>
-        <div className="navigation-button-container container">
-            <div className="navigation-button-container title">
-                <h1>Welcome!</h1>
-            </div>
-            <div className="navigation-button-container button">
+      <BaseContainer>
+        <div className={"welcome container"}>
+          <div className={"welcome text container2"}>
+
+          <div className={"welcome text title"}>Welcome!</div>
+            <div className={"welcome text line"}></div>
+
+            <div className={"welcome text subtitle"}>
+            Many teams who are working in shifts are still using hand made plans
+            to organize their work. This takes a lot of time for the team
+            leader, who has to create the plan. The team members have to check
+            the physical plan for changes on a regular basis. The goal of this
+            project is to provide a software system which supports this process.
+            A team leader can create a base plan where the team members get
+            assigned to automatically. Team members get their working plan
+            directly into their calendars and they can post their preferred
+            shifts or days off directly into the system. In case of a conflict,
+            the team members can sort it out in real time.
+          </div>
+            <div className={"welcome text button"}>
+              <Button onClick={() => history.push("/user/profile/edit")} style={{margin: "0px"}}>Learn more</Button>
 
             </div>
+
+          </div>
+        <div className={"welcome graphic container3"}>
+          <img src={blob1} />
+
         </div>
-            Maybe we can just get rid of this view and forward to log in if not authenticated/forward to user calendar if authenticated
-        </BaseContainer>
+        </div>
+
+      </BaseContainer>
     );
   }
 

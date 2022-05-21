@@ -12,7 +12,7 @@ import { TEMPLATE_USER_CALENDAR } from "../../../fixtures/templateUserCalendar";
 import { validateUserCalendar } from "../../../helpers/validations";
 import { PreferenceCalendar } from "../../ui/calendar/base/PreferenceCalendar";
 
-export const UserCalendarEdit = () => {
+export const UserPreferencesEdit = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
 

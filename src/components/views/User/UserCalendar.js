@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import { fetchFixedUserCalendar } from "../../../helpers/api";
 import { useHistory } from "react-router-dom";
 import { Button } from "../../ui/Button";
-import {insertFillerDays, validateUserCalendar} from "../../../helpers/validations";
+import {
+  insertFillerDays,
+  validateUserCalendar,
+} from "../../../helpers/validations";
 import { CalendarNavigationButtons } from "../../ui/calendar/CalendarNavigationButtons";
 import { FixedCalendar } from "../../ui/calendar/fixed/FixedCalendar";
 
@@ -12,16 +15,19 @@ export const UserCalendar = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
   const [localDays, setLocalDays] = useState([]);
+  const [displayedWeekIdx, setDisplayedWeekIdx] = useState(0);
 
   const handleBack = () => {
     // go back one week
-    // chane day type if necessary
-    // stop when there are no days left
+    if (displayedWeekIdx > 0) {
+      setDisplayedWeekIdx(displayedWeekIdx - 1);
+    }
   };
   const handleForwards = () => {
     // go forwards one week
-    // chane day type if necessary
-    // stop when there are no days left
+    if (displayedWeekIdx < localDays.length / 7 - 1) {
+      setDisplayedWeekIdx(displayedWeekIdx + 1);
+    }
   };
 
   useEffect(() => {
@@ -55,7 +61,7 @@ export const UserCalendar = () => {
       <FixedCalendar
         startingDate={calendar.startingDate}
         type={"user"}
-        days={localDays}
+        days={localDays.slice(7 * displayedWeekIdx, 7 * (displayedWeekIdx + 1))}
       />
     </BaseContainer>
   );

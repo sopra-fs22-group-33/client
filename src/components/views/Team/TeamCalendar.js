@@ -13,17 +13,24 @@ export const TeamCalendar = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
   const [localDays, setLocalDays] = useState([]);
+  const [displayedWeekIdx, setDisplayedWeekIdx] = useState(0);
 
   const handleChangeDayType = () => {
     // change days from editable to fixed and back
   };
   const handleBack = () => {
     // go back one week
+    if (displayedWeekIdx > 0) {
+      setDisplayedWeekIdx(displayedWeekIdx - 1);
+    }
     // chane day type if necessary
     // stop when there are no days left
   };
   const handleForwards = () => {
     // go forwards one week
+    if (displayedWeekIdx < localDays.length / 7 - 1) {
+      setDisplayedWeekIdx(displayedWeekIdx + 1);
+    }
     // chane day type if necessary
     // stop when there are no days left
   };
@@ -76,7 +83,7 @@ export const TeamCalendar = () => {
         <FixedCalendar
           startingDate={calendar.startingDate}
           type={"team"}
-          days={localDays}
+          days={localDays.slice(7 * displayedWeekIdx, 7 * (displayedWeekIdx + 1))}
         />
       </BaseContainer>
     </div>

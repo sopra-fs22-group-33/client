@@ -29,9 +29,9 @@ export const Login = (props) => {
     };
 
     return (
-        <BaseContainer>
-            <div className="auth container">
-                <div className="auth form">
+        <BaseContainer style={{height:"86vh", paddingTop:"16vh"}}>
+            <div className="auth container" style={{marginTop:"0"}}>
+                <div className="auth form" >
                     <FormField
                         label="Email"
                         value={email}

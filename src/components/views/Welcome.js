@@ -39,7 +39,7 @@ export const Welcome = () => {
             the team members can sort it out in real time.
           </div>
             <div className={"welcome text button"}>
-              <Button onClick={() => history.push("/user/profile/edit")} style={{margin: "0px"}}>Learn more</Button>
+              <Button onClick={() => history.push("/register")} style={{margin: "0px"}}>Get Started</Button>
 
             </div>
 

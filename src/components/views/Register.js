@@ -38,8 +38,8 @@ export const Register = (props) => {
   };
 
   return (
-    <BaseContainer>
-      <div className="auth container">
+    <BaseContainer style={{height:"86vh", paddingTop:"16vh"}}>
+      <div className="auth container" style={{marginTop:"0"}}>
         <div className="auth form">
           <FormField
             label="Email"

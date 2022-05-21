@@ -22,7 +22,7 @@ export const TeamMember = ({ teamMember, removeUser }) => (
     <div className="team member username">{teamMember.user.username}</div>
     <div className="team member email">{teamMember.user.email}</div>
     {teamMember.isAdmin ? <div className="team member admin">Admin</div> : ""}
-    {sessionStorage.getItem("isAdmin") && teamMember.isAdmin == false ? (
+    {sessionStorage.getItem("isAdmin")=="true" && teamMember.isAdmin == false ? (
       <div
         className="team member removebutton "
         onClick={() => {

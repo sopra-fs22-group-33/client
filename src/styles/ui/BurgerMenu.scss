@@ -2,10 +2,10 @@
 
 /* Position and sizing of burger button */
 .bm-burger-button {
-  position: fixed;
+  position: absolute;
   width: 2%;
   height: 3%;
-  left: 8%;
+  left: 10%;
   top: 5.7%;
 }
 
@@ -27,7 +27,8 @@
 
 /* Color/shape of close button cross */
 .bm-cross {
-  background: #bdc3c7;
+  background: black;
+
 }
 
 /*
@@ -42,7 +43,6 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* General sidebar styles */
 .bm-menu {
   background: white;
-  padding: 5em 5em;
   font-size: 1.5em;
 }
 
@@ -54,7 +54,11 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* Wrapper for item list */
 .bm-item-list {
   color: green;
-  padding: 1em;
+  padding-top: 20vh;
+  padding-left: 10vw;
+  padding-right: 2.5vw;
+
+
 }
 
 /* Individual item */
@@ -64,6 +68,9 @@ Note: Beware of modifying this element as it can break the animations - you shou
   font-weight: bold;
   text-decoration: none;
   color: black;
+  &:hover {
+      transform: translateX(0.5vw);
+    }
 
 }
 

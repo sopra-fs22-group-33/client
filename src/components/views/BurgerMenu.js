@@ -9,7 +9,7 @@ class BurgerMenu extends React.Component {
         // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
         return (
             <Menu
-                width={"37.5vw"}
+                width={"32.5vw"}
             >
                 <a href="/user/profile">My Profile ➔</a>
                 <a href="/user/calendar">My Calendar ➔</a>

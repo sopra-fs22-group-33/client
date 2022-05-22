@@ -41,7 +41,7 @@ export const TeamProfileEdit = () => {
               onChange={(un) => setName(un)}
           />
 
-          <div className="button-container">
+          <div className="auth button-container">
             <Button disabled={!name} onClick={() => doSaveEditProfile()}>
               Save
             </Button>

@@ -7,6 +7,7 @@
     padding-right: 10%;
     padding-top: 2%;
     padding-bottom: 2%;
+    min-height: 14vh;
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -14,7 +15,7 @@
   }
 
   &.placeholder {
-    width: 30%;
+    width: 35%;
   }
 
   &.title {
@@ -34,13 +35,12 @@
 .button-box {
   //background-color: mediumpurple;
   display: flex;
-  width: 30%;
+  width: 35%;
   flex-direction: row;
   justify-content: end;
 }
 
 .button-team {
-  //background-color: pink;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -68,8 +68,7 @@
 }
 
 .button-logout {
-  //background-color: green;
-  padding-left: 20px;
+  padding-left: 1vw;
   display: flex;
   align-items: center;
 }

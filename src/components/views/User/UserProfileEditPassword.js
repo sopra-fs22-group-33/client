@@ -6,7 +6,7 @@ import { useHistory, useParams } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
-import { FormField } from "../../ui/FormField";
+import {FormField, PasswordFormField} from "../../ui/FormField";
 
 const UserProfileEdit = () => {
   // use react-router-dom's hook to access the history
@@ -14,6 +14,8 @@ const UserProfileEdit = () => {
 
   const [username, setUsername] = useState(null);
   const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+
 
   // define a state variable (using the state hook).
   // if this variable changes, the component will re-render, but the variable will
@@ -46,7 +48,7 @@ const UserProfileEdit = () => {
   }, []);
 
   const doSaveEditProfile = async () => {
-    const requestBody = JSON.stringify({ username, email });
+    const requestBody = JSON.stringify({ username, email, password });
     const id = sessionStorage.getItem("id")
     await api.put(`/users/${id}`, requestBody, {
       headers: { token: sessionStorage.getItem("token") },
@@ -61,19 +63,16 @@ const UserProfileEdit = () => {
   content = (
     <div className="auth container">
       <div className="auth form">
-        <FormField
-          label="Username"
-          value={username}
-          onChange={(un) => setUsername(un)}
+        <PasswordFormField
+          label="New Password"
+          value={password}
+          onChange={(pn) => setPassword(pn)}
         />
-        <FormField label="Email" value={email} onChange={(u) => setEmail(u)} />
-
         <div className="auth button-container">
-          <Button disabled={!username || !email} onClick={() => doSaveEditProfile()}>
+          <Button disabled={!password} onClick={() => doSaveEditProfile()}>
             Save
           </Button>
           <Button onClick={() => history.goBack()}>Cancel</Button>
-
         </div>
       </div>
     </div>
@@ -83,7 +82,7 @@ const UserProfileEdit = () => {
     <BaseContainer>
       <div className="navigation-button-container container">
         <div className="navigation-button-container title">
-          <h1>Edit Profile</h1>
+          <h1>Change Password</h1>
         </div>
         <div className="navigation-button-container button">
         </div>

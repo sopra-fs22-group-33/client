@@ -103,7 +103,9 @@ export const UserProfile = () => {
                     <h1>User Profile</h1>
                 </div>
                 <div className="navigation-button-container button">
-                    <Button onClick={() => history.push("/user/profile/edit")}>Edit</Button>
+                    <Button onClick={() => history.push("/user/profile/edit/password")}>Change Password</Button>
+
+                    <Button onClick={() => history.push("/user/profile/edit/details")}>Edit Details</Button>
 
                     <Button onClick={() => history.push("/user/teams")}>See Teams</Button>
 

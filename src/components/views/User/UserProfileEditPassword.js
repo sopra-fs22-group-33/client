@@ -68,7 +68,7 @@ const UserProfileEdit = () => {
           value={password}
           onChange={(pn) => setPassword(pn)}
         />
-        <div className="button-container">
+        <div className="auth button-container">
           <Button disabled={!password} onClick={() => doSaveEditProfile()}>
             Save
           </Button>

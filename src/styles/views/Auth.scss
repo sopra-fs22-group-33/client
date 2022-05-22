@@ -16,7 +16,7 @@
     width: 60%;
     max-width: 30em;
     height: auto;
-    font-size: 16px;
+    font-size: 2vh;
     font-weight: 300;
     padding-left: 37px;
     padding-right: 37px;
@@ -29,21 +29,20 @@
     justify-content: center;
   }
   &.input {
-    height: 40px;
+    height: 5vh;
     padding-left: 15px;
-    border-radius: 20px;
+    border-radius: 2.5vh;
     margin-bottom: 30px;
-    background: transparentize(white, 0.85);
     color: $textColor;
   }
   &.label {
     color: $textColor;
-    margin-bottom: 20px;
+    margin-bottom: 1.5vh;
     font-weight: bold;
   }
   &.button-container {
     display: flex;
     justify-content: center;
-    margin-top: 2em;
+    margin-top: 0.5vh;
   }
 }

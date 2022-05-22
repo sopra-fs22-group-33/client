@@ -68,7 +68,7 @@ const UserProfileEdit = () => {
         />
         <FormField label="Email" value={email} onChange={(u) => setEmail(u)} />
 
-        <div className="button-container">
+        <div className="auth button-container">
           <Button disabled={!username || !email} onClick={() => doSaveEditProfile()}>
             Save
           </Button>

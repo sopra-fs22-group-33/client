@@ -44,7 +44,7 @@ export const TeamInvite = () => {
                     value={email}
                     onChange={(n) => setEmail(n)}
                 />
-                <div className="button-container">
+                <div className="auth button-container">
                     <Button onClick={doInvite}>Invite</Button>
                     <Button onClick={() => history.goBack()}>
                         Cancel

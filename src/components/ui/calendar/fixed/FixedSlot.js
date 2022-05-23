@@ -28,7 +28,7 @@ export class FixedSlot extends React.Component {
     if (slot.hasOwnProperty("schedules") && slot.schedules.length > 0) {
       for (let s in slot.schedules) {
         const user = slot.schedules[s].user;
-        if (user) {
+        if (user && slot.schedules[s].assigned === 1) {
           assignedUsers.push(user);
         }
       }

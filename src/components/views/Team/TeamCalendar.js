@@ -3,7 +3,6 @@ import { api, fetchTeamCalendar, handleError } from "helpers/api";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import BaseContainer from "../../ui/BaseContainer";
-import { EditChoiceButton } from "../../ui/calendar/EditChoiceButton";
 import { Button } from "../../ui/Button";
 import { CalendarNavigationButtons } from "../../ui/calendar/CalendarNavigationButtons";
 import { FixedCalendar } from "../../ui/calendar/fixed/FixedCalendar";

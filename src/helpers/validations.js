@@ -26,6 +26,22 @@ export function validateTeamCalendar(calendar) {
     wrappedCalendarError("invalid 'startingDate' in teamCalendar:", calendar);
   }
 
+  if (!calendar.hasOwnProperty("daysFixed")) {
+    wrappedCalendarError("invalid 'daysFixed' in teamCalendar:", calendar);
+  }
+  if (!calendar.hasOwnProperty("startingDateFixed")) {
+    wrappedCalendarError(
+      "invalid 'startingDateFixed' in teamCalendar:",
+      calendar
+    );
+  }
+  if (calendar.daysFixed === null) {
+    calendar.daysFixed = [];
+  }
+  if (calendar.startingDateFixed === null) {
+    calendar.startingDateFixed = calendar.startingDate;
+  }
+
   for (let i in calendar.days) {
     let day = calendar.days[i];
     if (!day.hasOwnProperty("weekday")) {
@@ -71,6 +87,19 @@ export function validateTeamCalendar(calendar) {
     }
   }
 
+  for (let i in calendar.daysFixed) {
+    let day = calendar.daysFixed[i];
+    if (!day.hasOwnProperty("weekday")) {
+      wrappedCalendarError("missing 'weekday' in teamCalendar:", day);
+    }
+    if (!day.hasOwnProperty("slots") || !Array.isArray(day.slots)) {
+      day.slots = [];
+    }
+
+    day.id = day.id ? day.id : randomId(); /* generate if missing */
+    day.date = getDate(day.weekday, calendar.startingDateFixed);
+  }
+
   return calendar;
 }
 
@@ -112,7 +141,7 @@ export function validateUserCalendar(calendar) {
 
 export function insertFillerDays(days, startingDateString) {
   if (days.length === 0) {
-    return;
+    return [];
   }
   const originalDate = new Date(Date.parse(startingDateString));
 
@@ -128,7 +157,10 @@ export function insertFillerDays(days, startingDateString) {
     }
   }
   for (let w = dayDiff; w < 0; w++) {
-    startFillerDays.push({ date: getDate(w, originalDate.toDateString()), isFiller: true });
+    startFillerDays.push({
+      date: getDate(w, originalDate.toDateString()),
+      isFiller: true,
+    });
   }
 
   const endFillerDays = [];
@@ -143,8 +175,11 @@ export function insertFillerDays(days, startingDateString) {
       break;
     }
   }
-  for (let w = 0; w < dayDiff; w++) {
-    endFillerDays.push({ date: getDate(w + lastWeekday, originalDate.toDateString()), isFiller: true });
+  for (let w = 1; w <= dayDiff; w++) {
+    endFillerDays.push({
+      date: getDate(w + lastWeekday, originalDate.toDateString()),
+      isFiller: true,
+    });
   }
 
   //do not overwrite original days array
@@ -152,7 +187,7 @@ export function insertFillerDays(days, startingDateString) {
 }
 
 function getDate(weekday, startingDateString) {
-  const date = new Date(startingDateString);
-  date.setDate(date.getDate() + weekday);
-  return date;
+    const date = new Date(startingDateString);
+    date.setDate(date.getDate() + weekday);
+    return date;
 }

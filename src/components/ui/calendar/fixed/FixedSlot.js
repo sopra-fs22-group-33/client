@@ -69,6 +69,7 @@ export class FixedSlot extends React.Component {
     }
     return (
       <Slot
+        sx={this.props.sx}
         timeFrom={this.props.timeFrom}
         timeTo={this.props.timeTo}
         onMouseEnter={(ev) => this.handleSlotMouseEnter(ev)}

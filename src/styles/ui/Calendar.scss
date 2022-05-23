@@ -14,10 +14,12 @@
 }
 
 .day-title {
+  user-select: none;
   font-weight: bold;
 }
 
 .time-line1, .time-line2, .time-line3, .time-line4, .time-line5, .time-line6, .time-line7, .time-line8, .time-line9, .time-line10, .time-line11 {
+  user-select: none;
   border: none;
   border-top: 1px dashed grey;
   position: absolute;
@@ -73,6 +75,7 @@
 
 
 .time-label1 {
+  user-select: none;
   font-weight: bold;
   position: absolute;
   display: block;
@@ -81,6 +84,7 @@
 }
 
 .time-label2 {
+  user-select: none;
   font-weight: bold;
   position: absolute;
   display: block;
@@ -89,6 +93,7 @@
 }
 
 .time-label3 {
+  user-select: none;
   font-weight: bold;
   position: absolute;
   display: block;

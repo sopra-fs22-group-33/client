@@ -29,7 +29,7 @@ class GameLobby extends React.Component {
   componentWillUnmount() {
     this.isLeaving = true;
     if (this.state.selectedGame && this.state.selectedPlayer) {
-      this.setOffline(this.state.selectedGame, this.state.selectedPlayer);
+      setOffline(this.state.selectedGame, this.state.selectedPlayer);
     }
     sessionStorage.removeItem("gameId");
     sessionStorage.removeItem("playerId");
@@ -62,7 +62,7 @@ class GameLobby extends React.Component {
 
     try {
       if (this.state.selectedGame && this.state.selectedPlayer) {
-        this.setOffline(this.state.selectedGame.id, this.state.selectedPlayer);
+        setOffline(this.state.selectedGame.id, this.state.selectedPlayer);
       }
 
       setOnline().then(() => {

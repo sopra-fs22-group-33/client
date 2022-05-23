@@ -13,6 +13,8 @@ class GameLobby extends React.Component {
   constructor(props) {
     super(props);
 
+    this.isJoiningGame = false;
+
     this.state = {
       games: [],
       selectedGame: null,
@@ -28,10 +30,18 @@ class GameLobby extends React.Component {
   }
 
   componentCleanup() {
-    setOffline(sessionStorage.getItem("gameId"), this.state.selectedPlayer).then(() => {
+    if (!this.isJoiningGame) {
+      setOffline(
+        sessionStorage.getItem("gameId"),
+        this.state.selectedPlayer
+      ).then(() => {
+        sessionStorage.removeItem("gameId");
+        sessionStorage.removeItem("playerId");
+      });
+    } else {
       sessionStorage.removeItem("gameId");
       sessionStorage.removeItem("playerId");
-    });
+    }
   }
 
   componentWillUnmount() {
@@ -42,12 +52,19 @@ class GameLobby extends React.Component {
   async update() {
     fetchGames(sessionStorage.getItem("id")).then((games) => {
       this.setState({ games });
+      for (let game of games) {
+        if (this.state.selectedGame.id === game.id) {
+          this.setState({selectedGame: game});
+          break;
+        }
+      }
     });
     if (
       this.state.selectedGame &&
       this.calcPlayersOnline(this.state.selectedGame.players) ===
         this.state.selectedGame.players.length
     ) {
+      this.isJoiningGame = true;
       this.props.history.push("/game");
     }
     setTimeout(() => {

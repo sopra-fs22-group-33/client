@@ -5,6 +5,7 @@ import { DAY_HEIGHT, SLOT_REL_WIDTH } from "./config";
 import Box from "@mui/material/Box";
 import "styles/ui/Calendar.scss";
 
+const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 /**
  * Takes slots and assigns left and width style properties to overlapping slots
@@ -113,10 +114,17 @@ export function handleOverlap(slots, newSlot) {
  */
 export class Day extends React.Component {
   render() {
+    const dateString = !this.props.hideDate
+      ? this.props.date
+          .toLocaleDateString()
+          .substring(0, this.props.date.toLocaleDateString().length - 5)
+      : null;
     return (
       <Grid item xs={12 / 7}>
         <Box sx={{ width: 1, pb: "12px" }} style={{}}>
-          <div className={"day-title"}>Monday{this.props.weekday}</div>
+          <div className={"day-title"}>
+            {weekdays[this.props.date.getDay()]} {dateString}
+          </div>
         </Box>
         <Box
           sx={{
@@ -128,6 +136,7 @@ export class Day extends React.Component {
             borderColor: "gray",
             borderRadius: "5px",
           }}
+          style={this.props.style} /* overrides */
           onMouseDown={this.props.onMouseDown}
         >
           {this.props.children}
@@ -138,5 +147,9 @@ export class Day extends React.Component {
 }
 
 Day.propTypes = {
-    onMouseDown: PropTypes.func,
+  onMouseDown: PropTypes.func,
+  date: PropTypes.object.isRequired,
+  hideDate: PropTypes.bool,
+
+  style: PropTypes.object,
 };

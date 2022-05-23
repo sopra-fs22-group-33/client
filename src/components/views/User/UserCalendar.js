@@ -1,67 +1,45 @@
 import BaseContainer from "../../ui/BaseContainer";
-import { Day, handleOverlap } from "../../ui/calendar/Day";
-import { Slot } from "../../ui/calendar/Slot";
-import { SlotPopper } from "../../ui/calendar/SlotPopper";
-import { Calendar } from "../../ui/calendar/Calendar";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { fetchFixedUserCalendar } from "../../../helpers/api";
 import { useHistory } from "react-router-dom";
 import { Button } from "../../ui/Button";
-import { validateUserCalendar } from "../../../helpers/validations";
+import {
+  insertFillerDays,
+  validateUserCalendar,
+} from "../../../helpers/validations";
+import { CalendarNavigationButtons } from "../../ui/calendar/CalendarNavigationButtons";
+import { FixedCalendar } from "../../ui/calendar/fixed/FixedCalendar";
 
 export const UserCalendar = () => {
   const history = useHistory();
-  const [anchorEl, setAnchorEl] = useState(undefined);
-  const [selectedSlot, setSelectedSlot] = useState(null);
   const [calendar, setCalendar] = useState(null);
+  const [localDays, setLocalDays] = useState([]);
+  const [displayedWeekIdx, setDisplayedWeekIdx] = useState(0);
+
+  const handleBack = () => {
+    // go back one week
+    if (displayedWeekIdx > 0) {
+      setDisplayedWeekIdx(displayedWeekIdx - 1);
+    }
+  };
+  const handleForwards = () => {
+    // go forwards one week
+    if (displayedWeekIdx < localDays.length / 7 - 1) {
+      setDisplayedWeekIdx(displayedWeekIdx + 1);
+    }
+  };
 
   useEffect(() => {
-    fetchFixedUserCalendar(sessionStorage.getItem("id")).then((calendar) =>
-      setCalendar(validateUserCalendar(calendar))
-    );
+    fetchFixedUserCalendar(sessionStorage.getItem("id")).then((calendar) => {
+      calendar = validateUserCalendar(calendar);
+      setLocalDays(insertFillerDays(calendar.days, calendar.startingDate));
+      setCalendar(calendar);
+    });
   }, []);
 
-  let content = <div> fetching user calendar </div>;
-  if (calendar) {
-    console.log(calendar);
-    content = (
-      <Calendar>
-        {calendar.days.map((day) => {
-          day.slots = handleOverlap(day.slots);
-          return (
-            <Day>
-              {day.slots.map((slot) => (
-                <Slot
-                  sx={{ left: slot.left, width: slot.width }}
-                  onMouseEnter={(ev) => {
-                    setAnchorEl(ev.currentTarget);
-                    setSelectedSlot(slot.id);
-                  }}
-                  onMouseLeave={(ev) => {
-                    setAnchorEl(undefined);
-                    setSelectedSlot(null);
-                  }}
-                  timeFrom={slot.timeFrom}
-                  timeTo={slot.timeTo}
-                >
-                  {anchorEl && selectedSlot === slot.id ? (
-                    <SlotPopper anchorEl={anchorEl}>
-                      {
-                        <div>
-                          <div>timeFrom: {slot.timeFrom}</div>
-                          <div>timeTo: {slot.timeTo}</div>
-                        </div>
-                      }
-                    </SlotPopper>
-                  ) : null}
-                </Slot>
-              ))}
-            </Day>
-          );
-        })}
-      </Calendar>
-    );
+  if (!calendar) {
+    return <div>fetching calendar</div>;
   }
 
   return (
@@ -70,13 +48,21 @@ export const UserCalendar = () => {
         <div className="navigation-button-container title">
           <h1>User Calendar</h1>
         </div>
+        <CalendarNavigationButtons
+          onBack={() => handleBack()}
+          onForwards={() => handleForwards()}
+        />
         <div className="navigation-button-container button">
           <Button onClick={() => history.push("/user/calendar/edit")}>
             Edit Preferences
           </Button>
         </div>
       </div>
-      {content}
+      <FixedCalendar
+        startingDate={calendar.startingDate}
+        type={"user"}
+        days={localDays.slice(7 * displayedWeekIdx, 7 * (displayedWeekIdx + 1))}
+      />
     </BaseContainer>
   );
 };

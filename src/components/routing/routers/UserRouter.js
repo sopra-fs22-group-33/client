@@ -6,7 +6,7 @@ import { AllTeams } from "../../views/User/AllTeams";
 import {CreateTeam} from "../../views/User/CreateTeam";
 import {UserInvitations} from "../../views/User/UserInvitations";
 import UserProfileEdit from "../../views/User/UserProfileEdit";
-import {UserCalendarEdit} from "../../views/User/UserCalendarEdit";
+import {UserPreferencesEdit} from "../../views/User/UserPreferencesEdit";
 import UserProfileEditPassword from "../../views/User/UserProfileEditPassword";
 
 export const UserRouter = (props) => {
@@ -17,7 +17,7 @@ export const UserRouter = (props) => {
           <UserCalendar />
         </Route>
         <Route exact path={`${props.base}/calendar/edit`}>
-          <UserCalendarEdit />
+          <UserPreferencesEdit />
         </Route>
         <Route exact path={`${props.base}/profile`}>
           <UserProfile />

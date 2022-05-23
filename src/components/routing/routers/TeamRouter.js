@@ -2,9 +2,10 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import {TeamCalendar} from "components/views/Team/TeamCalendar";
 import {TeamProfile} from "components/views/Team/TeamProfile";
-import {TeamCalendarEdit} from "../../views/Team/TeamCalendarEdit";
 import {TeamProfileEdit} from "../../views/Team/TeamProfileEdit";
 import {TeamInvite} from "../../views/Team/TeamInvite";
+import {TeamCalendarAdminEdit} from "../../views/Team/TeamCalenarAdminEdit";
+import {TeamCalendarPreferenceEdit} from "../../views/Team/TeamCalendarPreferenceEdit";
 
 export const TeamRouter = (props) => {
   // todo: consider adding a guard for editing
@@ -18,7 +19,10 @@ export const TeamRouter = (props) => {
           <TeamProfile />
         </Route>
         <Route exact path={`${props.base}/calendar/edit`} >
-          <TeamCalendarEdit />
+          <TeamCalendarAdminEdit />
+        </Route>
+        <Route exact path={`${props.base}/calendar/edit/preferences`} >
+          <TeamCalendarPreferenceEdit />
         </Route>
         <Route exact path={`${props.base}/profile/edit`} >
           <TeamProfileEdit />

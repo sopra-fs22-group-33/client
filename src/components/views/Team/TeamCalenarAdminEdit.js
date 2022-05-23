@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { api, fetchTeamCalendar, handleError } from "../../../helpers/api";
 import {
-  insertFillerDays,
   validateTeamCalendar,
 } from "../../../helpers/validations";
 import { useHistory } from "react-router-dom";
@@ -9,14 +8,16 @@ import * as React from "react";
 import BaseContainer from "../../ui/BaseContainer";
 import { Button } from "../../ui/Button";
 import { AdminCalendar } from "../../ui/calendar/admin/AdminCalendar";
+import {mapCalendarToWeek, mapWeekToAdminCalendar} from "../../../helpers/calendarMappers";
 
 export const TeamCalendarAdminEdit = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
-  const [localDays, setLocalDays] = useState([]);
+  const [week, setWeek] = useState([]);
 
   async function doSave() {
     try {
+      mapWeekToAdminCalendar(week, calendar.days)
       const requestBody = JSON.stringify({
         days: calendar.days,
         startingDate: calendar.startingDate,
@@ -42,7 +43,7 @@ export const TeamCalendarAdminEdit = () => {
   useEffect(() => {
     fetchTeamCalendar().then((calendar) => {
       calendar = validateTeamCalendar(calendar);
-      setLocalDays(insertFillerDays(calendar.days, calendar.startingDate));
+      setWeek(mapCalendarToWeek(calendar.days));
       setCalendar(calendar);
     });
   }, []);
@@ -65,7 +66,7 @@ export const TeamCalendarAdminEdit = () => {
             </Button>
           </div>
         </div>
-        <AdminCalendar startingDate={calendar.startingDate} days={localDays} />
+        <AdminCalendar startingDate={calendar.startingDate} days={week} />
       </BaseContainer>
     </div>
   );

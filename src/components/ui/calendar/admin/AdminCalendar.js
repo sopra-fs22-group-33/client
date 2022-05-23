@@ -55,7 +55,7 @@ export class AdminCalendar extends React.Component {
   render() {
     return (
       <Calendar>
-        {this.state.days.map((day) => {
+        {this.props.days.map((day) => {
           return day.isFiller ? (
             <FillerDay
               key={randomId()}

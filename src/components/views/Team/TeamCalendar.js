@@ -51,7 +51,6 @@ export const TeamCalendar = () => {
   useEffect(() => {
     fetchTeamCalendar().then((calendar) => {
       calendar = validateTeamCalendar(calendar);
-      console.log(calendar);
       setCalendar(calendar);
       setLocalDays(insertFillerDays(calendar.days, calendar.startingDate));
     });
@@ -78,7 +77,10 @@ export const TeamCalendar = () => {
             {sessionStorage.getItem("isAdmin") === "true" ? (
               <Button onClick={() => handleFinalize()}>Finalize</Button>
             ) : null}
-            <EditChoiceButton />
+            {sessionStorage.getItem("isAdmin") === "true" ? (
+              <Button onClick={() => history.push("/team/calendar/edit")}>Edit</Button>
+            ) : null}
+            <Button onClick={() => history.push("/team/calendar/edit/preferences")}>Preferences</Button>
           </div>
         </div>
         <FixedCalendar

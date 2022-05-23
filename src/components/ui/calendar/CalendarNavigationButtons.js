@@ -1,17 +1,35 @@
 import * as React from "react";
 import PropTypes from "prop-types";
+import {} from "react-icons/ai";
+import {
+  IoCaretBackSharp,
+  IoCaretForwardSharp,
+  IoPlayBackSharp,
+  IoPlayForwardSharp,
+} from "react-icons/io5";
+import { Button } from "../Button";
 
 export const CalendarNavigationButtons = (props) => (
-  <div /* buttons should have different styling from ../../ui/Button*/>
+  <div>
     {props.onBigBack ? (
-      <button onClick={props.onBigBack}>big back arrow</button>
+      <Button onClick={props.onBigBack}>
+        <IoPlayBackSharp />
+      </Button>
     ) : null}
-    {props.onBack ? <button onClick={props.onBack}>back arrow</button> : null}
+    {props.onBack ? (
+      <Button onClick={props.onBack}>
+        <IoCaretBackSharp />
+      </Button>
+    ) : null}
     {props.onForwards ? (
-      <button onClick={props.onForwards}>forwards arrow</button>
+      <Button onClick={props.onForwards}>
+        <IoCaretForwardSharp />
+      </Button>
     ) : null}
     {props.onBigForwards ? (
-      <button onClick={props.onBigForwards}>big forwards arrow</button>
+      <Button onClick={props.onBigForwards}>
+        <IoPlayForwardSharp />
+      </Button>
     ) : null}
   </div>
 );

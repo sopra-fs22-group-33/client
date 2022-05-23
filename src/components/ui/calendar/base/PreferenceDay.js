@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 export class PreferenceDay extends BaseDay {
   render() {
     return (
-      <Day date={this.props.date}>
+      <Day date={this.props.date} hideDate={true}>
         {this.props.slots.map((slot) => (
           <PreferenceSlot
             key={slot.id}

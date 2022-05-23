@@ -20,6 +20,7 @@ export class BaseDay extends React.Component {
     return (
       <Day
         date={this.props.date}
+        hideDate={true}
       >
         {this.state.slots.map((slot) => (
           <BaseSlot

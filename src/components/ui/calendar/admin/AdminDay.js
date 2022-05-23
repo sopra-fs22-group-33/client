@@ -127,6 +127,7 @@ export class AdminDay extends React.Component {
       <Day
         onMouseDown={(ev) => this.handleMouseDown(ev)}
         date={this.props.date}
+        hideDate={true}
       >
         <div
           ref={(el) => {

@@ -48,14 +48,14 @@ export class AdminDay extends React.Component {
     let time = (ev.clientY - this.ref.getBoundingClientRect().y) / HOUR_HEIGHT;
     this.setState({
       isSlotDrawn: true,
-      newSlot: { timeFrom: time, timeTo: time },
+      newSlot: { timeFrom: time, timeTo: time + 1},
     });
   }
 
   handleGlobalMouseMove(ev) {
     if (this.state.isSlotDrawn) {
       const to = this.state.newSlot.timeTo + ev.movementY / HOUR_HEIGHT;
-      if (to <= 24) {
+      if (to <= 24 && to > this.state.newSlot.timeFrom) {
         this.setState({
           newSlot: {
             timeFrom: this.state.newSlot.timeFrom,

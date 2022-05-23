@@ -94,6 +94,7 @@ export class AdminSlot extends React.Component {
       this.slot.timeFrom = from;
       this.slot.timeTo = to;
       this.setState({ timeFrom: from, timeTo: to });
+      calendarGlobal.setSelectedSlot(this.id);
       calendarEventDispatcher.dispatch("onSlotUpdated");
     }
   }

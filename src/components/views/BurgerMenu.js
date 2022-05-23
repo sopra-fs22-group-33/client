@@ -15,7 +15,7 @@ class BurgerMenu extends React.Component {
                 <a href="/user/calendar">My Calendar ➔</a>
                 <a href="/team/profile">Team Profile ➔</a>
                 <a href="/team/calendar">Team Calendar ➔</a>
-                <a href="/game">Snake ➔</a>
+                <a href="/game/lobby">Snake ➔</a>
             </Menu>
         );
     }

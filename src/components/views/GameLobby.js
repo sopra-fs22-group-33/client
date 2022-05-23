@@ -13,32 +13,33 @@ class GameLobby extends React.Component {
   constructor(props) {
     super(props);
 
-    this.isLeaving = false;
-
     this.state = {
       games: [],
       selectedGame: null,
       selectedPlayer: null,
     };
+
+    this.componentCleanup = this.componentCleanup.bind(this);
   }
 
   componentDidMount() {
+    window.addEventListener("beforeunload", this.componentCleanup);
     this.update();
   }
 
+  componentCleanup() {
+    setOffline(sessionStorage.getItem("gameId"), this.state.selectedPlayer).then(() => {
+      sessionStorage.removeItem("gameId");
+      sessionStorage.removeItem("playerId");
+    });
+  }
+
   componentWillUnmount() {
-    this.isLeaving = true;
-    if (this.state.selectedGame && this.state.selectedPlayer) {
-      setOffline(this.state.selectedGame, this.state.selectedPlayer);
-    }
-    sessionStorage.removeItem("gameId");
-    sessionStorage.removeItem("playerId");
+    this.componentCleanup();
+    window.removeEventListener("beforeunload", this.componentCleanup); // remove the event handler for normal unmounting
   }
 
   async update() {
-    if (this.isLeaving) {
-      return;
-    }
     fetchGames(sessionStorage.getItem("id")).then((games) => {
       this.setState({ games });
     });

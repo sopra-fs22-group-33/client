@@ -10,6 +10,7 @@ import {
   insertFillerDays,
   validateTeamCalendar,
 } from "../../../helpers/validations";
+import { SpecialCalendar } from "../../ui/calendar/special/SpecialCalendar";
 
 export const TeamCalendar = () => {
   const history = useHistory();
@@ -25,7 +26,9 @@ export const TeamCalendar = () => {
       setLocalDays(insertFillerDays(calendar.days, calendar.startingDate));
     } else {
       setIsFixed(true);
-      setLocalDays(insertFillerDays(calendar.daysFixed, calendar.startingDateFixed));
+      setLocalDays(
+        insertFillerDays(calendar.daysFixed, calendar.startingDateFixed)
+      );
     }
   };
   const handleBack = () => {
@@ -44,6 +47,29 @@ export const TeamCalendar = () => {
     // chane day type if necessary
     // stop when there are no days left
   };
+
+  async function doSave() {
+    try {
+      // fixed days are never edited from frontend
+      const requestBody = JSON.stringify({
+        days: calendar.days,
+        startingDate: calendar.startingDate,
+      });
+      await api.put(
+        `/teams/${sessionStorage.getItem("teamId")}/calendars`,
+        requestBody,
+        {
+          headers: { token: sessionStorage.getItem("token") },
+        }
+      );
+    } catch (error) {
+      alert(
+        `Something went wrong during saving the calendar: \n${handleError(
+          error
+        )}`
+      );
+    }
+  }
 
   async function handleFinalize() {
     try {
@@ -90,6 +116,7 @@ export const TeamCalendar = () => {
             onBigForwards={() => handleChangeDayType()}
           />
           <div className="navigation-button-container button">
+            {!isFixed ? <Button onClick={() => doSave()}> Save </Button> : null}
             {sessionStorage.getItem("isAdmin") === "true" ? (
               <Button onClick={() => handleFinalize()}>Finalize</Button>
             ) : null}
@@ -105,14 +132,26 @@ export const TeamCalendar = () => {
             </Button>
           </div>
         </div>
-        <FixedCalendar
-          startingDate={isFixed ? calendar.startingDateFixed : calendar.startingDate}
-          type={"team"}
-          days={localDays.slice(
-            7 * displayedWeekIdx,
-            7 * (displayedWeekIdx + 1)
-          )}
-        />
+        {isFixed ? (
+          <FixedCalendar
+            startingDate={
+              isFixed ? calendar.startingDateFixed : calendar.startingDate
+            }
+            type={"team"}
+            days={localDays.slice(
+              7 * displayedWeekIdx,
+              7 * (displayedWeekIdx + 1)
+            )}
+          />
+        ) : (
+          <SpecialCalendar
+            startingDate={calendar.startingDate}
+            days={localDays.slice(
+              7 * displayedWeekIdx,
+              7 * (displayedWeekIdx + 1)
+            )}
+          />
+        )}
       </BaseContainer>
     </div>
   );

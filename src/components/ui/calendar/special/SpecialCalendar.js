@@ -35,7 +35,7 @@ export class SpecialCalendar extends React.Component {
   render() {
     return (
       <Calendar>
-        {this.state.days.map((day) => (
+        {this.props.days.map((day) => (
           <SpecialDay
             key={day.id}
             id={day.id}

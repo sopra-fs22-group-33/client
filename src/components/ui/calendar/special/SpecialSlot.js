@@ -1,9 +1,11 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { Slot } from "../Slot";
-import { MAX_SPECIAL, MIN_SPECIAL } from "../config";
-import { SlotSlider } from "../SlotSlider";
 import { SlotPopper } from "../SlotPopper";
+import { Button } from "../../Button";
+import { AiFillHeart } from "react-icons/ai";
+import { ImCross } from "react-icons/im";
+import calendarEventDispatcher from "../calendarEventDispatcher";
 
 /**
  * Convert frontend to backend representation
@@ -55,18 +57,19 @@ export class SpecialSlot extends React.Component {
     };
   }
 
-  handleSlotMouseEnter(ev){
-    this.setState({isHoveredOver: true, anchorEl: ev.currentTarget});
+  handleSlotMouseEnter(ev) {
+    this.setState({ isHoveredOver: true, anchorEl: ev.currentTarget });
   }
 
   handleSlotMouseLeave(ev) {
-    this.setState({isHoveredOver: false, anchorEl: undefined});
+    this.setState({ isHoveredOver: false, anchorEl: undefined });
   }
 
-  handleSliderChange(ev, value) {
+  handleJokerChange(ev, value) {
     const schedule = this.state.mySchedule;
     schedule.special = frontToBackSpecial(value);
     this.setState({ mySchedule: schedule });
+    calendarEventDispatcher.dispatch("onSlotUpdated");
   }
 
   getSchedule() {
@@ -111,15 +114,17 @@ export class SpecialSlot extends React.Component {
       >
         {this.state.isHoveredOver ? (
           <SlotPopper anchorEl={this.state.anchorEl}>
-            <SlotSlider
-              onChange={(ev, value) => this.handleSliderChange(ev, value)}
-              value={backToFrontSpecial(this.state.mySchedule.special)}
-              valueLabelDisplay={"auto"}
-              step={1}
-              marks
-              min={MIN_SPECIAL}
-              max={MAX_SPECIAL}
-            />
+            <div>
+              <Button onClick={(ev) => this.handleJokerChange(ev, 1)}>
+                <AiFillHeart />
+              </Button>
+              <Button onClick={(ev) => this.handleJokerChange(ev, -1)}>
+                <ImCross />
+              </Button>
+            </div>
+            <Button onClick={(ev) => this.handleJokerChange(ev, 0)}>
+              clear
+            </Button>
             <div>requirement: {this.props.requirement}</div>
             <div>
               my special: {backToFrontSpecial(this.state.mySchedule.special)}

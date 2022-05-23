@@ -11,6 +11,9 @@ import {
   validateTeamCalendar,
 } from "../../../helpers/validations";
 import { SpecialCalendar } from "../../ui/calendar/special/SpecialCalendar";
+import calendarEventDispatcher from "../../ui/calendar/calendarEventDispatcher";
+import {countJokers} from "../../ui/calendar/Calendar";
+import {MAX_JOKERS} from "../../ui/calendar/config";
 
 export const TeamCalendar = () => {
   const history = useHistory();
@@ -48,7 +51,12 @@ export const TeamCalendar = () => {
     // stop when there are no days left
   };
 
-  async function doSave() {
+  async function doSaveJokers() {
+    const diff = countJokers(calendar.days, parseInt(sessionStorage.getItem("id"))) - MAX_JOKERS;
+    if (diff > 0) {
+      alert(`too many jokers, please remove ${diff}`);
+      return;
+    }
     try {
       // fixed days are never edited from frontend
       const requestBody = JSON.stringify({
@@ -116,7 +124,7 @@ export const TeamCalendar = () => {
             onBigForwards={() => handleChangeDayType()}
           />
           <div className="navigation-button-container button">
-            {!isFixed ? <Button onClick={() => doSave()}> Save </Button> : null}
+            {!isFixed ? <Button onClick={() => doSaveJokers()}> Save </Button> : null}
             {sessionStorage.getItem("isAdmin") === "true" ? (
               <Button onClick={() => handleFinalize()}>Finalize</Button>
             ) : null}
@@ -150,6 +158,7 @@ export const TeamCalendar = () => {
               7 * displayedWeekIdx,
               7 * (displayedWeekIdx + 1)
             )}
+            allDays={calendar.days}
           />
         )}
       </BaseContainer>

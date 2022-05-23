@@ -11,7 +11,6 @@ import {
   validateTeamCalendar,
 } from "../../../helpers/validations";
 import { SpecialCalendar } from "../../ui/calendar/special/SpecialCalendar";
-import calendarEventDispatcher from "../../ui/calendar/calendarEventDispatcher";
 import {countJokers} from "../../ui/calendar/Calendar";
 import {MAX_JOKERS} from "../../ui/calendar/config";
 
@@ -142,9 +141,7 @@ export const TeamCalendar = () => {
         </div>
         {isFixed ? (
           <FixedCalendar
-            startingDate={
-              isFixed ? calendar.startingDateFixed : calendar.startingDate
-            }
+            startingDate={calendar.startingDateFixed}
             type={"team"}
             days={localDays.slice(
               7 * displayedWeekIdx,

@@ -87,6 +87,19 @@ export function validateTeamCalendar(calendar) {
     }
   }
 
+  for (let i in calendar.daysFixed) {
+    let day = calendar.daysFixed[i];
+    if (!day.hasOwnProperty("weekday")) {
+      wrappedCalendarError("missing 'weekday' in teamCalendar:", day);
+    }
+    if (!day.hasOwnProperty("slots") || !Array.isArray(day.slots)) {
+      day.slots = [];
+    }
+
+    day.id = day.id ? day.id : randomId(); /* generate if missing */
+    day.date = getDate(day.weekday, calendar.startingDateFixed);
+  }
+
   return calendar;
 }
 
@@ -162,7 +175,7 @@ export function insertFillerDays(days, startingDateString) {
       break;
     }
   }
-  for (let w = 0; w < dayDiff; w++) {
+  for (let w = 1; w <= dayDiff; w++) {
     endFillerDays.push({
       date: getDate(w + lastWeekday, originalDate.toDateString()),
       isFiller: true,

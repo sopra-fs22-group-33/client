@@ -46,14 +46,14 @@ class GameLobby extends React.Component {
 
   componentWillUnmount() {
     this.componentCleanup();
-    window.removeEventListener("beforeunload", this.componentCleanup); // remove the event handler for normal unmounting
+    window.removeEventListener("beforeunload", this.componentCleanup);
   }
 
   async update() {
     fetchGames(sessionStorage.getItem("id")).then((games) => {
       this.setState({ games });
       for (let game of games) {
-        if (this.state.selectedGame.id === game.id) {
+        if (this.state.selectedGame && this.state.selectedGame.id === game.id) {
           this.setState({selectedGame: game});
           break;
         }

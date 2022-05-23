@@ -2,11 +2,11 @@ import * as React from "react";
 import { api } from "helpers/api";
 import "styles/views/Auth.scss";
 import { Player } from "../../models/Player";
-import {CHUNK_LENGTH, serialize} from "../ui/game/helpers";
+import { CHUNK_LENGTH, serialize } from "../ui/game/helpers";
 import BaseContainer from "../ui/BaseContainer";
-import {GameBoard} from "../ui/game/GameBoard";
-import {StatBoard} from "../ui/game/StatBoard";
-import {setOffline} from "./GameLobby";
+import { GameBoard } from "../ui/game/GameBoard";
+import { StatBoard } from "../ui/game/StatBoard";
+import { setOffline } from "./GameLobby";
 
 export class Game extends React.Component {
   constructor(props) {
@@ -20,6 +20,7 @@ export class Game extends React.Component {
     };
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.componentCleanup = this.componentCleanup.bind(this);
 
     this.gameId = sessionStorage.getItem("gameId");
     this.playerId = sessionStorage.getItem("playerId");
@@ -31,15 +32,22 @@ export class Game extends React.Component {
 
   componentDidMount() {
     window.addEventListener("keydown", this.handleKeyDown);
+    window.addEventListener("beforeunload", this.componentCleanup);
   }
 
-  // is not called on going back and forth through history
-  componentWillUnmount() {
+  componentCleanup() {
     this.isLeaving = true;
-    sessionStorage.removeItem("gameId");
-    sessionStorage.removeItem("playerId");
+    setOffline(this.gameId, this.player).finally(() => {
+      sessionStorage.removeItem("gameId");
+      sessionStorage.removeItem("playerId");
+    });
+  }
+
+  componentWillUnmount() {
+    this.componentCleanup();
+    window.removeEventListener("beforeunload", this.componentCleanup);
     window.removeEventListener("keydown", this.handleKeyDown);
-    setOffline(this.gameId, this.player);
+
     // todo: make the player automatically loose the game
   }
 
@@ -81,7 +89,7 @@ export class Game extends React.Component {
   tick() {
     if (this.isLeaving) {
       // workaround to stop recursion on leaving page
-      return
+      return;
     }
     if (!this.state.isDead) {
       this.player.updatePos();
@@ -152,9 +160,7 @@ export class Game extends React.Component {
   }
 
   doStartGame = async () => {
-    const response = await api.get(
-      `/games/${this.gameId}/${this.playerId}`
-    );
+    const response = await api.get(`/games/${this.gameId}/${this.playerId}`);
 
     // todo: let choose
     const game = response.data;

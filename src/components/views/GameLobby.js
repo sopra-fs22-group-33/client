@@ -119,6 +119,9 @@ class GameLobby extends React.Component {
           {this.state.games
             .sort((a, b) => (a.id > b.id ? 1 : -1))
             .map((game) => {
+              if (game.status === "off") {
+                return null;
+              }
               const player = this.getPlayerForUser(
                 parseInt(sessionStorage.getItem("id")),
                 game.players

@@ -32,7 +32,7 @@ export class SpecialCalendar extends React.Component {
 
     this.doSaveJokers().then((value) => {
       if (value) {
-        alert(`you have ${Math.abs(diff)} jokers left`);
+        alert(`Your joker has been saved!\nyou have ${Math.abs(diff)} jokers left`);
       }
     });
   }

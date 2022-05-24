@@ -111,16 +111,4 @@ export const TEMPLATE_DAYS = [
     weekday: 27,
     slots: [],
   },
-  {
-    weekday: 28,
-    slots: [],
-  },
-  {
-    weekday: 29,
-    slots: [],
-  },
-  {
-    weekday: 30,
-    slots: [],
-  },
 ];

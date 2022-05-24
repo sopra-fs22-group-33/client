@@ -49,6 +49,16 @@ class GameLobby extends React.Component {
     window.removeEventListener("beforeunload", this.componentCleanup);
   }
 
+  async doDelete(game) {
+    try {
+      await api.delete(`/games/${game.id}`);
+    } catch (e) {
+      // 404 is fine, multiple people should try deleting the same game
+      console.log(e);
+    }
+
+  }
+
   async update() {
     fetchGames(sessionStorage.getItem("id")).then((games) => {
       this.setState({ games });
@@ -120,7 +130,7 @@ class GameLobby extends React.Component {
             .sort((a, b) => (a.id > b.id ? 1 : -1))
             .map((game) => {
               if (game.status === "off") {
-                return null;
+                this.doDelete(game);
               }
               const player = this.getPlayerForUser(
                 parseInt(sessionStorage.getItem("id")),

@@ -23,7 +23,7 @@ export const TeamCalendarPreferenceEdit = () => {
         startingDate: calendar.startingDate,
       });
       await api.put(
-        `/teams/${sessionStorage.getItem("teamId")}/calendars`,
+        `/teams/${sessionStorage.getItem("teamId")}/calendars/${sessionStorage.getItem("id")}`,
         requestBody,
         {
           headers: { token: sessionStorage.getItem("token") },

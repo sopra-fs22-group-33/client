@@ -13,29 +13,27 @@ export class SpecialCalendar extends React.Component {
 
     this.state = {
       days: props.days,
-
       selectedSlot: null,
     };
 
-    calendarEventDispatcher.createTopic("onSlotUpdated");
-
+    calendarEventDispatcher.createTopic("onJokerUpdated");
     calendarEventDispatcher.subscribe(
-      "onSlotUpdated",
+      "onJokerUpdated",
       this,
-      this.handleSlotUpdated
+      this.handleJokerUpdated
     );
   }
 
-  handleSlotUpdated() {
+  handleJokerUpdated() {
     const diff = countJokers(
       this.props.allDays,
       parseInt(sessionStorage.getItem("id"))
 
     ) - MAX_JOKERS;
     if (diff > 0) {
-      alert(`too many jokers, please remove ${diff}`);
+      console.log(`too many jokers, please remove ${diff}`);
     } else {
-      alert(`you have ${Math.abs(diff)} jokers left`)
+      console.log(`you have ${Math.abs(diff)} jokers left`)
     }
   }
 

@@ -11,8 +11,6 @@ import {
   validateTeamCalendar,
 } from "../../../helpers/validations";
 import { SpecialCalendar } from "../../ui/calendar/special/SpecialCalendar";
-import {countJokers} from "../../ui/calendar/Calendar";
-import {MAX_JOKERS} from "../../ui/calendar/config";
 
 export const TeamCalendar = () => {
   const history = useHistory();

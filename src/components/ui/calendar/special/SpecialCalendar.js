@@ -6,7 +6,7 @@ import { MAX_JOKERS } from "../config";
 import { FillerDay } from "../FillerDay";
 import { randomId } from "../../../../helpers/validations";
 import calendarEventDispatcher from "../calendarEventDispatcher";
-import {api, handleError} from "../../../../helpers/api";
+import { api, handleError } from "../../../../helpers/api";
 
 export class SpecialCalendar extends React.Component {
   constructor(props) {
@@ -26,23 +26,24 @@ export class SpecialCalendar extends React.Component {
   }
 
   handleJokerUpdated() {
-    const diff = countJokers(
-      this.props.allDays,
-      parseInt(sessionStorage.getItem("id"))
+    const diff =
+      countJokers(this.props.allDays, parseInt(sessionStorage.getItem("id"))) -
+      MAX_JOKERS;
 
-    ) - MAX_JOKERS;
-    if (diff > 0) {
-      console.log(`too many jokers, please remove ${diff}`);
-    } else {
-      console.log(`you have ${Math.abs(diff)} jokers left`)
-    }
+    this.doSaveJokers().then((value) => {
+      if (value) {
+        alert(`you have ${Math.abs(diff)} jokers left`);
+      }
+    });
   }
 
   async doSaveJokers() {
-    const diff = countJokers(this.props.allDays, parseInt(sessionStorage.getItem("id"))) - MAX_JOKERS;
+    const diff =
+      countJokers(this.props.allDays, parseInt(sessionStorage.getItem("id"))) -
+      MAX_JOKERS;
     if (diff > 0) {
       alert(`too many jokers, please remove ${diff}`);
-      return;
+      return false;
     }
     try {
       // fixed days are never edited from frontend
@@ -51,12 +52,15 @@ export class SpecialCalendar extends React.Component {
         startingDate: this.props.startingDate,
       });
       await api.put(
-        `/teams/${sessionStorage.getItem("teamId")}/calendars/${sessionStorage.getItem("id")}`,
+        `/teams/${sessionStorage.getItem(
+          "teamId"
+        )}/calendars/${sessionStorage.getItem("id")}`,
         requestBody,
         {
           headers: { token: sessionStorage.getItem("token") },
         }
       );
+      return true;
     } catch (error) {
       alert(
         `Something went wrong during saving the calendar: \n${handleError(
@@ -90,5 +94,5 @@ export class SpecialCalendar extends React.Component {
 SpecialCalendar.propTypes = {
   startingDate: PropTypes.string.isRequired,
   days: PropTypes.array,
-  allDays: PropTypes.array, /* for counting jokers and saving */
+  allDays: PropTypes.array /* for counting jokers and saving */,
 };

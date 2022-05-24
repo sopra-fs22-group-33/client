@@ -1,6 +1,6 @@
 import { randomId } from "./validations";
 
-const someMonday = new Date(1652058720000);
+export const someMonday = new Date(1652058720000);
 
 export function mapCalendarToWeek(days) {
   const week = [];

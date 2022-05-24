@@ -69,7 +69,7 @@ export class SpecialSlot extends React.Component {
     const schedule = this.state.mySchedule;
     schedule.special = frontToBackSpecial(value);
     this.setState({ mySchedule: schedule });
-    calendarEventDispatcher.dispatch("onSlotUpdated");
+    calendarEventDispatcher.dispatch("onJokerUpdated");
   }
 
   getSchedule() {

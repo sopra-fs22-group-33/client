@@ -50,34 +50,6 @@ export const TeamCalendar = () => {
     // stop when there are no days left
   };
 
-  async function doSaveJokers() {
-    const diff = countJokers(calendar.days, parseInt(sessionStorage.getItem("id"))) - MAX_JOKERS;
-    if (diff > 0) {
-      alert(`too many jokers, please remove ${diff}`);
-      return;
-    }
-    try {
-      // fixed days are never edited from frontend
-      const requestBody = JSON.stringify({
-        days: calendar.days,
-        startingDate: calendar.startingDate,
-      });
-      await api.put(
-        `/teams/${sessionStorage.getItem("teamId")}/calendars`,
-        requestBody,
-        {
-          headers: { token: sessionStorage.getItem("token") },
-        }
-      );
-    } catch (error) {
-      alert(
-        `Something went wrong during saving the calendar: \n${handleError(
-          error
-        )}`
-      );
-    }
-  }
-
   async function handleFinalize() {
     try {
       const response = await api.get(
@@ -123,7 +95,6 @@ export const TeamCalendar = () => {
             onBigForwards={() => handleChangeDayType()}
           />
           <div className="navigation-button-container button">
-            {!isFixed ? <Button onClick={() => doSaveJokers()}> Save </Button> : null}
             {sessionStorage.getItem("isAdmin") === "true" ? (
               <Button onClick={() => handleFinalize()}>Finalize</Button>
             ) : null}

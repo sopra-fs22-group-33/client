@@ -1,4 +1,10 @@
-export const CHUNK_LENGTH = 20;
+export const BOARD_LENGTH = 700;
+
+export let CHUNK_LENGTH = 20;
+
+export function setChunkLength(boardLength) {
+  CHUNK_LENGTH = BOARD_LENGTH / boardLength;
+}
 
 /*
 converts information from backend to what we need in frontend and the other way around

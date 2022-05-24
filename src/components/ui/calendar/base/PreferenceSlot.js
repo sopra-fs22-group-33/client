@@ -29,8 +29,8 @@ export class PreferenceSlot extends React.Component {
   }
 
   handleSliderChange(ev, value) {
+    this.slot.base = value;
     this.setState({ base: value });
-    this.slot.base = this.state.base;
   }
 
   getColor() {

@@ -38,13 +38,14 @@ export const TeamCalendar = () => {
       setDisplayedWeekIdx(displayedWeekIdx - 1);
     } else {
       handleChangeDayType();
-      if (calendar.daysFixed.length === 0) {
-        // has to be nested, probably due to states
-        if (isFixed) {
-          setDisplayedWeekIdx(Math.ceil(calendar.days.length / 7 - 1));
-        }
+      if (isFixed) {
+        setDisplayedWeekIdx(Math.ceil(calendar.days.length / 7 - 1));
       } else {
-        setDisplayedWeekIdx(Math.ceil(localDays.length / 7 - 1));
+        if (calendar.daysFixed.length === 0) {
+          setDisplayedWeekIdx(0);
+        } else {
+          setDisplayedWeekIdx(Math.ceil(calendar.daysFixed.length / 7 - 1));
+        }
       }
     }
   };

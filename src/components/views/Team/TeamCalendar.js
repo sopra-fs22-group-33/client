@@ -39,12 +39,12 @@ export const TeamCalendar = () => {
     } else {
       handleChangeDayType();
       if (isFixed) {
-        setDisplayedWeekIdx(Math.ceil(calendar.days.length / 7));
+        setDisplayedWeekIdx(Math.floor(calendar.days.length / 7));
       } else {
         if (calendar.daysFixed.length === 0) {
           setDisplayedWeekIdx(0);
         } else {
-          setDisplayedWeekIdx(Math.ceil(calendar.daysFixed.length / 7));
+          setDisplayedWeekIdx(Math.floor(calendar.daysFixed.length / 7));
         }
       }
     }

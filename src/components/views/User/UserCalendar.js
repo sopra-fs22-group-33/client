@@ -22,7 +22,7 @@ export const UserCalendar = () => {
     if (displayedWeekIdx > 0) {
       setDisplayedWeekIdx(displayedWeekIdx - 1);
     } else {
-      setDisplayedWeekIdx(Math.ceil(localDays.length / 7 - 1))
+      setDisplayedWeekIdx(Math.floor(localDays.length / 7 - 1))
     }
   };
   const handleForwards = () => {

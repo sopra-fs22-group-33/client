@@ -10,7 +10,7 @@ import {
   mapCalendarToWeek,
   mapWeekToAdminCalendar,
 } from "../../../helpers/calendarMappers";
-import {CalendarDatePicker} from "../../ui/calendar/CalendarDatePicker";
+import { CalendarDatePicker } from "../../ui/calendar/CalendarDatePicker";
 
 export const TeamCalendarAdminEdit = () => {
   const history = useHistory();
@@ -43,9 +43,22 @@ export const TeamCalendarAdminEdit = () => {
     }
   }
 
+  async function doDeleteFixedDays() {
+    try {
+      await api.delete(`teams/${sessionStorage.getItem("teamId")}/calendars`);
+      history.push("/team/calendar");
+    } catch (e) {
+      alert(
+        `Something went wrong while deleting the calendar: \n${handleError(e)}`
+      );
+    }
+  }
+
   function handleDateChange(value) {
     calendar.startingDate = value;
-    setCalendar(validateTeamCalendar(calendar)); /* recalculates date for each day in calendar */
+    setCalendar(
+      validateTeamCalendar(calendar)
+    ); /* recalculates date for each day in calendar */
     setDate(value);
   }
 
@@ -69,7 +82,10 @@ export const TeamCalendarAdminEdit = () => {
           <div className="navigation-button-container title">
             <h1>Edit Calendar</h1>
           </div>
-          <CalendarDatePicker  value={date} onChange={(value) => handleDateChange(value)}/>
+          <CalendarDatePicker
+            value={date}
+            onChange={(value) => handleDateChange(value)}
+          />
           <div className="navigation-button-container button">
             <Button onClick={() => doSave()}>Save</Button>
             <Button onClick={() => history.push("/team/calendar")}>
@@ -77,7 +93,11 @@ export const TeamCalendarAdminEdit = () => {
             </Button>
           </div>
         </div>
-        <AdminCalendar startingDate={calendar.startingDate.toLocaleString()} days={week} />
+        <AdminCalendar
+          startingDate={calendar.startingDate.toLocaleString()}
+          days={week}
+        />
+        <Button onClick={() => doDeleteFixedDays()}>Delete</Button>
       </BaseContainer>
     </div>
   );

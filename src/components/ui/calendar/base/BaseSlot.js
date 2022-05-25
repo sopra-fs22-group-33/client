@@ -66,7 +66,7 @@ export class BaseSlot extends React.Component {
         ")"
       );
     }
-    return null;
+    return "rgba(179, 215, 249, 0.5)";
   }
 
   render() {

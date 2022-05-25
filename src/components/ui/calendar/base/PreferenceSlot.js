@@ -47,14 +47,14 @@ export class PreferenceSlot extends React.Component {
         ")"
       );
     }
-    return null;
+    return "rgba(179, 215, 249, 0.2)";
   }
 
   render() {
     return (
       <Slot
         sx={this.props.sx}
-        style={{ background: this.state.base ? this.getColor() : null }}
+        style={{ background: this.getColor() }}
         timeFrom={this.props.timeFrom}
         timeTo={this.props.timeTo}
         onMouseEnter={(ev) => this.handleSlotMouseEnter(ev)}

@@ -95,10 +95,10 @@ export class SpecialSlot extends React.Component {
       // disliked
       case -1:
         return "rgba(196, 128, 18, 0.5)";
-      case 0:
-        return null;
       case 1:
         return "rgba(50, 0, 255, 0.5)";
+      default:
+        return "rgba(179, 215, 249, 0.5)"
     }
   }
 

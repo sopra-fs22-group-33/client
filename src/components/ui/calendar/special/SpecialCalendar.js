@@ -16,13 +16,19 @@ export class SpecialCalendar extends React.Component {
       days: props.days,
       selectedSlot: null,
     };
+  }
 
+  componentDidMount() {
     calendarEventDispatcher.createTopic("onJokerUpdated");
     calendarEventDispatcher.subscribe(
       "onJokerUpdated",
       this,
       this.handleJokerUpdated
     );
+  }
+
+  componentWillUnmount() {
+    calendarEventDispatcher.clear("onJokerUpdated");
   }
 
   handleJokerUpdated() {
@@ -32,7 +38,9 @@ export class SpecialCalendar extends React.Component {
 
     this.doSaveJokers().then((value) => {
       if (value) {
-        alert(`Your joker has been saved!\nyou have ${Math.abs(diff)} jokers left`);
+        alert(
+          `Your joker has been saved!\nyou have ${Math.abs(diff)} jokers left`
+        );
       }
     });
   }

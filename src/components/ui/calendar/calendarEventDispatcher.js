@@ -27,6 +27,14 @@ const calendarEventDispatcher = {
     _events[eventName].push({ sub, func });
   },
   /**
+   * Remove a topic with all subscribers
+   *
+   * @param eventName
+   */
+  clear: (eventName) => {
+    delete _events[eventName];
+  },
+  /**
    * Dispatch event for all subscribers to catch
    *
    * @param eventName{string}

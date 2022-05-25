@@ -20,12 +20,13 @@ export const TeamCalendar = () => {
   const [displayedWeekIdx, setDisplayedWeekIdx] = useState(0);
 
   const handleChangeDayType = () => {
-    // change days from editable to fixed and back
     if (isFixed) {
       setIsFixed(false);
+      setDisplayedWeekIdx(0);
       setLocalDays(insertFillerDays(calendar.days, calendar.startingDate));
     } else {
       setIsFixed(true);
+      setDisplayedWeekIdx(0);
       setLocalDays(
         insertFillerDays(calendar.daysFixed, calendar.startingDateFixed)
       );
@@ -35,17 +36,18 @@ export const TeamCalendar = () => {
     // go back one week
     if (displayedWeekIdx > 0) {
       setDisplayedWeekIdx(displayedWeekIdx - 1);
+    } else {
+      handleChangeDayType();
+      setDisplayedWeekIdx(Math.ceil(localDays.length / 7 - 1));
     }
-    // chane day type if necessary
-    // stop when there are no days left
   };
   const handleForwards = () => {
     // go forwards one week
     if (displayedWeekIdx < localDays.length / 7 - 1) {
       setDisplayedWeekIdx(displayedWeekIdx + 1);
+    } else {
+      handleChangeDayType();
     }
-    // chane day type if necessary
-    // stop when there are no days left
   };
 
   async function handleFinalize() {

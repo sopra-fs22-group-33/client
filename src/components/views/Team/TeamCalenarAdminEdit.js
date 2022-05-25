@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
 import { api, fetchTeamCalendar, handleError } from "../../../helpers/api";
-import {
-  validateTeamCalendar,
-} from "../../../helpers/validations";
+import { validateTeamCalendar } from "../../../helpers/validations";
 import { useHistory } from "react-router-dom";
 import * as React from "react";
 import BaseContainer from "../../ui/BaseContainer";
 import { Button } from "../../ui/Button";
 import { AdminCalendar } from "../../ui/calendar/admin/AdminCalendar";
-import {mapCalendarToWeek, mapWeekToAdminCalendar} from "../../../helpers/calendarMappers";
+import {
+  mapCalendarToWeek,
+  mapWeekToAdminCalendar,
+} from "../../../helpers/calendarMappers";
+import {CalendarDatePicker} from "../../ui/calendar/CalendarDatePicker";
 
 export const TeamCalendarAdminEdit = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
+  const [date, setDate] = useState(new Date());
   const [week, setWeek] = useState([]);
 
   async function doSave() {
     try {
-      mapWeekToAdminCalendar(week, calendar.days)
+      mapWeekToAdminCalendar(week, calendar.days);
       const requestBody = JSON.stringify({
         days: calendar.days,
         startingDate: calendar.startingDate,
@@ -40,11 +43,17 @@ export const TeamCalendarAdminEdit = () => {
     }
   }
 
+  function handleDateChange(value) {
+    setDate(value);
+    calendar.startingDate = value;
+  }
+
   useEffect(() => {
     fetchTeamCalendar().then((calendar) => {
       calendar = validateTeamCalendar(calendar);
       setWeek(mapCalendarToWeek(calendar.days));
       setCalendar(calendar);
+      setDate(new Date(calendar.startingDate));
     });
   }, []);
 
@@ -59,6 +68,7 @@ export const TeamCalendarAdminEdit = () => {
           <div className="navigation-button-container title">
             <h1>Edit Calendar</h1>
           </div>
+          <CalendarDatePicker  value={date} onChange={(value) => handleDateChange(value)}/>
           <div className="navigation-button-container button">
             <Button onClick={() => doSave()}>Save</Button>
             <Button onClick={() => history.push("/team/calendar")}>
@@ -66,7 +76,7 @@ export const TeamCalendarAdminEdit = () => {
             </Button>
           </div>
         </div>
-        <AdminCalendar startingDate={calendar.startingDate} days={week} />
+        <AdminCalendar startingDate={calendar.startingDate.toLocaleString()} days={week} />
       </BaseContainer>
     </div>
   );

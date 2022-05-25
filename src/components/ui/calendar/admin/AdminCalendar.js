@@ -35,6 +35,10 @@ export class AdminCalendar extends React.Component {
 
   componentWillUnmount() {
     calendarGlobal.setSelectedSlot(null);
+    calendarEventDispatcher.clear("onSlotSelected");
+    calendarEventDispatcher.clear("onSlotDeleted");
+    calendarEventDispatcher.clear("onSlotUpdated");
+
     window.removeEventListener("keydown", this.handleGlobalKeyDown);
   }
 

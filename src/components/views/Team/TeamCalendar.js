@@ -37,7 +37,6 @@ export const TeamCalendar = () => {
     if (displayedWeekIdx > 0) {
       setDisplayedWeekIdx(displayedWeekIdx - 1);
     } else {
-      handleChangeDayType();
       setDisplayedWeekIdx(Math.ceil(localDays.length / 7 - 1));
     }
   };

@@ -22,7 +22,7 @@ export const UserCalendar = () => {
     if (displayedWeekIdx > 0) {
       setDisplayedWeekIdx(displayedWeekIdx - 1);
     } else {
-      setDisplayedWeekIdx(Math.floor(localDays.length / 7 - 1))
+      setDisplayedWeekIdx(Math.floor(localDays.length / 7 - 1));
     }
   };
   const handleForwards = () => {
@@ -52,10 +52,13 @@ export const UserCalendar = () => {
         <div className="navigation-button-container title">
           <h1>User Calendar</h1>
         </div>
-        <CalendarNavigationButtons
-          onBack={() => handleBack()}
-          onForwards={() => handleForwards()}
-        />
+        {calendar.days.length > 0 ? (
+          <CalendarNavigationButtons
+            onBack={() => handleBack()}
+            onForwards={() => handleForwards()}
+          />
+        ) : null}
+
         <div className="navigation-button-container button">
           <Button onClick={() => history.push("/user/calendar/edit")}>
             Edit Preferences

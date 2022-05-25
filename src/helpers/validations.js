@@ -145,28 +145,54 @@ export function insertFillerDays(days, startingDateString) {
   }
   const originalDate = new Date(Date.parse(startingDateString));
 
-  const startFillerDays = [];
-  const localDate = new Date(Date.parse(startingDateString));
-  let dayDiff = 0;
-  while (localDate.getDay() !== 1 /* Monday */) {
-    dayDiff--;
-    localDate.setDate(localDate.getDate() - 1);
-    if (dayDiff < -10) {
-      // just in case something goes wrong
-      break;
+  let mockDay;
+  if (days[0].weekday > 0) {
+    const localDate = new Date(days[0].date);
+    let dayDiff = 0;
+    while (localDate.getDay() !== 1 /* Monday */) {
+      dayDiff--;
+      localDate.setDate(localDate.getDate() - 1);
+      if (dayDiff < -10) {
+        // just in case something goes wrong
+        break;
+      }
     }
+
+    localDate.setDate(localDate.getDate() - 1);
+    mockDay = { weekday: days[0].weekday + dayDiff - 1, date: localDate };
+
+  } else if (originalDate.getDay() !== 1) {
+    const localDate = new Date(Date.parse(startingDateString));
+    let dayDiff = 0;
+    while (localDate.getDay() !== 1 /* Monday */) {
+      dayDiff--;
+      localDate.setDate(localDate.getDate() - 1);
+      if (dayDiff < -10) {
+        // just in case something goes wrong
+        break;
+      }
+    }
+
+    localDate.setDate(localDate.getDate() - 1);
+    mockDay = { weekday: dayDiff - 1, date: localDate };
   }
-  for (let w = dayDiff; w < 0; w++) {
-    startFillerDays.push({
-      date: getDate(w, originalDate.toDateString()),
-      isFiller: true,
-    });
+
+  const startFillerDays = generateFillers(mockDay, days[0]);
+
+  for (let d = 1; d < days.length; d++) {
+    if (days[d].weekday - days[d - 1].weekday > 1) {
+      const fillers = generateFillers(days[d - 1], days[d]);
+      for (let f = 0; f < fillers.length; f++) {
+        days.splice(d + f, 0, fillers[f]);
+      }
+    }
   }
 
   const endFillerDays = [];
   const lastWeekday = days[days.length - 1].weekday;
+  const localDate = new Date(originalDate);
   localDate.setDate(originalDate.getDate() + lastWeekday);
-  dayDiff = 0;
+  let dayDiff = 0;
   while (localDate.getDay() !== 0 /* Sunday */) {
     dayDiff++;
     localDate.setDate(localDate.getDate() + 1);
@@ -187,7 +213,25 @@ export function insertFillerDays(days, startingDateString) {
 }
 
 function getDate(weekday, startingDateString) {
-    const date = new Date(startingDateString);
-    date.setDate(date.getDate() + weekday);
-    return date;
+  const date = new Date(startingDateString);
+  date.setDate(date.getDate() + weekday);
+  return date;
+}
+
+function generateFillers(day1, day2) {
+  let diff = day2.weekday - day1.weekday;
+  if (diff >= 7) {
+    diff = 7 + diff % 7;
+  } else {
+    diff = diff % 7;
+  }
+  const fillerDays = [];
+  const startingDateString = day1.date.toDateString();
+  for (let w = 1; w < diff; w++) {
+    fillerDays.push({
+      date: getDate(w, startingDateString),
+      isFiller: true,
+    });
+  }
+  return fillerDays;
 }

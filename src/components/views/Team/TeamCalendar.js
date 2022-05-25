@@ -37,7 +37,15 @@ export const TeamCalendar = () => {
     if (displayedWeekIdx > 0) {
       setDisplayedWeekIdx(displayedWeekIdx - 1);
     } else {
-      setDisplayedWeekIdx(Math.ceil(localDays.length / 7 - 1));
+      handleChangeDayType();
+      if (calendar.daysFixed.length === 0) {
+        // has to be nested, probably due to states
+        if (isFixed) {
+          setDisplayedWeekIdx(Math.ceil(calendar.days.length / 7 - 1));
+        }
+      } else {
+        setDisplayedWeekIdx(Math.ceil(localDays.length / 7 - 1));
+      }
     }
   };
   const handleForwards = () => {
@@ -65,7 +73,6 @@ export const TeamCalendar = () => {
   }
 
   useEffect(() => {
-    console.log("refetched");
     fetchTeamCalendar().then((calendar) => {
       calendar = validateTeamCalendar(calendar);
 

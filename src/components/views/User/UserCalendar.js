@@ -21,12 +21,16 @@ export const UserCalendar = () => {
     // go back one week
     if (displayedWeekIdx > 0) {
       setDisplayedWeekIdx(displayedWeekIdx - 1);
+    } else {
+      setDisplayedWeekIdx(Math.ceil(localDays.length / 7 - 1))
     }
   };
   const handleForwards = () => {
     // go forwards one week
     if (displayedWeekIdx < localDays.length / 7 - 1) {
       setDisplayedWeekIdx(displayedWeekIdx + 1);
+    } else {
+      setDisplayedWeekIdx(0);
     }
   };
 

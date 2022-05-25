@@ -5,14 +5,12 @@ import BaseContainer from "../../ui/BaseContainer";
 import {Button} from "../../ui/Button";
 import {FormField} from "../../ui/FormField";
 import {TEMPLATE_DAYS} from "../../../fixtures/templateCalendar";
-import {CalendarDatePicker} from "../../ui/calendar/CalendarDatePicker";
 
 export const CreateTeam = () => {
     const history = useHistory();
 
     //hooks
     const [name, setName] = useState(null);
-    const [date, setDate] = useState(new Date());
 
 
     const doCreateTeam = async () => {
@@ -25,7 +23,7 @@ export const CreateTeam = () => {
 
             // create new calendar for the team
             const calendarRequestBody = JSON.stringify({
-              startingDate: date,
+              startingDate: new Date(),
               days: TEMPLATE_DAYS,
             });
             await api.post(
@@ -60,7 +58,6 @@ export const CreateTeam = () => {
                     value={name}
                     onChange={(n) => setName(n)}
                 />
-                <CalendarDatePicker value={date} onChange={(value) => setDate(value)} />
                 <div className="button-container">
                     <Button
                         onClick={() => doCreateTeam()}

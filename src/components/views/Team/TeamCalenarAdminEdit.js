@@ -44,8 +44,9 @@ export const TeamCalendarAdminEdit = () => {
   }
 
   function handleDateChange(value) {
-    setDate(value);
     calendar.startingDate = value;
+    setCalendar(validateTeamCalendar(calendar)); /* recalculates date for each day in calendar */
+    setDate(value);
   }
 
   useEffect(() => {

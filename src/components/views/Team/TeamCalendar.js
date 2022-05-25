@@ -56,6 +56,8 @@ export const TeamCalendar = () => {
         `/teams/${sessionStorage.getItem("teamId")}/calendars/finalize`
       );
       alert(response.data);
+      setIsFixed(null);
+      setIsFixed(true);
     } catch (e) {
       alert(
         `Something went wrong while finalizing the calendar:\n${handleError(e)}`
@@ -64,8 +66,14 @@ export const TeamCalendar = () => {
   }
 
   useEffect(() => {
+    console.log("refetched");
     fetchTeamCalendar().then((calendar) => {
       calendar = validateTeamCalendar(calendar);
+
+      // reset calendar components
+      setCalendar(null);
+      setLocalDays([]);
+
       setCalendar(calendar);
       if (isFixed) {
         setLocalDays(
@@ -75,7 +83,7 @@ export const TeamCalendar = () => {
         setLocalDays(insertFillerDays(calendar.days, calendar.startingDate));
       }
     });
-  }, []);
+  }, [isFixed]);
 
   if (!calendar) {
     return <div>fetching calendar</div>;

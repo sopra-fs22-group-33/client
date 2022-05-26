@@ -4,17 +4,19 @@ import { Chunk } from "./Chunk";
 import { Player } from "../../../models/Player";
 import { DeathDisplay } from "./DeathDisplay";
 import { deserialize } from "./helpers";
+import Box from "@mui/material/Box";
 
 export const GameBoard = (props) => {
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         position: "absolute",
         top: props.style ? props.style.top : 150,
         left: props.style ? props.style.left : 400,
         height: props.length,
         width: props.length,
-        background: "black",
+        background: "#1e1e1e",
+        borderRadius: "0.3vh",
       }}
       onClick={props.onClick}
     >
@@ -32,7 +34,7 @@ export const GameBoard = (props) => {
       {deserialize(props.apples).map((apple) => (
         <Chunk x={apple.x} y={apple.y} background={"red"} />
       ))}
-    </div>
+    </Box>
   );
 };
 

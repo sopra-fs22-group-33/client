@@ -3,6 +3,7 @@ import { api, fetchGames, handleError } from "../../helpers/api";
 import { withRouter } from "react-router-dom";
 import Box from "@mui/material/Box";
 import BaseContainer from "../ui/BaseContainer";
+import { GameLobbyEntity } from "../ui/game/GameLobbyEntity";
 
 export async function setOffline(gameId, player) {
   player.statusOnline = "OFFLINE";
@@ -56,7 +57,6 @@ class GameLobby extends React.Component {
       // 404 is fine, multiple people should try deleting the same game
       console.log(e);
     }
-
   }
 
   async update() {
@@ -64,7 +64,7 @@ class GameLobby extends React.Component {
       this.setState({ games });
       for (let game of games) {
         if (this.state.selectedGame && this.state.selectedGame.id === game.id) {
-          this.setState({selectedGame: game});
+          this.setState({ selectedGame: game });
           break;
         }
       }
@@ -137,29 +137,16 @@ class GameLobby extends React.Component {
                 game.players
               );
               return (
-                <Box
-                  style={{
-                    padding: 20,
-                    background:
-                      this.state.selectedGame &&
-                      this.state.selectedGame.id === game.id
-                        ? "lightcoral"
-                        : "lightgray",
-                  }}
+                <GameLobbyEntity
                   key={game.id}
+                  game={game}
+                  player={player}
                   onClick={(ev) => this.handleGameBoardClick(ev, game, player)}
-                >
-                  <div>game id: {game.id}</div>
-                  <div>my email: {player.user.email}</div>
-                  <div>my player id:{player.id}</div>
-                  <div>my status: {player.statusOnline}</div>
-                  <div>number of players: {game.players.length}</div>
-                  <div>
-                    number of players online:{" "}
-                    {this.calcPlayersOnline(game.players)} /{" "}
-                    {game.players.length}
-                  </div>
-                </Box>
+                  isSelected={
+                    this.state.selectedGame &&
+                    this.state.selectedGame.id === game.id
+                  }
+                />
               );
             })}
         </div>

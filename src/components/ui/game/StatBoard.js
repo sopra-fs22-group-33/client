@@ -1,17 +1,16 @@
 import PropTypes from "prop-types";
 import { Player } from "../../../models/Player";
 import * as React from "react";
+import { Box } from "@mui/material";
 
 export const StatBoard = (props) => {
   return (
-    <div>
-      <PlayerStats player={props.player} />
-      <ul>
-        {props.playerFoes.map((player) => (
-          <PlayerStats player={player} />
-        ))}
-      </ul>
-    </div>
+    <Box sx={{ width: "15%" }}>
+      <PlayerStats player={props.player} background={"green"} />
+      {props.playerFoes.sort((a, b) => a.rank <= b.rank ? 1 : -1).map((player) => (
+        <PlayerStats player={player} background={"orange"} />
+      ))}
+    </Box>
   );
 };
 
@@ -22,16 +21,31 @@ StatBoard.propTypes = {
 
 const PlayerStats = (props) => {
   return (
-    <div>
-      <div>player id: {props.player.id}</div>
-      {props.player.user ? <div>user id: {props.player.user.id}</div> : null}
-      {props.player.user ? <div>email: {props.player.user.email}</div> : null}
-      <div>rank: {props.player.rank}</div>
+    <Box
+      sx={{
+        background: props.background,
+        padding: "0.5em",
+        marginBottom: "1.5%",
+        borderRadius: "1.5vh",
+      }}
+    >
+      {props.player.user ? (
+        <div
+          style={{
+            fontSize: "20px",
+            fontWeight: "bolder",
+          }}
+        >
+          {props.player.user.username}
+        </div>
+      ) : null}
       <div>status: {props.player.status}</div>
-    </div>
+      <div>rank: {props.player.rank}</div>
+    </Box>
   );
 };
 
 PlayerStats.propTypes = {
   player: PropTypes.objectOf(Player).isRequired,
+  background: PropTypes.string,
 };

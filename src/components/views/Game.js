@@ -2,7 +2,7 @@ import * as React from "react";
 import { api } from "helpers/api";
 import "styles/views/Auth.scss";
 import { Player } from "../../models/Player";
-import {BOARD_LENGTH, serialize, setChunkLength} from "../ui/game/helpers";
+import {BOARD_LENGTH, CHUNK_LENGTH, serialize, setChunkLength} from "../ui/game/helpers";
 import BaseContainer from "../ui/BaseContainer";
 import { GameBoard } from "../ui/game/GameBoard";
 import { StatBoard } from "../ui/game/StatBoard";
@@ -189,7 +189,7 @@ export class Game extends React.Component {
       content = (
         <div>
           <GameBoard
-            length={BOARD_LENGTH}
+            length={Math.floor(BOARD_LENGTH / CHUNK_LENGTH) * CHUNK_LENGTH}
             player={this.player}
             playerFoes={this.playerFoes}
             apples={this.state.apples}

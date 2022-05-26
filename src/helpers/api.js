@@ -17,6 +17,9 @@ export async function doLogout() {
   } finally {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("id");
+    sessionStorage.removeItem("teamId");
+    sessionStorage.removeItem("teamName");
+    sessionStorage.removeItem("isAdmin");
   }
 }
 

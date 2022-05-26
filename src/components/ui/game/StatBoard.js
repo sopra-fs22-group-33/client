@@ -29,7 +29,16 @@ const PlayerStats = (props) => {
         borderRadius: "1.5vh",
       }}
     >
-      {props.player.user ? <div>{props.player.user.username}</div> : null}
+      {props.player.user ? (
+        <div
+          style={{
+            fontSize: "20px",
+            fontWeight: "bolder",
+          }}
+        >
+          {props.player.user.username}
+        </div>
+      ) : null}
       <div>status: {props.player.status}</div>
       <div>rank: {props.player.rank}</div>
     </Box>

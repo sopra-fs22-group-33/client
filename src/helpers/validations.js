@@ -139,6 +139,11 @@ export function validateUserCalendar(calendar) {
   return calendar;
 }
 
+export function sortUserCalendar(days, startingDateString) {
+  days = days.sort((a, b) => a.weekday > b.weekday ? 1: -1);
+  console.log(days);
+}
+
 export function insertFillerDays(days, startingDateString) {
   if (days.length === 0) {
     return [];

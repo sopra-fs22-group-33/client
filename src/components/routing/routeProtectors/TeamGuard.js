@@ -11,7 +11,7 @@ export const TeamGuard = (props) => {
   if (sessionStorage.getItem("teamId")) {
     return props.children;
   }
-  return <Redirect to="/user" />;
+  return <Redirect to="/user/teams" />;
 };
 
 TeamGuard.propTypes = {

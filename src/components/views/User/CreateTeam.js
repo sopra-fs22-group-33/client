@@ -32,9 +32,10 @@ export const CreateTeam = () => {
               { headers: { token: sessionStorage.getItem("token") } }
             );
 
-
-
-            history.push("/user/teams");
+            sessionStorage.setItem("teamId", response.data.id);
+            sessionStorage.setItem("teamName", response.data.name);
+            sessionStorage.setItem("isAdmin", "true");
+            history.push("/team/profile");
         } catch (e) {
             alert(`Something went while creating the team: \n${handleError(e)}`);
         }

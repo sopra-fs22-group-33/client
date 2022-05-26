@@ -3,7 +3,7 @@ export const BOARD_LENGTH = 600;
 export let CHUNK_LENGTH = 20;
 
 export function setChunkLength(boardLength) {
-  CHUNK_LENGTH = BOARD_LENGTH / boardLength;
+  CHUNK_LENGTH = Math.round(BOARD_LENGTH / boardLength);
 }
 
 /*

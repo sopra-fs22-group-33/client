@@ -11,12 +11,15 @@ import {
   mapWeekToAdminCalendar,
 } from "../../../helpers/calendarMappers";
 import { CalendarDatePicker } from "../../ui/calendar/CalendarDatePicker";
+import {StyledDialog} from "../../ui/StyledDialog";
 
 export const TeamCalendarAdminEdit = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
   const [date, setDate] = useState(new Date());
   const [week, setWeek] = useState([]);
+
+  const [isDeleting, setIsDeleting] = useState(false);
 
   async function doSave() {
     try {
@@ -77,6 +80,19 @@ export const TeamCalendarAdminEdit = () => {
 
   return (
     <div>
+      <StyledDialog open={isDeleting}>
+        <div>This will delete all shifts that have already been assigned</div>
+        <div>the shifts that have not been finalized yet will remain untouched</div>
+        <div>Are you sure?</div>
+        <Button
+          onClick={() => {
+            doDeleteFixedDays().then((r) => setIsDeleting(false));
+          }}
+        >
+          yes
+        </Button>
+        <Button onClick={() => setIsDeleting(false)}>no</Button>
+      </StyledDialog>
       <BaseContainer>
         <div className="navigation-button-container container">
           <div className="navigation-button-container title">
@@ -97,7 +113,7 @@ export const TeamCalendarAdminEdit = () => {
           startingDate={calendar.startingDate.toLocaleString()}
           days={week}
         />
-        <Button onClick={() => doDeleteFixedDays()}>Delete</Button>
+        <Button onClick={() => setIsDeleting(true)}>Delete</Button>
       </BaseContainer>
     </div>
   );

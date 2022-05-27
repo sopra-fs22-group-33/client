@@ -109,14 +109,16 @@ export const TeamProfile = () => {
         <div className="navigation-button-container title">
           <h1>{teamName}</h1>
         </div>
-        <div className="navigation-button-container button">
-          <Button onClick={() => history.push("/team/profile/invite")}>
-            Invite User
-          </Button>
-          <Button onClick={() => history.push("/team/profile/edit")}>
-            Edit Name
-          </Button>
-        </div>
+        {sessionStorage.getItem("isAdmin") === "true" ? (
+          <div className="navigation-button-container button">
+            <Button onClick={() => history.push("/team/profile/invite")}>
+              Invite User
+            </Button>
+            <Button onClick={() => history.push("/team/profile/edit")}>
+              Edit Name
+            </Button>
+          </div>
+        ) : null}
       </div>
       <div></div>
       {content}

@@ -81,9 +81,8 @@ export const TeamCalendarAdminEdit = () => {
   return (
     <div>
       <StyledDialog open={isDeleting}>
-        <div>This will delete all shifts that have already been assigned</div>
-        <div>the shifts that have not been finalized yet will remain untouched</div>
-        <div>Are you sure?</div>
+        <div>This will delete all assigned shifts,</div>
+        <div>are you sure?</div>
         <Button
           onClick={() => {
             doDeleteFixedDays().then((r) => setIsDeleting(false));
@@ -113,7 +112,7 @@ export const TeamCalendarAdminEdit = () => {
           startingDate={calendar.startingDate.toLocaleString()}
           days={week}
         />
-        <Button onClick={() => setIsDeleting(true)}>Delete</Button>
+        <Button onClick={() => setIsDeleting(true)}>Delete Optimized Calendar</Button>
       </BaseContainer>
     </div>
   );

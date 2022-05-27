@@ -110,7 +110,7 @@ export const TeamCalendar = () => {
             onBigForwards={() => handleChangeDayType()}
           />
           <div className="navigation-button-container button">
-            {sessionStorage.getItem("isAdmin") === "true" ? (
+            {(sessionStorage.getItem("isAdmin") === "true" && !calendar.busy)? (
               <Button onClick={() => handleFinalize()}>Finalize</Button>
             ) : null}
             {sessionStorage.getItem("isAdmin") === "true" ? (

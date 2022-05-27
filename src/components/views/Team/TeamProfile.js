@@ -12,9 +12,10 @@ import { Button } from "../../ui/Button";
 import avatar from "../../../images/avatar1.png";
 import "styles/views/TeamProfil.scss";
 import globalEventDispatcher from "../../../helpers/globalEventDispatcher";
+import {StyledDialog} from "../../ui/StyledDialog";
 
 //component for a TEAM MEMBER
-export const TeamMember = ({ teamMember, removeUser }) => (
+export const TeamMember = ({ teamMember, onClick }) => (
   <div className="team member container2">
     <div className="team member icon">
       <img src={avatar} />
@@ -25,9 +26,7 @@ export const TeamMember = ({ teamMember, removeUser }) => (
     {sessionStorage.getItem("isAdmin")==="true" && teamMember.isAdmin === false ? (
       <div
         className="team member removebutton "
-        onClick={() => {
-          removeUser(teamMember.user.id);
-        }}
+        onClick={onClick}
       >
         Remove
       </div>
@@ -41,7 +40,7 @@ export const TeamProfile = () => {
   const history = useHistory();
 
   //hooks
-  const [users, setUsers] = useState(null);
+  const [userToBeRemoved, setUserToBeRemoved] = useState(null);
   const [team, setTeam] = useState(null);
 
   //fetch all users in team only once
@@ -96,7 +95,10 @@ export const TeamProfile = () => {
       <div className="team container2">
         <ul className="team member-list2">
           {team.memberships.map((teamMember) => (
-            <TeamMember teamMember={teamMember} removeUser={removeUser} />
+            <TeamMember
+              teamMember={teamMember}
+              onClick={() => setUserToBeRemoved(teamMember.user)}
+            />
           ))}
         </ul>
       </div>
@@ -105,6 +107,21 @@ export const TeamProfile = () => {
 
   return (
     <BaseContainer>
+      <StyledDialog open={userToBeRemoved !== null}>
+        <div>
+          Are you sure you want to remove{" "}
+          {userToBeRemoved ? userToBeRemoved.username : null} from{" "}
+          {sessionStorage.getItem("teamName")}?
+        </div>
+        <Button
+          onClick={() =>
+            removeUser(userToBeRemoved.id).then(() => setUserToBeRemoved(null))
+          }
+        >
+          yes
+        </Button>
+        <Button onClick={() => setUserToBeRemoved(null)}>no</Button>
+      </StyledDialog>
       <div className="navigation-button-container container">
         <div className="navigation-button-container title">
           <h1>{teamName}</h1>

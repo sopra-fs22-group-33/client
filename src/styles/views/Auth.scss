@@ -45,4 +45,11 @@
     justify-content: center;
     margin-top: 0.5vh;
   }
+  &.profile-dropdown{
+    height: 5vh;
+    padding-left: 15px;
+    border-radius: 2.5vh;
+    margin-bottom: 30px;
+    color: $textColor;
+  }
 }

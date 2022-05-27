@@ -14,11 +14,11 @@ out in real time.
 - optimizer lpsolve 
 
 ## High-level components
-Component #1: Calendar (src/components/ui/calendar)
+Component #1: Calendar (src/components/ui/calendar/Day.js)
 The application revolves around team calendars, which have entries (called slots) that are associated to users.
 
 Component #2: Game (src/components/views/Game.js)
-The game is used to resolve conflicts arising from the calendar assignment.
+The game is used to resolve conflicts arising from the calendar assignment. Users play a multiplayer version of snake and are ranked by the amount of squares they can rack up.
 
 Component #3: Game Lobby (src/components/views/GameLobby.js)
 The game lobby allows the users to assemble before starting a game session to resolve conflicts.
@@ -66,16 +66,12 @@ Play a game of snake with other members of the same team to resolve conflicts in
 
 
 
-
-
-
-
-
 ## Roadmap
 - [ ] automated finalizing of calendars
 - [ ] shift swaps
 - [ ] individual constraints for team members (working hours per week, number of jokers etc.) 
 - [ ] export calendar as .ics
+- [ ] allow choosing avatar image
 
 
 ## Authors and acknowledgement

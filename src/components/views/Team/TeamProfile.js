@@ -40,8 +40,10 @@ export const TeamProfile = () => {
   const history = useHistory();
 
   //hooks
-  const [userToBeRemoved, setUserToBeRemoved] = useState(null);
   const [team, setTeam] = useState(null);
+
+  const [userToBeRemoved, setUserToBeRemoved] = useState(null);
+  const [isDeletingTeam, setIsDeletingTeam] = useState(false);
 
   //fetch all users in team only once
   useEffect(() => {
@@ -85,6 +87,16 @@ export const TeamProfile = () => {
       window.location.reload();
   }
 
+  async function handleDeleteTeam() {
+    try {
+      await api.delete(`/teams/${team.id}`, {
+        headers: { token: sessionStorage.getItem("token") },
+      });
+    } catch (e) {
+      alert(`Something went wrong while deleting the team:\n${handleError(e)}`);
+    }
+  }
+
   let content = <Spinner />;
   let teamName = <Spinner />;
 
@@ -107,6 +119,22 @@ export const TeamProfile = () => {
 
   return (
     <BaseContainer>
+      <StyledDialog open={isDeletingTeam}>
+        <div>Are you sure you want to delete the entire team?</div>
+        <Button
+          onClick={() =>
+            handleDeleteTeam().then(() => {
+              setIsDeletingTeam(false);
+              sessionStorage.removeItem("teamName");
+              sessionStorage.removeItem("teamId");
+              history.push("/user/teams");
+            })
+          }
+        >
+          yes
+        </Button>
+        <Button onClick={() => setIsDeletingTeam(false)}>no</Button>
+      </StyledDialog>
       <StyledDialog open={userToBeRemoved !== null}>
         <div>
           Are you sure you want to remove{" "}
@@ -134,6 +162,7 @@ export const TeamProfile = () => {
             <Button onClick={() => history.push("/team/profile/edit")}>
               Edit Name
             </Button>
+            <Button onClick={() => setIsDeletingTeam(true)}>Delete Team</Button>
           </div>
         ) : null}
       </div>

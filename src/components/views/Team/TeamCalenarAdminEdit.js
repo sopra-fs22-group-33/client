@@ -11,7 +11,7 @@ import {
   mapWeekToAdminCalendar,
 } from "../../../helpers/calendarMappers";
 import { CalendarDatePicker } from "../../ui/calendar/CalendarDatePicker";
-import {StyledDialog} from "../../ui/StyledDialog";
+import { StyledDialog } from "../../ui/StyledDialog";
 
 export const TeamCalendarAdminEdit = () => {
   const history = useHistory();
@@ -58,11 +58,28 @@ export const TeamCalendarAdminEdit = () => {
   }
 
   function handleDateChange(value) {
-    calendar.startingDate = value;
-    setCalendar(
-      validateTeamCalendar(calendar)
-    ); /* recalculates date for each day in calendar */
-    setDate(value);
+    const finalDate = new Date(
+      calendar.daysFixed.length > 0
+        ? calendar.daysFixed[calendar.daysFixed.length - 1].date
+        : calendar.startingDateFixed
+    );
+    if (
+      (calendar.daysFixed.length === 0 &&
+        (value > finalDate || value.getDate() === finalDate.getDate())) ||
+      (calendar.daysFixed.length > 0 &&
+        value > finalDate &&
+        value.getDate() !== finalDate.getDate())
+    ) {
+      calendar.startingDate = value;
+      setCalendar(
+        validateTeamCalendar(calendar)
+      ); /* recalculates date for each day in calendar */
+      setDate(value);
+    } else {
+      alert(
+        `There could be slots on ${finalDate.toDateString()}\nplease choose a later date or delete the finalized calendar`
+      );
+    }
   }
 
   useEffect(() => {
@@ -112,7 +129,7 @@ export const TeamCalendarAdminEdit = () => {
           startingDate={calendar.startingDate.toLocaleString()}
           days={week}
         />
-        <Button onClick={() => setIsDeleting(true)}>Delete Optimized Calendar</Button>
+        <Button onClick={() => setIsDeleting(true)}>Delete Calendar</Button>
       </BaseContainer>
     </div>
   );

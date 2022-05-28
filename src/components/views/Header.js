@@ -49,7 +49,7 @@ class Header extends React.Component {
                       doLogout().then(() => this.props.history.push("/"))
                     }
                   >
-                    Log out
+                    Logout
                   </Button2>
                 </div>
               </div>

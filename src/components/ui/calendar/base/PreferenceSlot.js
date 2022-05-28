@@ -4,6 +4,7 @@ import { MAX_BASE, MIN_BASE } from "../config";
 import { Slot } from "../Slot";
 import { SlotPopper } from "../SlotPopper";
 import { SlotSlider } from "../SlotSlider";
+import {baseToText} from "./BaseSlot";
 
 export class PreferenceSlot extends React.Component {
   constructor(props) {
@@ -64,6 +65,8 @@ export class PreferenceSlot extends React.Component {
           <SlotPopper anchorEl={this.state.anchorEl}>
             <SlotSlider
               onChange={(ev, value) => this.handleSliderChange(ev, value)}
+              width={100}
+
               value={this.state.base}
               valueLabelDisplay={"auto"}
               step={1}
@@ -71,7 +74,7 @@ export class PreferenceSlot extends React.Component {
               min={MIN_BASE}
               max={MAX_BASE}
             />
-            <div>my base: {this.state.base}</div>
+            <div>{baseToText(this.state.base)}</div>
           </SlotPopper>
         ) : null}
       </Slot>

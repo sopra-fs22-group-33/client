@@ -65,7 +65,7 @@ export class PreferenceSlot extends React.Component {
           <SlotPopper anchorEl={this.state.anchorEl}>
             <SlotSlider
               onChange={(ev, value) => this.handleSliderChange(ev, value)}
-              width={100}
+              width={120}
 
               value={this.state.base}
               valueLabelDisplay={"auto"}

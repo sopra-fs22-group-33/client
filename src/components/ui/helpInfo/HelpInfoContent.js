@@ -50,5 +50,5 @@ export function getHelperInfo(pathname) {
   if (pathname.includes("/game")) {
     return GameHelp;
   }
-  return "text or component";
+  return " ";
 }

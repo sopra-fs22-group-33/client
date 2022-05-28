@@ -23,9 +23,22 @@ export const HelpInfoFrame = (props) => {
         onMouseEnter={(ev) => handleMouseEnter(ev)}
         onMouseLeave={(ev) => handleMouseLeave(ev)}
       />
-      <Popper open={anchorEl != null} anchorEl={anchorEl}>
-        <Box>
-          {history.location.pathname} {getHelperInfo(history.location.pathname)}
+      <Popper
+        open={anchorEl != null}
+        anchorEl={anchorEl}
+        placement={"left-start"}
+      >
+        <Box
+          sx={{
+            background: "white",
+            padding: "1.5em",
+            marginBottom: "1.5%",
+            borderRadius: "1.5vh",
+            border: 1,
+            borderColor: "gray",
+          }}
+        >
+            <div>{getHelperInfo(history.location.pathname)}</div>
         </Box>
       </Popper>
     </div>

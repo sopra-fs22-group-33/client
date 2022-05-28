@@ -14,6 +14,11 @@ export const Register = (props) => {
   const [username, setUsername] = useState(null);
 
   const doRegister = async (props) => {
+    // roughest check, "@" is considered valid
+    if (!email || !email.includes("@")) {
+      alert(`${email} is invalid email\nPlease provide a real email`);
+      return;
+    }
     try {
       const userRequestBody = JSON.stringify({ email, password, username });
       const userResponse = await api.post("/users", userRequestBody);
@@ -44,7 +49,7 @@ export const Register = (props) => {
           <FormField
             label="Email"
             value={email}
-            onChange={(n) => setEmail(n)}
+            onChange={(value) => setEmail(value.toString().toLowerCase())}
           />
           <FormField
             label="Username"

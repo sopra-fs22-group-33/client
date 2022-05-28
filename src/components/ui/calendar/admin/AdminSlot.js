@@ -144,6 +144,8 @@ export class AdminSlot extends React.Component {
                 onClick={(ev) => this.handleSliderClick(ev)}
                 onChange={(ev, value) => this.handleSliderChange(ev, value)}
                 onMouseDown={(ev) => this.handleSliderMouseDown(ev)}
+                width={120}
+
                 value={this.state.requirement}
                 valueLabelDisplay={"auto"}
                 step={1}

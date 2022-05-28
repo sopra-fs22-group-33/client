@@ -74,6 +74,7 @@ include a few screenshots of your application.
 - [ ] shift swaps
 - [ ] individual constraints for team members (working hours per week, number of jokers etc.) 
 - [ ] export calendar as .ics
+- [ ] E-Mail validation
 ## Authors and acknowledgement
 shift planner is created by vmjulia, UpstairsForest, eoeaee and grueezi
 

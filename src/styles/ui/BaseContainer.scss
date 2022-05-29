@@ -1,6 +1,7 @@
 @import 'styles/theme';
 
 .base-container {
+  user-select: none;
   margin-left: 10%;
   margin-right: 10%;
   color: $textColor;

@@ -1,51 +1,3 @@
-# SoPra FS22 - Client Template
-
-## Getting started
-
-Read and go through these Tutorials. It will make your life easier!
-
-- Read the React [Docs](https://reactjs.org/docs/getting-started.html)
-- Do this React [Getting Started](https://reactjs.org/tutorial/tutorial.html) Tutorial (it doesn’t assume any existing React knowledge)
-- Get an Understanding of [CSS](https://www.w3schools.com/Css/), [SCSS](https://sass-lang.com/documentation/syntax), and [HTML](https://www.w3schools.com/html/html_intro.asp)!
-
-Next, there are two other technologies that you should look at:
-
-* [react-router-dom](https://reacttraining.com/react-router/web/guides/quick-start) offers declarative routing for React. It is a collection of navigational components that fit nicely with the application. 
-* [react-hooks](https://reactrouter.com/web/api/Hooks) let you access the router's state and perform navigation from inside your components.
-
-## Prerequisites and Installation
-For your local development environment, you will need Node.js. You can download it [here](https://nodejs.org). All other dependencies, including React, get installed with:
-
-```npm install```
-
-Run this command before you start your application for the first time. Next, you can start the app with:
-
-```npm run dev```
-
-Now you can open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-Notice that the page will reload if you make any edits. You will also see any lint errors in the console (use Google Chrome).
-
-### Testing
-Testing is optional, and you can run the tests with `npm run test`.
-This launches the test runner in an interactive watch mode. See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-> For macOS user running into a 'fsevents' error: https://github.com/jest-community/vscode-jest/issues/423
-
-### Build
-Finally, `npm run build` builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance: the build is minified, and the filenames include hashes.<br>
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-
-> Thanks to Lucas Pelloni and Kyrill Hux for working on the template.
-
-
 # shift planner SoPra FS22 Group 33
 
 ## Introduction
@@ -60,21 +12,69 @@ out in real time.
 - Heroku
 - Sendgrid e-mail API 
 - optimizer lpsolve 
+
 ## High-level components
+Component #1: Calendar (src/components/ui/calendar/Day.js)
+The application revolves around team calendars, which have entries (called slots) that are associated to users.
+
+Component #2: Game (src/components/views/Game.js)
+The game is used to resolve conflicts arising from the calendar assignment. Users play a multiplayer version of snake and are ranked by the amount of squares they can rack up.
+
+Component #3: Game Lobby (src/components/views/GameLobby.js)
+The game lobby allows the users to assemble before starting a game session to resolve conflicts.
 
 
 ## Launch & Deployment
+The client repository requires ```npm install``` and  ```npm run dev``` to run. There are no further operations needed.
+
 
 ## Illustrations
-In your client repository, briefly describe and illustrate the main user flow(s) of your interface. How does it work (without going into too much detail)? Feel free to
-include a few screenshots of your application.
+**Create a group**
+
+Users can create new groups for their operation and automatically become the admin of the group
+![img.png](src/screenshotsReadMe/img.png)
+
+**Invite users to group**
+
+Enter an email of an existing user to add him to a team
+![img_1.png](src/screenshotsReadMe/img_1.png)
+
+**Accept invitation**
+
+Accept the invitation as the recipient of the invite
+![img_2.png](src/screenshotsReadMe/img_2.png)
+
+**Set up shifts for a group as an admin**
+
+Enter time slots on which people are required to show up and work
+![img_3.png](src/screenshotsReadMe/img_3.png)
+
+**Specify base preferences as a user**
+
+Enter the base working hour preferences as a user which should be applied across all groups
+![img_4.png](src/screenshotsReadMe/img_4.png)
+
+**Specify preferences as a member of a group**
+
+If needed adjust the preferences for specific shifts within a group as a user
+![img_5.png](src/screenshotsReadMe/img_5.png)
+
+**Play game**
+
+Play a game of snake with other members of the same team to resolve conflicts in shifts
+![img_6.png](src/screenshotsReadMe/img_6.png)
+
+
 
 ## Roadmap
 - [ ] automated finalizing of calendars
 - [ ] shift swaps
 - [ ] individual constraints for team members (working hours per week, number of jokers etc.) 
 - [ ] export calendar as .ics
+- [ ] allow choosing avatar image
 - [ ] E-Mail validation
+
+
 ## Authors and acknowledgement
 shift planner is created by vmjulia, UpstairsForest, eoeaee and grueezi
 

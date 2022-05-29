@@ -2,6 +2,7 @@
 
 .auth {
   &.container {
+    user-select: none;
     margin-top: 6em;
     min-height: 300px;
     /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
@@ -44,5 +45,12 @@
     display: flex;
     justify-content: center;
     margin-top: 0.5vh;
+  }
+  &.profile-dropdown{
+    height: 5vh;
+    padding-left: 15px;
+    border-radius: 2.5vh;
+    margin-bottom: 30px;
+    color: $textColor;
   }
 }

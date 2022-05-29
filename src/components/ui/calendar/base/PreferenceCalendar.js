@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 
 export class PreferenceCalendar extends BaseCalendar {
   render() {
-    console.log(this.props.days);
     return (
       <Calendar>
         {this.props.days.map((day) => (

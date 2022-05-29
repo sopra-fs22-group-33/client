@@ -16,7 +16,6 @@ export const UserInvitations = () => {
                     `/users/${sessionStorage.getItem("id")}/invitations`,
                     {headers: {token: sessionStorage.getItem("token")}}
                 );
-                console.log(response.data);
                 setInvitations(response.data);
             } catch (e) {
                 alert(
@@ -75,7 +74,6 @@ export const UserInvitations = () => {
     }
 
     let content = <div>no new invitations</div>;
-    console.log(invitations);
     if (invitations != null && invitations.length > 0) {
         content = (
             <div>

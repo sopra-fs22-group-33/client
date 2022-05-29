@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 export const Chunk = (props) => {
   return (
     <Box
-      onClick={() => console.log("x:", props.x, "\ny:", props.y)}
       sx={{
         position: "absolute",
         top: props.y,

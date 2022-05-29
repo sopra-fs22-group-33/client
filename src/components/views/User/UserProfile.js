@@ -34,7 +34,6 @@ export const UserProfile = () => {
     const history = useHistory();
 
     const id = useParams();
-    console.log(id);
 
 
     // define a state variable (using the state hook).
@@ -65,12 +64,10 @@ export const UserProfile = () => {
                     headers: {token}
                 });
 
-                console.log(response.data);
 
 
                 // Get the returned profile
                 setUser(response.data);
-                console.log("User has been set");
 
 
             } catch (error) {

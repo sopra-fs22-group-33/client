@@ -74,7 +74,6 @@ export class FixedSlot extends React.Component {
         timeTo={this.props.timeTo}
         onMouseEnter={(ev) => this.handleSlotMouseEnter(ev)}
         onMouseLeave={(ev) => this.handleSlotMouseLeave(ev)}
-        onMouseDown={(ev) => console.log(this.props.slot)} // todo: remove debug help
       >
         {this.state.isHoveredOver ? (
           <SlotPopper anchorEl={this.state.anchorEl}>{content}</SlotPopper>

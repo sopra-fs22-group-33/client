@@ -34,7 +34,6 @@ const UserProfileEdit = () => {
         // Get the returned profile
         setUsername(response.data.username);
         setEmail(response.data.email);
-        console.log("User has been set");
 
       } catch (error) {
         console.error("Details:", error);

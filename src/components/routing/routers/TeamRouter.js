@@ -8,7 +8,6 @@ import {TeamCalendarAdminEdit} from "../../views/Team/TeamCalenarAdminEdit";
 import {TeamCalendarPreferenceEdit} from "../../views/Team/TeamCalendarPreferenceEdit";
 
 export const TeamRouter = (props) => {
-  // todo: consider adding a guard for editing
   return (
     <div>
       <Switch>

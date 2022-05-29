@@ -47,8 +47,6 @@ export class Game extends React.Component {
     this.componentCleanup();
     window.removeEventListener("beforeunload", this.componentCleanup);
     window.removeEventListener("keydown", this.handleKeyDown);
-
-    // todo: make the player automatically loose the game
   }
 
   handleKeyDown(ev) {

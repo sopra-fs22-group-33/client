@@ -4,6 +4,7 @@ import { Popper } from "@mui/material";
 import Box from "@mui/material/Box";
 import { useHistory } from "react-router-dom";
 import { getHelperInfo } from "./HelpInfoContent";
+import "../../../styles/_theme.scss";
 
 export const HelpInfoFrame = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -17,9 +18,15 @@ export const HelpInfoFrame = (props) => {
   };
   return (
     <div>
-      <AiFillQuestionCircle
-        size={30}
-        color={"#3C4FFA"}
+        <svg width="0" height="0">
+            <linearGradient id="blue-gradient" x1="100%" y1="0%" x2="0%" y2="0%">
+                <stop stopColor="#3DD7F9" offset="0%" />
+                <stop stopColor="#3C4FFA" offset="100%" />
+            </linearGradient>
+        </svg>
+        <AiFillQuestionCircle
+        size={"3vh"}
+        fill={"url(#blue-gradient)"}
         onMouseEnter={(ev) => handleMouseEnter(ev)}
         onMouseLeave={(ev) => handleMouseLeave(ev)}
       />
@@ -36,9 +43,10 @@ export const HelpInfoFrame = (props) => {
             borderRadius: "1.5vh",
             border: 1,
             borderColor: "gray",
+            boxShadow: 2,
           }}
         >
-            <div>{getHelperInfo(history.location.pathname)}</div>
+          <div>{getHelperInfo(history.location.pathname)}</div>
         </Box>
       </Popper>
     </div>

@@ -6,7 +6,7 @@ import { Button, Button2 } from "components/ui/Button";
 import BurgerMenu from "components/views/BurgerMenu.js";
 import globalEventDispatcher from "../../helpers/globalEventDispatcher";
 import { withRouter } from "react-router-dom";
-import {HelpInfoFrame} from "../ui/helpInfo/HelpInfoFrame";
+import { HelpInfoFrame } from "../ui/helpInfo/HelpInfoFrame";
 
 class Header extends React.Component {
   constructor(props) {
@@ -19,53 +19,45 @@ class Header extends React.Component {
     return (
       <div>
         {sessionStorage.getItem("token") != null ? <BurgerMenu /> : ""}
-
         <div className="header container" style={{ height: this.props.height }}>
           <div className="header placeholder"></div>
-
           <h1 className="header title">Shift Planner</h1>
-
-
-            {sessionStorage.getItem("token") != null ? (
-              <div className="header button-box">
-                <div className="header button-team">
-                  <div className={"label-box"}>
-                  <div className="button-label">
-                    Team
-                  </div>
+          {sessionStorage.getItem("token") != null ? (
+            <div className="header button-box">
+                            <div className="header button-team">
+                <div className={"label-box"}>
+                  <div className="button-label">Team</div>
                   <div className="button-label2">
                     {sessionStorage.getItem("teamName")}
                   </div>
-                  </div>
-                  <Button
-                    onClick={() => this.props.history.push("/user/teams")}
-                  >
-                    Change
-                  </Button>
                 </div>
-                <div className="header button-logout">
-                  <Button2
-                    onClick={() =>
-                      doLogout().then(() => this.props.history.push("/"))
-                    }
-                  >
-                    Logout
-                  </Button2>
-                </div>
-              </div>
-            ) : (
-                <div className="header button-box">
-
-                <Button onClick={() => this.props.history.push("/login")}>
-                  Log in
+                <Button onClick={() => this.props.history.push("/user/teams")}>
+                  Change
                 </Button>
-                <Button2 onClick={() => this.props.history.push("/register")}>
-                  Register
+              </div>
+              <div className="header button-logout">
+                <Button2
+                  onClick={() =>
+                    doLogout().then(() => this.props.history.push("/"))
+                  }
+                >
+                  Logout
                 </Button2>
-                </div>
-
-            )}
-          <HelpInfoFrame />
+              </div>
+              <div className="header info-icon">
+                <HelpInfoFrame />
+              </div>
+            </div>
+          ) : (
+            <div className="header button-box">
+              <Button onClick={() => this.props.history.push("/login")}>
+                Log in
+              </Button>
+              <Button2 onClick={() => this.props.history.push("/register")}>
+                Register
+              </Button2>
+            </div>
+          )}
         </div>
       </div>
     );

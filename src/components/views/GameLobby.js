@@ -14,6 +14,7 @@ class GameLobby extends React.Component {
     super(props);
 
     this.isJoiningGame = false;
+    this.isLeaving = false;
 
     this.state = {
       games: [],
@@ -30,6 +31,7 @@ class GameLobby extends React.Component {
   }
 
   componentCleanup() {
+    this.isLeaving = true;
     if (!this.isJoiningGame && this.state.selectedPlayer !== null) {
       setOffline(sessionStorage.getItem("gameId"), this.state.selectedPlayer)
         .then(() => {
@@ -58,6 +60,10 @@ class GameLobby extends React.Component {
   }
 
   async update() {
+    if (this.isLeaving) {
+      // workaround to stop recursion on leaving page
+      return;
+    }
     fetchGames(sessionStorage.getItem("id")).then((games) => {
       this.setState({ games });
       for (let game of games) {

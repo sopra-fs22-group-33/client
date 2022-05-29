@@ -11,13 +11,16 @@ import {
   validateTeamCalendar,
 } from "../../../helpers/validations";
 import { SpecialCalendar } from "../../ui/calendar/special/SpecialCalendar";
+import { StyledDialog } from "../../ui/StyledDialog";
 
 export const TeamCalendar = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
-  const [isFixed, setIsFixed] = useState(true);
   const [localDays, setLocalDays] = useState([]);
   const [displayedWeekIdx, setDisplayedWeekIdx] = useState(0);
+
+  const [isFixed, setIsFixed] = useState(true);
+  const [isFinalizing, setIsFinalizing] = useState(false);
 
   const handleChangeDayType = () => {
     if (isFixed) {
@@ -98,6 +101,13 @@ export const TeamCalendar = () => {
 
   return (
     <div>
+      <StyledDialog open={isFinalizing}>
+        <div>Attempt to generate an optimized calendar?</div>
+        <Button onClick={() => handleFinalize().then(() => setIsFinalizing(false))}>
+          yes
+        </Button>
+        <Button onClick={() => setIsFinalizing(false)}>no</Button>
+      </StyledDialog>
       <BaseContainer>
         <div className="navigation-button-container container">
           <div className="navigation-button-container title">
@@ -110,8 +120,8 @@ export const TeamCalendar = () => {
             onBigForwards={() => handleChangeDayType()}
           />
           <div className="navigation-button-container button">
-            {sessionStorage.getItem("isAdmin") === "true" ? (
-              <Button onClick={() => handleFinalize()}>Finalize</Button>
+            {sessionStorage.getItem("isAdmin") === "true" && !calendar.busy ? (
+              <Button onClick={() => setIsFinalizing(true)}>Finalize</Button>
             ) : null}
             {sessionStorage.getItem("isAdmin") === "true" ? (
               <Button onClick={() => history.push("/team/calendar/edit")}>

@@ -12,9 +12,10 @@ import { Button } from "../../ui/Button";
 import avatar from "../../../images/avatar1.png";
 import "styles/views/TeamProfil.scss";
 import globalEventDispatcher from "../../../helpers/globalEventDispatcher";
+import {StyledDialog} from "../../ui/StyledDialog";
 
 //component for a TEAM MEMBER
-export const TeamMember = ({ teamMember, removeUser }) => (
+export const TeamMember = ({ teamMember, onClick }) => (
   <div className="team member container2">
     <div className="team member icon">
       <img src={avatar} />
@@ -25,9 +26,7 @@ export const TeamMember = ({ teamMember, removeUser }) => (
     {sessionStorage.getItem("isAdmin")==="true" && teamMember.isAdmin === false ? (
       <div
         className="team member removebutton "
-        onClick={() => {
-          removeUser(teamMember.user.id);
-        }}
+        onClick={onClick}
       >
         Remove
       </div>
@@ -41,8 +40,10 @@ export const TeamProfile = () => {
   const history = useHistory();
 
   //hooks
-  const [users, setUsers] = useState(null);
   const [team, setTeam] = useState(null);
+
+  const [userToBeRemoved, setUserToBeRemoved] = useState(null);
+  const [isDeletingTeam, setIsDeletingTeam] = useState(false);
 
   //fetch all users in team only once
   useEffect(() => {
@@ -86,6 +87,16 @@ export const TeamProfile = () => {
       window.location.reload();
   }
 
+  async function handleDeleteTeam() {
+    try {
+      await api.delete(`/teams/${team.id}`, {
+        headers: { token: sessionStorage.getItem("token") },
+      });
+    } catch (e) {
+      alert(`Something went wrong while deleting the team:\n${handleError(e)}`);
+    }
+  }
+
   let content = <Spinner />;
   let teamName = <Spinner />;
 
@@ -96,7 +107,10 @@ export const TeamProfile = () => {
       <div className="team container2">
         <ul className="team member-list2">
           {team.memberships.map((teamMember) => (
-            <TeamMember teamMember={teamMember} removeUser={removeUser} />
+            <TeamMember
+              teamMember={teamMember}
+              onClick={() => setUserToBeRemoved(teamMember.user)}
+            />
           ))}
         </ul>
       </div>
@@ -105,18 +119,52 @@ export const TeamProfile = () => {
 
   return (
     <BaseContainer>
+      <StyledDialog open={isDeletingTeam}>
+        <div>Are you sure you want to delete the entire team?</div>
+        <Button
+          onClick={() =>
+            handleDeleteTeam().then(() => {
+              setIsDeletingTeam(false);
+              sessionStorage.removeItem("teamName");
+              sessionStorage.removeItem("teamId");
+              history.push("/user/teams");
+            })
+          }
+        >
+          yes
+        </Button>
+        <Button onClick={() => setIsDeletingTeam(false)}>no</Button>
+      </StyledDialog>
+      <StyledDialog open={userToBeRemoved !== null}>
+        <div>
+          Are you sure you want to remove{" "}
+          {userToBeRemoved ? userToBeRemoved.username : null} from{" "}
+          {sessionStorage.getItem("teamName")}?
+        </div>
+        <Button
+          onClick={() =>
+            removeUser(userToBeRemoved.id).then(() => setUserToBeRemoved(null))
+          }
+        >
+          yes
+        </Button>
+        <Button onClick={() => setUserToBeRemoved(null)}>no</Button>
+      </StyledDialog>
       <div className="navigation-button-container container">
         <div className="navigation-button-container title">
           <h1>{teamName}</h1>
         </div>
-        <div className="navigation-button-container button">
-          <Button onClick={() => history.push("/team/profile/invite")}>
-            Invite User
-          </Button>
-          <Button onClick={() => history.push("/team/profile/edit")}>
-            Edit Name
-          </Button>
-        </div>
+        {sessionStorage.getItem("isAdmin") === "true" ? (
+          <div className="navigation-button-container button">
+            <Button onClick={() => history.push("/team/profile/invite")}>
+              Invite User
+            </Button>
+            <Button onClick={() => history.push("/team/profile/edit")}>
+              Edit Name
+            </Button>
+            <Button onClick={() => setIsDeletingTeam(true)}>Delete Team</Button>
+          </div>
+        ) : null}
       </div>
       <div></div>
       {content}

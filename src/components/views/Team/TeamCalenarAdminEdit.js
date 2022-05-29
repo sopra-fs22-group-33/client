@@ -11,12 +11,15 @@ import {
   mapWeekToAdminCalendar,
 } from "../../../helpers/calendarMappers";
 import { CalendarDatePicker } from "../../ui/calendar/CalendarDatePicker";
+import { StyledDialog } from "../../ui/StyledDialog";
 
 export const TeamCalendarAdminEdit = () => {
   const history = useHistory();
   const [calendar, setCalendar] = useState(null);
   const [date, setDate] = useState(new Date());
   const [week, setWeek] = useState([]);
+
+  const [isDeleting, setIsDeleting] = useState(false);
 
   async function doSave() {
     try {
@@ -55,11 +58,28 @@ export const TeamCalendarAdminEdit = () => {
   }
 
   function handleDateChange(value) {
-    calendar.startingDate = value;
-    setCalendar(
-      validateTeamCalendar(calendar)
-    ); /* recalculates date for each day in calendar */
-    setDate(value);
+    const finalDate = new Date(
+      calendar.daysFixed.length > 0
+        ? calendar.daysFixed[calendar.daysFixed.length - 1].date
+        : calendar.startingDateFixed
+    );
+    if (
+      (calendar.daysFixed.length === 0 &&
+        (value > finalDate || value.getDate() === finalDate.getDate())) ||
+      (calendar.daysFixed.length > 0 &&
+        value > finalDate &&
+        value.getDate() !== finalDate.getDate())
+    ) {
+      calendar.startingDate = value;
+      setCalendar(
+        validateTeamCalendar(calendar)
+      ); /* recalculates date for each day in calendar */
+      setDate(value);
+    } else {
+      alert(
+        `There could be slots on ${finalDate.toDateString()}\nplease choose a later date or delete the finalized calendar`
+      );
+    }
   }
 
   useEffect(() => {
@@ -77,6 +97,18 @@ export const TeamCalendarAdminEdit = () => {
 
   return (
     <div>
+      <StyledDialog open={isDeleting}>
+        <div>This will delete all assigned shifts,</div>
+        <div>are you sure?</div>
+        <Button
+          onClick={() => {
+            doDeleteFixedDays().then((r) => setIsDeleting(false));
+          }}
+        >
+          yes
+        </Button>
+        <Button onClick={() => setIsDeleting(false)}>no</Button>
+      </StyledDialog>
       <BaseContainer>
         <div className="navigation-button-container container">
           <div className="navigation-button-container title">
@@ -97,7 +129,7 @@ export const TeamCalendarAdminEdit = () => {
           startingDate={calendar.startingDate.toLocaleString()}
           days={week}
         />
-        <Button onClick={() => doDeleteFixedDays()}>Delete</Button>
+        <Button onClick={() => setIsDeleting(true)}>Delete Calendar</Button>
       </BaseContainer>
     </div>
   );

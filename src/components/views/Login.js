@@ -35,7 +35,7 @@ export const Login = (props) => {
                     <FormField
                         label="Email"
                         value={email}
-                        onChange={(n) => setEmail(n)}
+                        onChange={(n) => setEmail(n.toString().toLowerCase())}
                     />
                     <PasswordFormField
                         label="Password"

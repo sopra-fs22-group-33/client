@@ -6,6 +6,7 @@ import { Button, Button2 } from "components/ui/Button";
 import BurgerMenu from "components/views/BurgerMenu.js";
 import globalEventDispatcher from "../../helpers/globalEventDispatcher";
 import { withRouter } from "react-router-dom";
+import {HelpInfoFrame} from "../ui/helpInfo/HelpInfoFrame";
 
 class Header extends React.Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class Header extends React.Component {
                       doLogout().then(() => this.props.history.push("/"))
                     }
                   >
-                    Log out
+                    Logout
                   </Button2>
                 </div>
               </div>
@@ -64,6 +65,7 @@ class Header extends React.Component {
                 </div>
 
             )}
+          <HelpInfoFrame />
         </div>
       </div>
     );

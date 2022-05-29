@@ -5,6 +5,21 @@ import { MAX_BASE, MIN_BASE } from "../config";
 import { SlotSlider } from "../SlotSlider";
 import { SlotPopper } from "../SlotPopper";
 
+export function baseToText(value) {
+  switch (value) {
+    case -2:
+      return "highly disliked"
+    case -1:
+      return "disliked"
+    case 0:
+      return "indifferent"
+    case 1:
+      return "liked"
+    case 2:
+      return "highly liked"
+  }
+}
+
 export class BaseSlot extends React.Component {
   constructor(props) {
     super(props);
@@ -83,6 +98,8 @@ export class BaseSlot extends React.Component {
           <SlotPopper anchorEl={this.state.anchorEl}>
             <SlotSlider
               onChange={(ev, value) => this.handleSliderChange(ev, value)}
+              width={120}
+
               value={this.state.mySchedule.base}
               valueLabelDisplay={"auto"}
               step={1}
@@ -91,8 +108,9 @@ export class BaseSlot extends React.Component {
               max={MAX_BASE}
             />
             <div>requirement: {this.props.requirement}</div>
+            <div>my preference:</div>
             <div>
-              my base: {this.state.mySchedule.base}
+              {baseToText(this.state.mySchedule.base)}
             </div>
           </SlotPopper>
         ) : null}

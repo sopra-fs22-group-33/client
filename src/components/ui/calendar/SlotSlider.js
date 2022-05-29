@@ -14,6 +14,7 @@ export const SlotSlider = (props) => {
       style={{
         position: "relative",
         background: "white",
+        width: props.width,
       }}
       onClick={props.onClick}
       onChange={props.onChange}

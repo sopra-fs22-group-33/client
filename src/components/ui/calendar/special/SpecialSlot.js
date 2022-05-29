@@ -2,7 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { Slot } from "../Slot";
 import { SlotPopper } from "../SlotPopper";
-import { Button } from "../../Button";
+import { Button, Button2 } from "../../Button";
 import { AiFillHeart } from "react-icons/ai";
 import { ImCross } from "react-icons/im";
 import calendarEventDispatcher from "../calendarEventDispatcher";
@@ -98,7 +98,7 @@ export class SpecialSlot extends React.Component {
       case 1:
         return "rgba(50, 0, 255, 0.5)";
       default:
-        return "rgba(179, 215, 249, 0.5)"
+        return "rgba(179, 215, 249, 0.5)";
     }
   }
 
@@ -114,21 +114,31 @@ export class SpecialSlot extends React.Component {
       >
         {this.state.isHoveredOver ? (
           <SlotPopper anchorEl={this.state.anchorEl}>
-            <div>
-              <Button onClick={(ev) => this.handleJokerChange(ev, 1)}>
-                <AiFillHeart />
-              </Button>
-              <Button onClick={(ev) => this.handleJokerChange(ev, -1)}>
-                <ImCross />
-              </Button>
-            </div>
-            <Button onClick={(ev) => this.handleJokerChange(ev, 0)}>
-              clear
-            </Button>
             <div>requirement: {this.props.requirement}</div>
             <div>
-              my special: {backToFrontSpecial(this.state.mySchedule.special)}
+              <Button2
+                disabled={
+                  this.state.mySchedule.special === frontToBackSpecial(1)
+                }
+                onClick={(ev) => this.handleJokerChange(ev, 1)}
+              >
+                <AiFillHeart />
+              </Button2>
+              <Button2
+                disabled={
+                  this.state.mySchedule.special === frontToBackSpecial(-1)
+                }
+                onClick={(ev) => this.handleJokerChange(ev, -1)}
+              >
+                <ImCross />
+              </Button2>
             </div>
+            <Button2
+              disabled={this.state.mySchedule.special === frontToBackSpecial(0)}
+              onClick={(ev) => this.handleJokerChange(ev, 0)}
+            >
+              clear
+            </Button2>
           </SlotPopper>
         ) : null}
       </Slot>

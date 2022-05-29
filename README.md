@@ -72,6 +72,7 @@ Play a game of snake with other members of the same team to resolve conflicts in
 - [ ] individual constraints for team members (working hours per week, number of jokers etc.) 
 - [ ] export calendar as .ics
 - [ ] allow choosing avatar image
+- [ ] E-Mail validation
 
 
 ## Authors and acknowledgement

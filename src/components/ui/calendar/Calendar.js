@@ -45,17 +45,17 @@ export class Calendar extends React.Component {
           <div className={"time-label2"}>12:00</div>
           <div className={"time-label3"}>18:00</div>
 
-          <div className={"time-line1"}/>
-          <div className={"time-line2"}/>
-          <div className={"time-line3"}/>
-          <div className={"time-line4"}/>
-          <div className={"time-line5"}/>
-          <div className={"time-line6"}/>
-          <div className={"time-line7"}/>
-          <div className={"time-line8"}/>
-          <div className={"time-line9"}/>
-          <div className={"time-line10"}/>
-          <div className={"time-line11"}/>
+          <div className={"time-line1"} />
+          <div className={"time-line2"} />
+          <div className={"time-line3"} />
+          <div className={"time-line4"} />
+          <div className={"time-line5"} />
+          <div className={"time-line6"} />
+          <div className={"time-line7"} />
+          <div className={"time-line8"} />
+          <div className={"time-line9"} />
+          <div className={"time-line10"} />
+          <div className={"time-line11"} />
 
           {this.props.children}
         </Grid>

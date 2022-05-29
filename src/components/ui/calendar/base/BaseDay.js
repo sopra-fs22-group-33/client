@@ -18,10 +18,7 @@ export class BaseDay extends React.Component {
 
   render() {
     return (
-      <Day
-        date={this.props.date}
-        hideDate={true}
-      >
+      <Day date={this.props.date} hideDate={true}>
         {this.state.slots.map((slot) => (
           <BaseSlot
             key={slot.id}

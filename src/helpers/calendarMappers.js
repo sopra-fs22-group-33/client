@@ -50,7 +50,7 @@ export function mapWeekToPreferenceCalendar(week, days) {
         const schedule = slot.schedules[sc];
         const weekSchedule = weekSlot.schedules[sc];
 
-        schedule.base = weekSchedule.base
+        schedule.base = weekSchedule.base;
       }
     }
   }

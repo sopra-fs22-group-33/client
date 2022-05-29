@@ -24,18 +24,19 @@ const UserProfileEdit = () => {
     async function fetchData() {
       try {
         const token = sessionStorage.getItem("token");
-        const id = sessionStorage.getItem("id")
+        const id = sessionStorage.getItem("id");
         const response = await api.get(`/users/${id}`, {
-          headers: {token}
-        })
+          headers: { token },
+        });
 
         // Get the returned profile
         setUsername(response.data.username);
         setEmail(response.data.email);
-
       } catch (error) {
         console.error("Details:", error);
-        alert("Something went wrong while fetching the users! See the console for details.");
+        alert(
+          "Something went wrong while fetching the users! See the console for details."
+        );
       }
     }
 
@@ -44,7 +45,7 @@ const UserProfileEdit = () => {
 
   const doSaveEditProfile = async () => {
     const requestBody = JSON.stringify({ username, email });
-    const id = sessionStorage.getItem("id")
+    const id = sessionStorage.getItem("id");
     await api.put(`/users/${id}`, requestBody, {
       headers: { token: sessionStorage.getItem("token") },
     });
@@ -64,11 +65,13 @@ const UserProfileEdit = () => {
         <FormField label="Email" value={email} onChange={(u) => setEmail(u)} />
 
         <div className="auth button-container">
-          <Button disabled={!username || !email} onClick={() => doSaveEditProfile()}>
+          <Button
+            disabled={!username || !email}
+            onClick={() => doSaveEditProfile()}
+          >
             Save
           </Button>
           <Button onClick={() => history.goBack()}>Cancel</Button>
-
         </div>
       </div>
     </div>
@@ -80,8 +83,7 @@ const UserProfileEdit = () => {
         <div className="navigation-button-container title">
           <h1>Edit Profile</h1>
         </div>
-        <div className="navigation-button-container button">
-        </div>
+        <div className="navigation-button-container button"></div>
       </div>
       {content}
     </BaseContainer>

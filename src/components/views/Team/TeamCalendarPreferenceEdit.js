@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { api, fetchTeamCalendar, handleError } from "../../../helpers/api";
-import {
-  validateTeamCalendar,
-} from "../../../helpers/validations";
+import { validateTeamCalendar } from "../../../helpers/validations";
 import { useHistory } from "react-router-dom";
 import BaseContainer from "../../ui/BaseContainer";
 import { Button } from "../../ui/Button";
 import * as React from "react";
 import { BaseCalendar } from "../../ui/calendar/base/BaseCalendar";
-import {mapCalendarToWeek, mapWeekToPreferenceCalendar} from "../../../helpers/calendarMappers";
+import {
+  mapCalendarToWeek,
+  mapWeekToPreferenceCalendar,
+} from "../../../helpers/calendarMappers";
 
 export const TeamCalendarPreferenceEdit = () => {
   const history = useHistory();
@@ -23,7 +24,9 @@ export const TeamCalendarPreferenceEdit = () => {
         startingDate: calendar.startingDate,
       });
       await api.put(
-        `/teams/${sessionStorage.getItem("teamId")}/calendars/${sessionStorage.getItem("id")}`,
+        `/teams/${sessionStorage.getItem(
+          "teamId"
+        )}/calendars/${sessionStorage.getItem("id")}`,
         requestBody,
         {
           headers: { token: sessionStorage.getItem("token") },

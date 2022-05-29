@@ -2,7 +2,6 @@ const _data = {
   selectedSlot: false,
 };
 
-
 /**
  * Singleton for properties/values used by different components in a calendar
  *

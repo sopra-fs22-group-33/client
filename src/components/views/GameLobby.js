@@ -31,13 +31,12 @@ class GameLobby extends React.Component {
 
   componentCleanup() {
     if (!this.isJoiningGame && this.state.selectedPlayer !== null) {
-      setOffline(
-        sessionStorage.getItem("gameId"),
-        this.state.selectedPlayer
-      ).then(() => {
-        sessionStorage.removeItem("gameId");
-        sessionStorage.removeItem("playerId");
-      }).catch((e) => console.log(e));
+      setOffline(sessionStorage.getItem("gameId"), this.state.selectedPlayer)
+        .then(() => {
+          sessionStorage.removeItem("gameId");
+          sessionStorage.removeItem("playerId");
+        })
+        .catch((e) => console.log(e));
     } else {
       sessionStorage.removeItem("gameId");
       sessionStorage.removeItem("playerId");

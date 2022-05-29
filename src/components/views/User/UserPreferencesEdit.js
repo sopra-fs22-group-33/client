@@ -11,7 +11,7 @@ import * as React from "react";
 import { TEMPLATE_USER_CALENDAR } from "../../../fixtures/templateUserCalendar";
 import { validateUserCalendar } from "../../../helpers/validations";
 import { PreferenceCalendar } from "../../ui/calendar/base/PreferenceCalendar";
-import {someMonday} from "../../../helpers/calendarMappers";
+import { someMonday } from "../../../helpers/calendarMappers";
 
 export const UserPreferencesEdit = () => {
   const history = useHistory();

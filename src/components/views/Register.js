@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import User from "models/User";
 import BaseContainer from "components/ui/BaseContainer";
-import {FormField, PasswordFormField} from "components/ui/FormField";
+import { FormField, PasswordFormField } from "components/ui/FormField";
 import { Button, Button2 } from "components/ui/Button";
 import { TEMPLATE_USER_CALENDAR } from "../../fixtures/templateUserCalendar";
 
@@ -27,11 +27,9 @@ export const Register = () => {
       user.token = getToken(userResponse);
 
       const preferenceRequestBody = JSON.stringify(TEMPLATE_USER_CALENDAR);
-      await api.post(
-        `/users/${user.id}/preferences`,
-        preferenceRequestBody,
-        { headers: { token: user.token } }
-      );
+      await api.post(`/users/${user.id}/preferences`, preferenceRequestBody, {
+        headers: { token: user.token },
+      });
 
       sessionStorage.setItem("token", user.token);
       sessionStorage.setItem("id", user.id);
@@ -43,8 +41,8 @@ export const Register = () => {
   };
 
   return (
-    <BaseContainer style={{height:"86vh", paddingTop:"16vh"}}>
-      <div className="auth container" style={{marginTop:"0"}}>
+    <BaseContainer style={{ height: "86vh", paddingTop: "16vh" }}>
+      <div className="auth container" style={{ marginTop: "0" }}>
         <div className="auth form">
           <FormField
             label="Email"
@@ -60,7 +58,7 @@ export const Register = () => {
             label="Password"
             value={password}
             onChange={(un) => setPassword(un)}
-          type={"password"}
+            type={"password"}
           />
           <div className="auth button-container">
             <Button

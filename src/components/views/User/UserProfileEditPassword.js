@@ -4,7 +4,7 @@ import { Button } from "components/ui/Button";
 import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Game.scss";
-import {PasswordFormField} from "../../ui/FormField";
+import { PasswordFormField } from "../../ui/FormField";
 
 const UserProfileEdit = () => {
   // use react-router-dom's hook to access the history
@@ -13,7 +13,6 @@ const UserProfileEdit = () => {
   const [username, setUsername] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-
 
   // define a state variable (using the state hook).
   // if this variable changes, the component will re-render, but the variable will
@@ -26,18 +25,19 @@ const UserProfileEdit = () => {
     async function fetchData() {
       try {
         const token = sessionStorage.getItem("token");
-        const id = sessionStorage.getItem("id")
+        const id = sessionStorage.getItem("id");
         const response = await api.get(`/users/${id}`, {
-          headers: {token}
-        })
+          headers: { token },
+        });
 
         // Get the returned profile
         setUsername(response.data.username);
         setEmail(response.data.email);
-
       } catch (error) {
         console.error("Details:", error);
-        alert("Something went wrong while fetching the users! See the console for details.");
+        alert(
+          "Something went wrong while fetching the users! See the console for details."
+        );
       }
     }
 
@@ -46,7 +46,7 @@ const UserProfileEdit = () => {
 
   const doSaveEditProfile = async () => {
     const requestBody = JSON.stringify({ username, email, password });
-    const id = sessionStorage.getItem("id")
+    const id = sessionStorage.getItem("id");
     await api.put(`/users/${id}`, requestBody, {
       headers: { token: sessionStorage.getItem("token") },
     });
@@ -79,8 +79,7 @@ const UserProfileEdit = () => {
         <div className="navigation-button-container title">
           <h1>Change Password</h1>
         </div>
-        <div className="navigation-button-container button">
-        </div>
+        <div className="navigation-button-container button"></div>
       </div>
       {content}
     </BaseContainer>

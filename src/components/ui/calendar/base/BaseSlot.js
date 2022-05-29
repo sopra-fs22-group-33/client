@@ -8,17 +8,17 @@ import { SlotPopper } from "../SlotPopper";
 export function baseToText(value) {
   switch (value) {
     case -2:
-      return "highly disliked"
+      return "highly disliked";
     case -1:
-      return "disliked"
+      return "disliked";
     case 0:
-      return "indifferent"
+      return "indifferent";
     case 1:
-      return "liked"
+      return "liked";
     case 2:
-      return "highly liked"
+      return "highly liked";
     default:
-      return " "
+      return " ";
   }
 }
 
@@ -38,12 +38,12 @@ export class BaseSlot extends React.Component {
     };
   }
 
-  handleSlotMouseEnter(ev){
-    this.setState({isHoveredOver: true, anchorEl: ev.currentTarget});
+  handleSlotMouseEnter(ev) {
+    this.setState({ isHoveredOver: true, anchorEl: ev.currentTarget });
   }
 
   handleSlotMouseLeave() {
-    this.setState({isHoveredOver: false, anchorEl: undefined});
+    this.setState({ isHoveredOver: false, anchorEl: undefined });
   }
 
   handleSliderChange(ev, value) {
@@ -101,7 +101,6 @@ export class BaseSlot extends React.Component {
             <SlotSlider
               onChange={(ev, value) => this.handleSliderChange(ev, value)}
               width={120}
-
               value={this.state.mySchedule.base}
               valueLabelDisplay={"auto"}
               step={1}
@@ -111,9 +110,7 @@ export class BaseSlot extends React.Component {
             />
             <div>requirement: {this.props.requirement}</div>
             <div>my preference:</div>
-            <div>
-              {baseToText(this.state.mySchedule.base)}
-            </div>
+            <div>{baseToText(this.state.mySchedule.base)}</div>
           </SlotPopper>
         ) : null}
       </Slot>

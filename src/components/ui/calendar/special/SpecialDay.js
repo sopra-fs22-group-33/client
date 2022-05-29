@@ -18,9 +18,7 @@ export class SpecialDay extends React.Component {
 
   render() {
     return (
-      <Day
-        date={this.props.date}
-      >
+      <Day date={this.props.date}>
         {this.state.slots.map((slot) => (
           <SpecialSlot
             key={slot.id}

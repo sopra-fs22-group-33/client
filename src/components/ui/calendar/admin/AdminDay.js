@@ -48,7 +48,7 @@ export class AdminDay extends React.Component {
     let time = (ev.clientY - this.ref.getBoundingClientRect().y) / HOUR_HEIGHT;
     this.setState({
       isSlotDrawn: true,
-      newSlot: { timeFrom: time, timeTo: time + 1},
+      newSlot: { timeFrom: time, timeTo: time + 1 },
     });
   }
 

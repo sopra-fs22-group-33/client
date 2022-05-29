@@ -61,10 +61,7 @@ export class AdminCalendar extends React.Component {
       <Calendar>
         {this.props.days.map((day) => {
           return day.isFiller ? (
-            <FillerDay
-              key={randomId()}
-              date={day.date}
-            />
+            <FillerDay key={randomId()} date={day.date} />
           ) : (
             <AdminDay
               key={day.id}

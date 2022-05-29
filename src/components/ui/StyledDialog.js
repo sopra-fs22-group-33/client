@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 export const StyledDialog = (props) => (
   <Dialog open={props.open}>
-    <Box sx={{ padding: 10, }}>{props.children}</Box>
+    <Box sx={{ padding: 10 }}>{props.children}</Box>
   </Dialog>
 );
 

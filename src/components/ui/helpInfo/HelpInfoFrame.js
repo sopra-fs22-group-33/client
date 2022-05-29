@@ -18,13 +18,13 @@ export const HelpInfoFrame = () => {
   };
   return (
     <div>
-        <svg width="0" height="0">
-            <linearGradient id="blue-gradient" x1="100%" y1="0%" x2="0%" y2="0%">
-                <stop stopColor="#3DD7F9" offset="0%" />
-                <stop stopColor="#3C4FFA" offset="100%" />
-            </linearGradient>
-        </svg>
-        <AiFillQuestionCircle
+      <svg width="0" height="0">
+        <linearGradient id="blue-gradient" x1="100%" y1="0%" x2="0%" y2="0%">
+          <stop stopColor="#3DD7F9" offset="0%" />
+          <stop stopColor="#3C4FFA" offset="100%" />
+        </linearGradient>
+      </svg>
+      <AiFillQuestionCircle
         size={"3vh"}
         fill={"url(#blue-gradient)"}
         onMouseEnter={(ev) => handleMouseEnter(ev)}
@@ -44,11 +44,13 @@ export const HelpInfoFrame = () => {
             border: 1,
             borderColor: "gray",
             boxShadow: 2,
-              maxWidth: "30vw",
+            maxWidth: "30vw",
           }}
         >
-            <h3 style={{paddingTop: "0", marginTop: "0"}}>Instructions</h3>
-          <div style={{fontSize: "1.6vh"}}>{getHelperInfo(history.location.pathname)}</div>
+          <h3 style={{ paddingTop: "0", marginTop: "0" }}>Instructions</h3>
+          <div style={{ fontSize: "1.6vh" }}>
+            {getHelperInfo(history.location.pathname)}
+          </div>
         </Box>
       </Popper>
     </div>

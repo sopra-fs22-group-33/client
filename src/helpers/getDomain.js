@@ -1,4 +1,4 @@
-import { isProduction } from 'helpers/isProduction';
+import { isProduction } from "helpers/isProduction";
 
 /**
  * This helper function returns the current domain of the API.
@@ -8,7 +8,7 @@ import { isProduction } from 'helpers/isProduction';
  */
 export const getDomain = () => {
   const prodUrl = "https://sopra-fs22-group-33-server.herokuapp.com/";
-  const devUrl = 'http://localhost:8080';
+  const devUrl = "http://localhost:8080";
 
   return isProduction() ? prodUrl : devUrl;
 };

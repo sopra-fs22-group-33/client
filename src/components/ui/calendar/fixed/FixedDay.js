@@ -11,9 +11,7 @@ export class FixedDay extends React.Component {
 
   render() {
     return (
-      <Day
-        date={this.props.date}
-      >
+      <Day date={this.props.date}>
         {this.props.day.slots.map((slot) => (
           <FixedSlot
             key={slot.id}

@@ -20,11 +20,11 @@ class Header extends React.Component {
       <div>
         {sessionStorage.getItem("token") != null ? <BurgerMenu /> : ""}
         <div className="header container" style={{ height: this.props.height }}>
-          <div className="header placeholder"/>
+          <div className="header placeholder" />
           <h1 className="header title">Shift Planner</h1>
           {sessionStorage.getItem("token") != null ? (
             <div className="header button-box">
-                            <div className="header button-team">
+              <div className="header button-team">
                 <div className={"label-box"}>
                   <div className="button-label">Team</div>
                   <div className="button-label2">

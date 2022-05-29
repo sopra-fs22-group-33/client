@@ -7,9 +7,11 @@ export const StatBoard = (props) => {
   return (
     <Box sx={{ width: "15%" }}>
       <PlayerStats player={props.player} background={"green"} />
-      {props.playerFoes.sort((a, b) => a.rank <= b.rank ? 1 : -1).map((player) => (
-        <PlayerStats player={player} background={"orange"} />
-      ))}
+      {props.playerFoes
+        .sort((a, b) => (a.rank <= b.rank ? 1 : -1))
+        .map((player) => (
+          <PlayerStats player={player} background={"orange"} />
+        ))}
     </Box>
   );
 };

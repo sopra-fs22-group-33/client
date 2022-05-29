@@ -5,7 +5,8 @@ import { fetchFixedUserCalendar } from "../../../helpers/api";
 import { useHistory } from "react-router-dom";
 import { Button } from "../../ui/Button";
 import {
-  insertFillerDays, sortUserCalendar,
+  insertFillerDays,
+  sortUserCalendar,
   validateUserCalendar,
 } from "../../../helpers/validations";
 import { CalendarNavigationButtons } from "../../ui/calendar/CalendarNavigationButtons";

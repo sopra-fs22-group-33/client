@@ -44,9 +44,11 @@ export const HelpInfoFrame = (props) => {
             border: 1,
             borderColor: "gray",
             boxShadow: 2,
+              maxWidth: "30vw",
           }}
         >
-          <div>{getHelperInfo(history.location.pathname)}</div>
+            <h3 style={{paddingTop: "0", marginTop: "0"}}>Instructions</h3>
+          <div style={{fontSize: "1.6vh"}}>{getHelperInfo(history.location.pathname)}</div>
         </Box>
       </Popper>
     </div>

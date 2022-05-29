@@ -8,65 +8,65 @@ import { HelpInfoImageFrame } from "../HelpInfoImageFrame";
 
 export const UserCalendarEditHelp = (
   <div>
-    <div>
+    <p>
       Here you can set your preferences for different working hours on different
-      weekdays
-    </div>
+      weekdays.
+    </p>
     <HelpInfoImageFrame src={edit} />
-    <div>
+    <p>
       Once you are part of a team, these will be mapped onto the schedules in
-      that team's calendar
-    </div>
+      that team's calendar.
+    </p>
   </div>
 );
 
 export const UserCalendarHelp = (
   <div>
-    <div>Here you will see all of your shifts from different teams</div>
+    <p>Here you will see all of your shifts from different teams.</p>
     <HelpInfoImageFrame src={calendar} />
-    <div>
-      you can navigate between weeks by pressing the left and right arrows at
-      the top of the calendar
-    </div>
+    <p>
+      You can navigate between weeks by pressing the left and right arrows at
+      the top of the calendar.
+    </p>
   </div>
 );
 
 export const UserInvitationsHelp = (
   <div>
-    <div>
+    <p>
       Once you are invited to a team by team administrator this is where you
-      will be able to accept or decline the invitation
-    </div>
+      will be able to accept or decline the invitation.
+    </p>
     <HelpInfoImageFrame src={invitations} />
   </div>
 );
 
 export const UserProfileHelp = (
   <div>
-    <div>
+    <p>
       Here you can see your profile as well as change your password, username
-      and email
-    </div>
+      and email.
+    </p>
     <HelpInfoImageFrame src={buttons1} />
-    <div>
+    <p>
       From here you will also find any invitations to teams created by other
-      people
-    </div>
+      people.
+    </p>
     <HelpInfoImageFrame src={buttons2} />
   </div>
 );
 
 export const UserTeamsHelp = (
   <div>
-    <div>
+    <p>
       Here you can see all of the teams you are part of as well as create new
-      ones
-    </div>
+      ones.
+    </p>
     <HelpInfoImageFrame src={teams} />
-    <div>
+    <p>
       In order to view the profile and calendar of a specific team you must
-      first press on it
-    </div>
-    <div>and then navigate to Team Calendar using the menu on the right</div>
+      first press on it and then navigate to Team Calendar using the menu on the
+      right.
+    </p>
   </div>
 );

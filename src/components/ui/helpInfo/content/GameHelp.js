@@ -3,25 +3,27 @@ import { HelpInfoImageFrame } from "../HelpInfoImageFrame";
 
 export const GameHelp = (
   <div>
-    <div>
+    <p>
       Here you will see the all snake games for specific shifts in different
-      teams
-    </div>
-    <div>
+      teams.
+    </p>
+    <p>
       Press on a game to select it, the game will start automatically once all
-      the players are online
-    </div>
-    <div>
-      Once in the game use arrow keys or WASD to set the direction for the snake
-    </div>
-    <div>
+      the players are online.
+    </p>
+    <p>
+      Once in the game use arrow keys or WASD to set the direction for the
+      snake.
+    </p>
+    <p>
       Green shows your snake while orange is your opponents' snakes and red is
-      the apples
-    </div>
+      the apples.
+    </p>
     <HelpInfoImageFrame src={game2} />
-    <div>
-      Eat apples and avoid walls as well as hitting other players with your head
-    </div>
-    <div>The last standing snake wins</div>
+    <p>
+      Eat apples and avoid walls as well as hitting other players with your
+      head.
+    </p>
+    <p>The last standing snake wins.</p>
   </div>
 );

@@ -31,14 +31,14 @@ class GameLobby extends React.Component {
   }
 
   componentCleanup() {
-    if (!this.isJoiningGame) {
+    if (!this.isJoiningGame && this.state.selectedPlayer !== null) {
       setOffline(
         sessionStorage.getItem("gameId"),
         this.state.selectedPlayer
       ).then(() => {
         sessionStorage.removeItem("gameId");
         sessionStorage.removeItem("playerId");
-      });
+      }).catch((e) => console.log(e));
     } else {
       sessionStorage.removeItem("gameId");
       sessionStorage.removeItem("playerId");
@@ -83,27 +83,31 @@ class GameLobby extends React.Component {
   }
 
   handleGameBoardClick(ev, game, player) {
+    function wrapError(e) {
+      alert(
+        `Something went wrong when trying to enter the game:\n${handleError(e)}`
+      );
+    }
+
     async function setOnline() {
       player.statusOnline = "ONLINE";
       await api.put(`games/${game.id}/${player.id}`, player);
     }
 
-    try {
-      if (this.state.selectedGame && this.state.selectedPlayer) {
-        setOffline(this.state.selectedGame.id, this.state.selectedPlayer);
-      }
+    if (this.state.selectedGame && this.state.selectedPlayer) {
+      setOffline(this.state.selectedGame.id, this.state.selectedPlayer).catch(
+        (e) => wrapError(e)
+      );
+    }
 
-      setOnline().then(() => {
+    setOnline()
+      .then(() => {
         sessionStorage.setItem("gameId", game.id);
         sessionStorage.setItem("playerId", player.id);
         game.isActive = true;
         this.setState({ selectedGame: game, selectedPlayer: player });
-      });
-    } catch (e) {
-      alert(
-        `Something went wrong when trying to enter the game:\n${handleError(e)}`
-      );
-    }
+      })
+      .catch((e) => wrapError(e));
   }
 
   getPlayerForUser(userId, players) {

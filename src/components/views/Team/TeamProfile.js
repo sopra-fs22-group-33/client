@@ -105,6 +105,7 @@ export const TeamProfile = () => {
         <ul className="team member-list2">
           {team.memberships.map((teamMember) => (
             <TeamMember
+              key={teamMember.id}
               teamMember={teamMember}
               onClick={() => setUserToBeRemoved(teamMember.user)}
             />

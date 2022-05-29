@@ -24,7 +24,7 @@ export const Team = ({ team, getTeam }) => (
     <div className="team name2">{team.name} </div>
     <ul className="team member-list">
       {team.memberships.map((teamMember) => (
-        <TeamMember teamMember={teamMember} />
+        <TeamMember key={teamMember.id} teamMember={teamMember} />
       ))}
     </ul>
   </ul>
@@ -83,7 +83,7 @@ export const AllTeams = () => {
     content = (
       <div>
         {teams.map((team) => (
-          <Team team={team} getTeam={getTeam} />
+          <Team key={team.id} team={team} getTeam={getTeam} />
         ))}
       </div>
     );

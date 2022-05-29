@@ -1,11 +1,7 @@
 import PropTypes from "prop-types";
 import * as React from "react";
-import { Button } from "../Button";
-import { useHistory } from "react-router-dom";
 
-export const DeathDisplay = (props) => {
-  const history = useHistory();
-  return (
+export const DeathDisplay = (props) => (
     <div
       style={{
         position: "relative",
@@ -18,10 +14,8 @@ export const DeathDisplay = (props) => {
       }}
     >
       YOU DIED
-      <Button onClick={() => history.push("/game/lobby")}>Leave</Button>
     </div>
   );
-};
 
 DeathDisplay.propTypes = {
   length: PropTypes.number.isRequired,

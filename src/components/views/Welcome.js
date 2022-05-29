@@ -23,7 +23,7 @@ export const Welcome = () => {
         <div className={"welcome container"}>
           <div className={"welcome text container2"}>
 
-          <div className={"welcome text title"}>Welcome!</div>
+          <div className={"welcome text title"}>Shift planning made easy</div>
             <div className={"welcome text line"}></div>
 
             <div className={"welcome text subtitle"}>

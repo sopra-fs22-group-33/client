@@ -24,6 +24,8 @@ export const TeamProfileEdit = () => {
       headers: { token: sessionStorage.getItem("token") },
     });
 
+    sessionStorage.setItem("teamName", name.toString());
+
     // Route to right place here
     history.goBack();
   };

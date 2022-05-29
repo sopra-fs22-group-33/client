@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import {api, doLogout, getTeamIsAdmin, handleError} from "../../../helpers/api";
+import {api, getTeamIsAdmin, handleError} from "../../../helpers/api";
 import { useEffect, useState } from "react";
 import { Spinner } from "../../ui/Spinner";
 import "styles/views/Team.scss";
@@ -33,7 +33,7 @@ export const Team = ({ team, getTeam }) => (
 export const TeamMember = ({ teamMember }) => (
   <div className="team member container2">
     <div className="team member icon">
-      <img src={avatar} />
+      <img src={avatar}  alt={" "}/>
     </div>
       <div className="team member username">{teamMember.user.username}</div>
       <div className="team member email">{teamMember.user.email}</div>
@@ -51,7 +51,7 @@ export const AllTeams = () => {
 
   //fetch all teams user is part of from backend only once
   useEffect(() => {
-    const fetchData = async (props) => {
+    const fetchData = async () => {
       try {
         const response = await api.get(
           `/users/${sessionStorage.getItem("id")}/teams`,

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { api, fetchGames, handleError } from "../../helpers/api";
 import { withRouter } from "react-router-dom";
-import Box from "@mui/material/Box";
 import BaseContainer from "../ui/BaseContainer";
 import { GameLobbyEntity } from "../ui/game/GameLobbyEntity";
 

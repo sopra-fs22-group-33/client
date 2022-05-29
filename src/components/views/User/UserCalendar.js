@@ -37,7 +37,7 @@ export const UserCalendar = () => {
   useEffect(() => {
     fetchFixedUserCalendar(sessionStorage.getItem("id")).then((calendar) => {
       calendar = validateUserCalendar(calendar);
-      sortUserCalendar(calendar.days, calendar.startingDate);
+      sortUserCalendar(calendar.days);
       setLocalDays(insertFillerDays(calendar.days, calendar.startingDate));
       setCalendar(calendar);
     });

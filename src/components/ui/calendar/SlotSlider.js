@@ -2,7 +2,6 @@ import * as React from "react";
 import { Slider } from "@mui/material";
 import PropTypes from "prop-types";
 import "styles/ui/Calendar.scss";
-import { HOUR_HEIGHT } from "./config";
 
 /**
  * Generic slot slider with functionality required in any calendar

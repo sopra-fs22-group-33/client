@@ -1,6 +1,6 @@
 import {useHistory} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {api, doLogout, handleError} from "../../../helpers/api";
+import {api, handleError} from "../../../helpers/api";
 import {Team} from "./AllTeams";
 import BaseContainer from "../../ui/BaseContainer";
 import {Button} from "../../ui/Button";

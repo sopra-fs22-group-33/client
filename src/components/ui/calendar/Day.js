@@ -93,7 +93,7 @@ export function handleOverlap(slots, newSlot) {
       } else {
         slots = slots.filter((o) => o !== slot);
       }
-      return handleOverlap(slots);
+      return handleOverlap(slots, null);
     }
     slot.width = valueToStrPercent(SLOT_REL_WIDTH / 2);
     if (isPushedRight) {

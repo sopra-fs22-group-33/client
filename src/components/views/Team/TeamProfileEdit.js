@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { api, handleError } from "../../../helpers/api";
-import { TeamMember } from "../User/AllTeams";
+import React, { useState } from "react";
+import { api } from "../../../helpers/api";
 import { useHistory } from "react-router-dom";
 import BaseContainer from "../../ui/BaseContainer";
 import {Button} from "../../ui/Button";
-import {Spinner} from "../../ui/Spinner";
 import {FormField} from "../../ui/FormField";
 
 export const TeamProfileEdit = () => {
@@ -30,9 +28,7 @@ export const TeamProfileEdit = () => {
     history.goBack();
   };
 
-  let content = <Spinner />;
-
-  content = (
+  const content = (
       <div className="auth container">
         <div className="auth form">
           <FormField

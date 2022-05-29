@@ -14,7 +14,7 @@ export class AdminDay extends React.Component {
     this.id = props.id;
     // reference to object in parent
     this.day = props.day;
-    this.day.slots = handleOverlap(this.day.slots);
+    this.day.slots = handleOverlap(this.day.slots, null);
 
     this.ref = undefined;
 
@@ -66,7 +66,7 @@ export class AdminDay extends React.Component {
     }
   }
 
-  handleGlobalMouseUP(ev) {
+  handleGlobalMouseUP() {
     if (this.state.isSlotDrawn) {
       window.removeEventListener("mouseup", this.handleGlobalMouseUP);
       window.removeEventListener("mousemove", this.handleGlobalMouseMove);
@@ -91,7 +91,7 @@ export class AdminDay extends React.Component {
     if (filteredSlots.length === previousLength) {
       return;
     }
-    this.day.slots = handleOverlap(filteredSlots);
+    this.day.slots = handleOverlap(filteredSlots, null);
     this.setState({ slots: this.day.slots });
   }
 

@@ -139,8 +139,8 @@ export function validateUserCalendar(calendar) {
   return calendar;
 }
 
-export function sortUserCalendar(days, startingDateString) {
-  days = days.sort((a, b) => a.weekday > b.weekday ? 1: -1);
+export function sortUserCalendar(days) {
+  days.sort((a, b) => a.weekday > b.weekday ? 1: -1);
 }
 
 export function insertFillerDays(days, startingDateString) {

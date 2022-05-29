@@ -6,14 +6,14 @@ import { useHistory } from "react-router-dom";
 import { getHelperInfo } from "./HelpInfoContent";
 import "../../../styles/_theme.scss";
 
-export const HelpInfoFrame = (props) => {
+export const HelpInfoFrame = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
 
   const handleMouseEnter = (ev) => {
     setAnchorEl(ev.currentTarget);
   };
-  const handleMouseLeave = (ev) => {
+  const handleMouseLeave = () => {
     setAnchorEl(null);
   };
   return (
@@ -28,7 +28,7 @@ export const HelpInfoFrame = (props) => {
         size={"3vh"}
         fill={"url(#blue-gradient)"}
         onMouseEnter={(ev) => handleMouseEnter(ev)}
-        onMouseLeave={(ev) => handleMouseLeave(ev)}
+        onMouseLeave={() => handleMouseLeave()}
       />
       <Popper
         open={anchorEl != null}

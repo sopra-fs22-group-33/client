@@ -7,13 +7,13 @@ import {FormField, PasswordFormField} from "components/ui/FormField";
 import { Button, Button2 } from "components/ui/Button";
 import { TEMPLATE_USER_CALENDAR } from "../../fixtures/templateUserCalendar";
 
-export const Register = (props) => {
+export const Register = () => {
   const history = useHistory();
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [username, setUsername] = useState(null);
 
-  const doRegister = async (props) => {
+  const doRegister = async () => {
     // roughest check, "@" is considered valid
     if (!email || !email.includes("@")) {
       alert(`${email} is invalid email\nPlease provide a real email`);

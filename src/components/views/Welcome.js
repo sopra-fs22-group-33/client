@@ -1,6 +1,4 @@
 import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { doLogout } from "helpers/api";
 import { Button } from "../ui/Button";
 import BaseContainer from "../ui/BaseContainer";
 import "styles/views/Welcome.scss";
@@ -9,9 +7,7 @@ import blob1 from "../../images/blob1.png";
 
 export const Welcome = () => {
   const history = useHistory();
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!sessionStorage.getItem("token") && !!sessionStorage.getItem("id")
-  );
+  const isAuthenticated = !!sessionStorage.getItem("token") && !!sessionStorage.getItem("id");
 
   let content;
 
@@ -24,7 +20,7 @@ export const Welcome = () => {
           <div className={"welcome text container2"}>
 
           <div className={"welcome text title"}>Shift planning made easy</div>
-            <div className={"welcome text line"}></div>
+            <div className={"welcome text line"}/>
 
             <div className={"welcome text subtitle"}>
             Many teams who are working in shifts are still using hand made plans
@@ -46,7 +42,7 @@ export const Welcome = () => {
           </div>
         <div className={"welcome graphic container3"}>
           <img src={blob1} style={{ width:"70vh",
-            height:"auto"}}/>
+            height:"auto"}} alt={" "}/>
 
         </div>
         </div>

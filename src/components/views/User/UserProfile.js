@@ -1,6 +1,4 @@
-import {useHistory, useParams} from "react-router-dom";
-import {doLogout} from "../../../helpers/api";
-import {Spinner} from 'components/ui/Spinner';
+import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
@@ -14,7 +12,7 @@ import "styles/views/ProfileInfo.scss";
 const PlayerProfile = ({user}) => (
     <div className="user-profile container">
         <div className="user-profile icon">
-            <img src={avatar} />
+            <img src={avatar}  alt={" "}/>
         </div>
         <div className="user-profile label">Username</div>
         <div className="user-profile text">{user.username}</div>
@@ -32,8 +30,6 @@ PlayerProfile.propTypes = {
 export const UserProfile = () => {
     // use react-router-dom's hook to access the history
     const history = useHistory();
-
-    const id = useParams();
 
 
     // define a state variable (using the state hook).
@@ -80,10 +76,7 @@ export const UserProfile = () => {
         fetchData();
     }, []);
 
-    let content = <Spinner/>;
-
-
-    content = (
+    const content = (
         <div className="game">
             <PlayerProfile
                 user={user}

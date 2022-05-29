@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { api, handleError } from "helpers/api";
-import { Spinner } from "components/ui/Spinner";
+import { api } from "helpers/api";
 import { Button } from "components/ui/Button";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
 import "styles/views/Game.scss";
 import { FormField } from "../../ui/FormField";
 
@@ -55,9 +53,7 @@ const UserProfileEdit = () => {
     history.goBack();
   };
 
-  let content = <Spinner />;
-
-  content = (
+  const content = (
     <div className="auth container">
       <div className="auth form">
         <FormField

@@ -25,7 +25,7 @@ export class PreferenceSlot extends React.Component {
     this.setState({isHoveredOver: true, anchorEl: ev.currentTarget});
   }
 
-  handleSlotMouseLeave(ev) {
+  handleSlotMouseLeave() {
     this.setState({isHoveredOver: false, anchorEl: undefined});
   }
 
@@ -59,7 +59,7 @@ export class PreferenceSlot extends React.Component {
         timeFrom={this.props.timeFrom}
         timeTo={this.props.timeTo}
         onMouseEnter={(ev) => this.handleSlotMouseEnter(ev)}
-        onMouseLeave={(ev) => this.handleSlotMouseLeave(ev)}
+        onMouseLeave={() => this.handleSlotMouseLeave()}
       >
         {this.state.isHoveredOver ? (
           <SlotPopper anchorEl={this.state.anchorEl}>

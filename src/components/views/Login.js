@@ -7,7 +7,7 @@ import "styles/views/Auth.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import {FormField, PasswordFormField} from "components/ui/FormField";
 
-export const Login = (props) => {
+export const Login = () => {
     const history = useHistory();
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);

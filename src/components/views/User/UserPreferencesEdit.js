@@ -35,7 +35,7 @@ export const UserPreferencesEdit = () => {
     }
   }
 
-  function handleClick(ev) {
+  function handleClick() {
     setCalendar(
       validateUserCalendar(JSON.parse(JSON.stringify(TEMPLATE_USER_CALENDAR)))
     );

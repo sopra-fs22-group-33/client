@@ -102,7 +102,7 @@ export const TeamCalendarAdminEdit = () => {
         <div>are you sure?</div>
         <Button
           onClick={() => {
-            doDeleteFixedDays().then((r) => setIsDeleting(false));
+            doDeleteFixedDays().then(() => setIsDeleting(false));
           }}
         >
           yes

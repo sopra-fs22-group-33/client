@@ -17,6 +17,8 @@ export function baseToText(value) {
       return "liked"
     case 2:
       return "highly liked"
+    default:
+      return " "
   }
 }
 
@@ -40,7 +42,7 @@ export class BaseSlot extends React.Component {
     this.setState({isHoveredOver: true, anchorEl: ev.currentTarget});
   }
 
-  handleSlotMouseLeave(ev) {
+  handleSlotMouseLeave() {
     this.setState({isHoveredOver: false, anchorEl: undefined});
   }
 
@@ -92,7 +94,7 @@ export class BaseSlot extends React.Component {
         timeFrom={this.props.timeFrom}
         timeTo={this.props.timeTo}
         onMouseEnter={(ev) => this.handleSlotMouseEnter(ev)}
-        onMouseLeave={(ev) => this.handleSlotMouseLeave(ev)}
+        onMouseLeave={() => this.handleSlotMouseLeave()}
       >
         {this.state.isHoveredOver ? (
           <SlotPopper anchorEl={this.state.anchorEl}>

@@ -14,7 +14,9 @@ export const GameLobbyEntity = (props) => {
       className={"team container"}
       style={{
         padding: 20,
-        background: props.isSelected ? "linear-gradient(to right, #3C4FFA, #3DD7F9)" : null,
+        background: props.isSelected
+          ? "linear-gradient(to right, #3C4FFA, #3DD7F9)"
+          : null,
       }}
       onClick={props.onClick}
     >

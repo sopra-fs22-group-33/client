@@ -6,14 +6,12 @@ import { FixedSlot } from "./FixedSlot";
 export class FixedDay extends React.Component {
   constructor(props) {
     super(props);
-    this.props.day.slots = handleOverlap(this.props.day.slots);
+    this.props.day.slots = handleOverlap(this.props.day.slots, null);
   }
 
   render() {
     return (
-      <Day
-        date={this.props.date}
-      >
+      <Day date={this.props.date}>
         {this.props.day.slots.map((slot) => (
           <FixedSlot
             key={slot.id}

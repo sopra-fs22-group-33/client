@@ -5,7 +5,8 @@ import { fetchFixedUserCalendar } from "../../../helpers/api";
 import { useHistory } from "react-router-dom";
 import { Button } from "../../ui/Button";
 import {
-  insertFillerDays, sortUserCalendar,
+  insertFillerDays,
+  sortUserCalendar,
   validateUserCalendar,
 } from "../../../helpers/validations";
 import { CalendarNavigationButtons } from "../../ui/calendar/CalendarNavigationButtons";
@@ -37,7 +38,7 @@ export const UserCalendar = () => {
   useEffect(() => {
     fetchFixedUserCalendar(sessionStorage.getItem("id")).then((calendar) => {
       calendar = validateUserCalendar(calendar);
-      sortUserCalendar(calendar.days, calendar.startingDate);
+      sortUserCalendar(calendar.days);
       setLocalDays(insertFillerDays(calendar.days, calendar.startingDate));
       setCalendar(calendar);
     });

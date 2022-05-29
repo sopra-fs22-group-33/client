@@ -1,33 +1,25 @@
-import { useHistory, useParams } from "react-router-dom";
-import {
-  api,
-  handleError,
-  doLogout,
-  getTeamIsAdmin,
-} from "../../../helpers/api";
+import { useHistory } from "react-router-dom";
+import { api, handleError } from "../../../helpers/api";
 import React, { useEffect, useState } from "react";
 import { Spinner } from "../../ui/Spinner";
 import BaseContainer from "../../ui/BaseContainer";
 import { Button } from "../../ui/Button";
 import avatar from "../../../images/avatar1.png";
 import "styles/views/TeamProfil.scss";
-import globalEventDispatcher from "../../../helpers/globalEventDispatcher";
-import {StyledDialog} from "../../ui/StyledDialog";
+import { StyledDialog } from "../../ui/StyledDialog";
 
 //component for a TEAM MEMBER
 export const TeamMember = ({ teamMember, onClick }) => (
   <div className="team member container2">
     <div className="team member icon">
-      <img src={avatar} />
+      <img src={avatar} alt={" "} />
     </div>
     <div className="team member username">{teamMember.user.username}</div>
     <div className="team member email">{teamMember.user.email}</div>
     {teamMember.isAdmin ? <div className="team member admin">Admin</div> : ""}
-    {sessionStorage.getItem("isAdmin")==="true" && teamMember.isAdmin === false ? (
-      <div
-        className="team member removebutton "
-        onClick={onClick}
-      >
+    {sessionStorage.getItem("isAdmin") === "true" &&
+    teamMember.isAdmin === false ? (
+      <div className="team member removebutton " onClick={onClick}>
         Remove
       </div>
     ) : (
@@ -47,7 +39,7 @@ export const TeamProfile = () => {
 
   //fetch all users in team only once
   useEffect(() => {
-    const fetchData = async (props) => {
+    const fetchData = async () => {
       try {
         const responseTeams = await api.get(
           `/teams/${sessionStorage.getItem("teamId")}`,
@@ -71,12 +63,9 @@ export const TeamProfile = () => {
 
   async function removeUser(userId) {
     try {
-      const responseTeams = await api.delete(
-        `/teams/${team.id}/users/${userId}`,
-        {
-          headers: { token: sessionStorage.getItem("token") },
-        }
-      );
+      await api.delete(`/teams/${team.id}/users/${userId}`, {
+        headers: { token: sessionStorage.getItem("token") },
+      });
     } catch (error) {
       alert(
         `Something went wrong with deleting the user from the team: \n${handleError(
@@ -84,7 +73,7 @@ export const TeamProfile = () => {
         )}`
       );
     }
-      window.location.reload();
+    window.location.reload();
   }
 
   async function handleDeleteTeam() {
@@ -108,6 +97,7 @@ export const TeamProfile = () => {
         <ul className="team member-list2">
           {team.memberships.map((teamMember) => (
             <TeamMember
+              key={teamMember.id}
               teamMember={teamMember}
               onClick={() => setUserToBeRemoved(teamMember.user)}
             />
@@ -166,7 +156,7 @@ export const TeamProfile = () => {
           </div>
         ) : null}
       </div>
-      <div></div>
+      <div />
       {content}
     </BaseContainer>
   );

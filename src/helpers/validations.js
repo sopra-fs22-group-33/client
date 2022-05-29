@@ -139,9 +139,8 @@ export function validateUserCalendar(calendar) {
   return calendar;
 }
 
-export function sortUserCalendar(days, startingDateString) {
-  days = days.sort((a, b) => a.weekday > b.weekday ? 1: -1);
-  console.log(days);
+export function sortUserCalendar(days) {
+  days.sort((a, b) => (a.weekday > b.weekday ? 1 : -1));
 }
 
 export function insertFillerDays(days, startingDateString) {
@@ -165,7 +164,6 @@ export function insertFillerDays(days, startingDateString) {
 
     localDate.setDate(localDate.getDate() - 1);
     mockDay = { weekday: days[0].weekday + dayDiff - 1, date: localDate };
-
   } else if (originalDate.getDay() !== 1) {
     const localDate = new Date(Date.parse(startingDateString));
     let dayDiff = 0;
@@ -226,7 +224,7 @@ function getDate(weekday, startingDateString) {
 function generateFillers(day1, day2) {
   let diff = day2.weekday - day1.weekday;
   if (diff >= 7) {
-    diff = 7 + diff % 7;
+    diff = 7 + (diff % 7);
   } else {
     diff = diff % 7;
   }

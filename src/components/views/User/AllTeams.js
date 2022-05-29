@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import {api, doLogout, getTeamIsAdmin, handleError} from "../../../helpers/api";
+import { api, getTeamIsAdmin, handleError } from "../../../helpers/api";
 import { useEffect, useState } from "react";
 import { Spinner } from "../../ui/Spinner";
 import "styles/views/Team.scss";
@@ -16,7 +16,7 @@ export const Team = ({ team, getTeam }) => (
     onClick={() => {
       sessionStorage.setItem("teamId", team.id);
       sessionStorage.setItem("teamName", team.name);
-      sessionStorage.setItem("isAdmin", getTeamIsAdmin(team.memberships))
+      sessionStorage.setItem("isAdmin", getTeamIsAdmin(team.memberships));
       globalEventDispatcher.dispatch("onTeamIdChanged");
       getTeam();
     }}
@@ -24,7 +24,7 @@ export const Team = ({ team, getTeam }) => (
     <div className="team name2">{team.name} </div>
     <ul className="team member-list">
       {team.memberships.map((teamMember) => (
-        <TeamMember teamMember={teamMember} />
+        <TeamMember key={teamMember.id} teamMember={teamMember} />
       ))}
     </ul>
   </ul>
@@ -33,13 +33,11 @@ export const Team = ({ team, getTeam }) => (
 export const TeamMember = ({ teamMember }) => (
   <div className="team member container2">
     <div className="team member icon">
-      <img src={avatar} />
+      <img src={avatar} alt={" "} />
     </div>
-      <div className="team member username">{teamMember.user.username}</div>
-      <div className="team member email">{teamMember.user.email}</div>
-    {teamMember.isAdmin
-        ? <div className="team member admin">Admin</div> :''
-    }
+    <div className="team member username">{teamMember.user.username}</div>
+    <div className="team member email">{teamMember.user.email}</div>
+    {teamMember.isAdmin ? <div className="team member admin">Admin</div> : ""}
   </div>
 );
 
@@ -51,7 +49,7 @@ export const AllTeams = () => {
 
   //fetch all teams user is part of from backend only once
   useEffect(() => {
-    const fetchData = async (props) => {
+    const fetchData = async () => {
       try {
         const response = await api.get(
           `/users/${sessionStorage.getItem("id")}/teams`,
@@ -83,7 +81,7 @@ export const AllTeams = () => {
     content = (
       <div>
         {teams.map((team) => (
-          <Team team={team} getTeam={getTeam} />
+          <Team key={team.id} team={team} getTeam={getTeam} />
         ))}
       </div>
     );

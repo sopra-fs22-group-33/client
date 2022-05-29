@@ -1,7 +1,8 @@
 import { AuthHelp } from "./content/AuthHelp";
 import {
   UserCalendarEditHelp,
-  UserCalendarHelp, UserInvitationsHelp,
+  UserCalendarHelp,
+  UserInvitationsHelp,
   UserProfileHelp,
   UserTeamsHelp,
 } from "./content/UserHelp";
@@ -24,9 +25,7 @@ export function getHelperInfo(pathname) {
   if (pathname.includes("/user/calendar")) {
     return UserCalendarHelp;
   }
-  if (
-    pathname.includes("/user/profile/invitations")
-  ) {
+  if (pathname.includes("/user/profile/invitations")) {
     return UserInvitationsHelp;
   }
   if (pathname.includes("/user/profile")) {

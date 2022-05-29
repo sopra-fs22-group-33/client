@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { UserCalendar } from "components/views/User/UserCalendar";
 import { UserProfile } from "components/views/User/UserProfile";
 import { AllTeams } from "../../views/User/AllTeams";
-import {CreateTeam} from "../../views/User/CreateTeam";
-import {UserInvitations} from "../../views/User/UserInvitations";
+import { CreateTeam } from "../../views/User/CreateTeam";
+import { UserInvitations } from "../../views/User/UserInvitations";
 import UserProfileEdit from "../../views/User/UserProfileEdit";
-import {UserPreferencesEdit} from "../../views/User/UserPreferencesEdit";
+import { UserPreferencesEdit } from "../../views/User/UserPreferencesEdit";
 import UserProfileEditPassword from "../../views/User/UserProfileEditPassword";
 
 export const UserRouter = (props) => {
@@ -28,7 +28,7 @@ export const UserRouter = (props) => {
         <Route exact path={`${props.base}/profile/edit/password`}>
           <UserProfileEditPassword />
         </Route>
-        <Route exact path={`${props.base}/profile/invitations`} >
+        <Route exact path={`${props.base}/profile/invitations`}>
           <UserInvitations />
         </Route>
         <Route exact path={`${props.base}/teams`}>

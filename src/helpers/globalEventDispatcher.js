@@ -1,6 +1,5 @@
 const _events = [];
 
-
 /**
  * @see CalendarEventDispatcher.js
  */

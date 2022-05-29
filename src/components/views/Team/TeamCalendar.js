@@ -103,7 +103,9 @@ export const TeamCalendar = () => {
     <div>
       <StyledDialog open={isFinalizing}>
         <div>Attempt to generate an optimized calendar?</div>
-        <Button onClick={() => handleFinalize().then(() => setIsFinalizing(false))}>
+        <Button
+          onClick={() => handleFinalize().then(() => setIsFinalizing(false))}
+        >
           yes
         </Button>
         <Button onClick={() => setIsFinalizing(false)}>no</Button>

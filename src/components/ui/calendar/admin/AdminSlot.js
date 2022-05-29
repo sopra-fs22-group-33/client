@@ -38,7 +38,7 @@ export class AdminSlot extends React.Component {
     this.setState({ isHoveredOver: true, anchorEl: ev.currentTarget });
   }
 
-  handleSlotMouseLeave(ev) {
+  handleSlotMouseLeave() {
     calendarGlobal.setSelectedSlot(null);
     this.setState({ isHoveredOver: false, anchorEl: undefined });
   }
@@ -80,7 +80,7 @@ export class AdminSlot extends React.Component {
     }
   }
 
-  handleGlobalMouseUp(ev) {
+  handleGlobalMouseUp() {
     // global, make sure this is being changed
     if (this.state.isDragged || this.state.isResized) {
       window.removeEventListener("mouseup", this.handleGlobalMouseUp);
@@ -135,7 +135,7 @@ export class AdminSlot extends React.Component {
         onClick={(ev) => this.handleSlotClick(ev)}
         onMouseDown={(ev) => this.handleSlotMouseDown(ev)}
         onMouseEnter={(ev) => this.handleSlotMouseEnter(ev)}
-        onMouseLeave={(ev) => this.handleSlotMouseLeave(ev)}
+        onMouseLeave={() => this.handleSlotMouseLeave()}
       >
         {!this.state.isDragged && this.state.isHoveredOver ? (
           <div>
@@ -145,7 +145,6 @@ export class AdminSlot extends React.Component {
                 onChange={(ev, value) => this.handleSliderChange(ev, value)}
                 onMouseDown={(ev) => this.handleSliderMouseDown(ev)}
                 width={120}
-
                 value={this.state.requirement}
                 valueLabelDisplay={"auto"}
                 step={1}

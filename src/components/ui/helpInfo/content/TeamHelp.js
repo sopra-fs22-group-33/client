@@ -64,7 +64,7 @@ export const TeamProfileHelp = (
       account. You can also edit the name of your team, delete the entire team
       or remove specific people from the team.
     </p>
-       <HelpInfoImageFrame src={teamProfile} />
+    <HelpInfoImageFrame src={teamProfile} />
   </div>
 );
 

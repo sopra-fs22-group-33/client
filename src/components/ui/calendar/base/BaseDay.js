@@ -9,7 +9,7 @@ export class BaseDay extends React.Component {
     this.id = props.id;
     // reference to object in parent
     this.day = props.day;
-    this.day.slots = handleOverlap(this.day.slots);
+    this.day.slots = handleOverlap(this.day.slots, null);
 
     this.state = {
       slots: this.day.slots,
@@ -18,10 +18,7 @@ export class BaseDay extends React.Component {
 
   render() {
     return (
-      <Day
-        date={this.props.date}
-        hideDate={true}
-      >
+      <Day date={this.props.date} hideDate={true}>
         {this.state.slots.map((slot) => (
           <BaseSlot
             key={slot.id}

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { api, fetchGames, handleError } from "../../helpers/api";
 import { withRouter } from "react-router-dom";
-import Box from "@mui/material/Box";
 import BaseContainer from "../ui/BaseContainer";
 import { GameLobbyEntity } from "../ui/game/GameLobbyEntity";
 
@@ -15,6 +14,7 @@ class GameLobby extends React.Component {
     super(props);
 
     this.isJoiningGame = false;
+    this.isLeaving = false;
 
     this.state = {
       games: [],
@@ -31,14 +31,14 @@ class GameLobby extends React.Component {
   }
 
   componentCleanup() {
-    if (!this.isJoiningGame) {
-      setOffline(
-        sessionStorage.getItem("gameId"),
-        this.state.selectedPlayer
-      ).then(() => {
-        sessionStorage.removeItem("gameId");
-        sessionStorage.removeItem("playerId");
-      });
+    this.isLeaving = true;
+    if (!this.isJoiningGame && this.state.selectedPlayer !== null) {
+      setOffline(sessionStorage.getItem("gameId"), this.state.selectedPlayer)
+        .then(() => {
+          sessionStorage.removeItem("gameId");
+          sessionStorage.removeItem("playerId");
+        })
+        .catch((e) => console.log(e));
     } else {
       sessionStorage.removeItem("gameId");
       sessionStorage.removeItem("playerId");
@@ -60,6 +60,10 @@ class GameLobby extends React.Component {
   }
 
   async update() {
+    if (this.isLeaving) {
+      // workaround to stop recursion on leaving page
+      return;
+    }
     fetchGames(sessionStorage.getItem("id")).then((games) => {
       this.setState({ games });
       for (let game of games) {
@@ -83,27 +87,31 @@ class GameLobby extends React.Component {
   }
 
   handleGameBoardClick(ev, game, player) {
+    function wrapError(e) {
+      alert(
+        `Something went wrong when trying to enter the game:\n${handleError(e)}`
+      );
+    }
+
     async function setOnline() {
       player.statusOnline = "ONLINE";
       await api.put(`games/${game.id}/${player.id}`, player);
     }
 
-    try {
-      if (this.state.selectedGame && this.state.selectedPlayer) {
-        setOffline(this.state.selectedGame.id, this.state.selectedPlayer);
-      }
+    if (this.state.selectedGame && this.state.selectedPlayer) {
+      setOffline(this.state.selectedGame.id, this.state.selectedPlayer).catch(
+        (e) => wrapError(e)
+      );
+    }
 
-      setOnline().then(() => {
+    setOnline()
+      .then(() => {
         sessionStorage.setItem("gameId", game.id);
         sessionStorage.setItem("playerId", player.id);
         game.isActive = true;
         this.setState({ selectedGame: game, selectedPlayer: player });
-      });
-    } catch (e) {
-      alert(
-        `Something went wrong when trying to enter the game:\n${handleError(e)}`
-      );
-    }
+      })
+      .catch((e) => wrapError(e));
   }
 
   getPlayerForUser(userId, players) {

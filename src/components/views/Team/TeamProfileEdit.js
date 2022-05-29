@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { api, handleError } from "../../../helpers/api";
-import { TeamMember } from "../User/AllTeams";
+import React, { useState } from "react";
+import { api } from "../../../helpers/api";
 import { useHistory } from "react-router-dom";
 import BaseContainer from "../../ui/BaseContainer";
-import {Button} from "../../ui/Button";
-import {Spinner} from "../../ui/Spinner";
-import {FormField} from "../../ui/FormField";
+import { Button } from "../../ui/Button";
+import { FormField } from "../../ui/FormField";
 
 export const TeamProfileEdit = () => {
   // use react-router-dom's hook to access the history
@@ -21,7 +19,7 @@ export const TeamProfileEdit = () => {
 
   const doSaveEditProfile = async () => {
     const requestBody = JSON.stringify({ name });
-    const id = sessionStorage.getItem("teamId")
+    const id = sessionStorage.getItem("teamId");
     await api.put(`/teams/${id}`, requestBody, {
       headers: { token: sessionStorage.getItem("token") },
     });
@@ -30,39 +28,31 @@ export const TeamProfileEdit = () => {
     history.goBack();
   };
 
-  let content = <Spinner />;
+  const content = (
+    <div className="auth container">
+      <div className="auth form">
+        <FormField label="Name" value={name} onChange={(un) => setName(un)} />
 
-  content = (
-      <div className="auth container">
-        <div className="auth form">
-          <FormField
-              label="Name"
-              value={name}
-              onChange={(un) => setName(un)}
-          />
-
-          <div className="auth button-container">
-            <Button disabled={!name} onClick={() => doSaveEditProfile()}>
-              Save
-            </Button>
-            <Button onClick={() => history.goBack()}>Cancel</Button>
-
-          </div>
+        <div className="auth button-container">
+          <Button disabled={!name} onClick={() => doSaveEditProfile()}>
+            Save
+          </Button>
+          <Button onClick={() => history.goBack()}>Cancel</Button>
         </div>
       </div>
+    </div>
   );
 
   return (
-      <BaseContainer>
-        <div className="navigation-button-container container">
-          <div className="navigation-button-container title">
-            <h1>Edit Team Profile</h1>
-          </div>
-          <div className="navigation-button-container button">
-          </div>
+    <BaseContainer>
+      <div className="navigation-button-container container">
+        <div className="navigation-button-container title">
+          <h1>Edit Team Profile</h1>
         </div>
-        {content}
-      </BaseContainer>
+        <div className="navigation-button-container button"/>
+      </div>
+      {content}
+    </BaseContainer>
   );
 };
 

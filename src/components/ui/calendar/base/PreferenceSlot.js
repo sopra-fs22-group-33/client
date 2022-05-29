@@ -4,7 +4,7 @@ import { MAX_BASE, MIN_BASE } from "../config";
 import { Slot } from "../Slot";
 import { SlotPopper } from "../SlotPopper";
 import { SlotSlider } from "../SlotSlider";
-import {baseToText} from "./BaseSlot";
+import { baseToText } from "./BaseSlot";
 
 export class PreferenceSlot extends React.Component {
   constructor(props) {
@@ -21,12 +21,12 @@ export class PreferenceSlot extends React.Component {
     };
   }
 
-  handleSlotMouseEnter(ev){
-    this.setState({isHoveredOver: true, anchorEl: ev.currentTarget});
+  handleSlotMouseEnter(ev) {
+    this.setState({ isHoveredOver: true, anchorEl: ev.currentTarget });
   }
 
-  handleSlotMouseLeave(ev) {
-    this.setState({isHoveredOver: false, anchorEl: undefined});
+  handleSlotMouseLeave() {
+    this.setState({ isHoveredOver: false, anchorEl: undefined });
   }
 
   handleSliderChange(ev, value) {
@@ -59,14 +59,13 @@ export class PreferenceSlot extends React.Component {
         timeFrom={this.props.timeFrom}
         timeTo={this.props.timeTo}
         onMouseEnter={(ev) => this.handleSlotMouseEnter(ev)}
-        onMouseLeave={(ev) => this.handleSlotMouseLeave(ev)}
+        onMouseLeave={() => this.handleSlotMouseLeave()}
       >
         {this.state.isHoveredOver ? (
           <SlotPopper anchorEl={this.state.anchorEl}>
             <SlotSlider
               onChange={(ev, value) => this.handleSliderChange(ev, value)}
               width={120}
-
               value={this.state.base}
               valueLabelDisplay={"auto"}
               step={1}

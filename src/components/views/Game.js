@@ -2,7 +2,12 @@ import * as React from "react";
 import { api } from "helpers/api";
 import "styles/views/Auth.scss";
 import { Player } from "../../models/Player";
-import {BOARD_LENGTH, CHUNK_LENGTH, serialize, setChunkLength} from "../ui/game/helpers";
+import {
+  BOARD_LENGTH,
+  CHUNK_LENGTH,
+  serialize,
+  setChunkLength,
+} from "../ui/game/helpers";
 import BaseContainer from "../ui/BaseContainer";
 import { GameBoard } from "../ui/game/GameBoard";
 import { StatBoard } from "../ui/game/StatBoard";
@@ -47,8 +52,6 @@ export class Game extends React.Component {
     this.componentCleanup();
     window.removeEventListener("beforeunload", this.componentCleanup);
     window.removeEventListener("keydown", this.handleKeyDown);
-
-    // todo: make the player automatically loose the game
   }
 
   handleKeyDown(ev) {

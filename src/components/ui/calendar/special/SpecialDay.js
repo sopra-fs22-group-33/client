@@ -9,7 +9,7 @@ export class SpecialDay extends React.Component {
     this.id = props.id;
     // reference to object in parent
     this.day = props.day;
-    this.day.slots = handleOverlap(this.day.slots);
+    this.day.slots = handleOverlap(this.day.slots, null);
 
     this.state = {
       slots: this.day.slots,
@@ -18,9 +18,7 @@ export class SpecialDay extends React.Component {
 
   render() {
     return (
-      <Day
-        date={this.props.date}
-      >
+      <Day date={this.props.date}>
         {this.state.slots.map((slot) => (
           <SpecialSlot
             key={slot.id}

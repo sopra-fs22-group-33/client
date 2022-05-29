@@ -2,7 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { Slot } from "../Slot";
 import { SlotPopper } from "../SlotPopper";
-import { Button, Button2 } from "../../Button";
+import { Button2 } from "../../Button";
 import { AiFillHeart } from "react-icons/ai";
 import { ImCross } from "react-icons/im";
 import calendarEventDispatcher from "../calendarEventDispatcher";
@@ -61,7 +61,7 @@ export class SpecialSlot extends React.Component {
     this.setState({ isHoveredOver: true, anchorEl: ev.currentTarget });
   }
 
-  handleSlotMouseLeave(ev) {
+  handleSlotMouseLeave() {
     this.setState({ isHoveredOver: false, anchorEl: undefined });
   }
 
@@ -110,7 +110,7 @@ export class SpecialSlot extends React.Component {
         timeFrom={this.props.timeFrom}
         timeTo={this.props.timeTo}
         onMouseEnter={(ev) => this.handleSlotMouseEnter(ev)}
-        onMouseLeave={(ev) => this.handleSlotMouseLeave(ev)}
+        onMouseLeave={() => this.handleSlotMouseLeave()}
       >
         {this.state.isHoveredOver ? (
           <SlotPopper anchorEl={this.state.anchorEl}>

@@ -14,10 +14,7 @@ export class FixedCalendar extends React.Component {
       <Calendar>
         {this.props.days.map((day) => {
           return day.isFiller ? (
-            <FillerDay
-              key={randomId()}
-              date={day.date}
-            />
+            <FillerDay key={randomId()} date={day.date} />
           ) : (
             <FixedDay
               key={day.id}

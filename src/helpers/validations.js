@@ -180,7 +180,10 @@ export function insertFillerDays(days, startingDateString) {
     mockDay = { weekday: dayDiff - 1, date: localDate };
   }
 
-  const startFillerDays = generateFillers(mockDay, days[0]);
+  let startFillerDays = [];
+  if (mockDay) {
+    startFillerDays = generateFillers(mockDay, days[0]);
+  }
 
   for (let d = 1; d < days.length; d++) {
     if (days[d].weekday - days[d - 1].weekday > 1) {
